@@ -16,6 +16,9 @@ html,body,#app{
   height: 100%;
   -webkit-tap-highlight-color:rgba(0,0,0,0)
 }
+div,input{
+    box-sizing: border-box;
+}
 body,
 dd,
 dl,
