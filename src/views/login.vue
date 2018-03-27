@@ -8,14 +8,18 @@
             <div class="pass common">
                 <input type="password" placeholder="请输入密码">
             </div>
-            <div class="login_btn">登录</div>
+            <div class="login_btn" @click="login()">登录</div>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-
+    methods:{
+        login(){
+            this.$router.push('/datamanage')
+        }
+    }
 }
 </script>
 

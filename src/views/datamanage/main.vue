@@ -1,12 +1,16 @@
 <template>
     <main>
-
+        <Breadcrumb></Breadcrumb>
     </main>
 </template>
 
 <script>
-export default {
+import Breadcrumb from '@/components/common/breadcrumb'
 
+export default {
+    components:{
+        Breadcrumb
+    }
 }
 </script>
 

@@ -30,6 +30,7 @@ export default {
         height:100%;
         background: #edecec;
         display: flex;
+        padding-top: 16px;
     }
 </style>
 
