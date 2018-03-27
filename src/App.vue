@@ -53,7 +53,7 @@ input {
     outline-style: none;
 }
 ul,li {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
 }
 ol,
 ul {
