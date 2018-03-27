@@ -1,5 +1,5 @@
 <template>
-    <h1>面包屑导航栏</h1>
+    <p>资料管理>资料上传</p>
 </template>
 
 <script>
