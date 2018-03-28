@@ -1,36 +1,32 @@
 <template>
-  <div>
-      <Header></Header>
-      <div class="conten">
+    <div class="box">
         <asideNav></asideNav>
-        <Main></Main>
-      </div>
-  </div>
+        <main>
+            <transition name="move" mode="out-in">
+                <router-view></router-view>
+            </transition>
+        </main>
+    </div>
 </template>
 
 <script>
-
-import Header from '@/components/common/Header'
-
-import asideNav from './asidenav'
-
-import Main from './main'
-
-export default {
-    components:{
-        Header,
-        asideNav,
-        Main
+    import asideNav from "./asidenav";
+    export default {
+        components: {
+            asideNav
+        }
     }
-}
 </script>
 
 <style>
-    .conten{
-        height:100%;
-        background: #edecec;
-        display: flex;
-        padding-top: 16px;
+.box{
+    display: flex;
+}
+main {
+        width: 1136px;
+        height: 670px;
+        border: 1px solid red;
+        background: #fff;
     }
 </style>
 

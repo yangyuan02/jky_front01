@@ -16,6 +16,12 @@ html,body,#app{
   height: 100%;
   -webkit-tap-highlight-color:rgba(0,0,0,0)
 }
+.move-enter-active,.move-leave-active{
+    transition: opacity .5s;
+}
+.move-enter,.move-leave{
+    opacity: 0;
+}
 div,input{
     box-sizing: border-box;
 }
