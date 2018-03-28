@@ -5,17 +5,18 @@ import router from './router'
 const api = axios.create();
 
 api.defaults.timeout = 5000;
-api.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-api.defaults.headers.post['X-Requested-With'] = 'XMLHttpRequest'
+api.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
+api.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
 // 请求拦截
 api.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     // store.commit('SET_LOADING', true);
     // 如果有token,添加到请求报文 后台会根据该报文返回status
-    // if (store.state.login.token) {
-    //     config.headers.Authorization = `token ${store.state.login.token}`;
-    // }
+    var token = window.localStorage.getItem("token")
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
 
     return config;
 
