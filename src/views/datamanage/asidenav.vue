@@ -1,7 +1,7 @@
 <template>
     <nav>
         <ul>
-            <li @click="goTo('/home/datamanage')" v-bind:class="{ active: 'datamanage'== path}">1资料上传</li>
+            <li @click="goTo('/home/datamanage')" v-bind:class="{ active: 'datamanage'== path||'upload'== path}">1资料上传</li>
             <li @click="goTo('/home/replenish')" v-bind:class="{ active: 'replenish'== path}">2补充资料上传</li>
         </ul>
     </nav>
@@ -19,7 +19,11 @@
                 this.$router.push(url)
             },
             getPath() {
-                this.path = this.$route.path.slice(6)
+                if (this.$route.path.indexOf('upload')!=-1) {
+                    this.path = this.$route.path.slice(6, 12)
+                } else {
+                    this.path = this.$route.path.slice(6)
+                }
             }
         },
         created() {
@@ -42,6 +46,7 @@
         margin: 0px 16px;
         display: flex;
         justify-content: center;
+        box-shadow: 1px 1px 8px #ccc
     }
     nav li:nth-child(1) {
         margin-top: 42px;

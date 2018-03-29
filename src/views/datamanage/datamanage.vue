@@ -24,8 +24,9 @@
 }
 main {
         width: 1136px;
-        height: 670px;
+        height: auto;
         background: #fff;
+        box-shadow: 1px 1px 8px #ccc;
     }
 </style>
 
