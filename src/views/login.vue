@@ -3,10 +3,10 @@
         <div class="login_box">
             <h2>用户登录</h2>
             <div class="user common">
-                <input type="text" placeholder="请输入用户名">
+                <input type="text" placeholder="请输入用户名" v-model="unsename">
             </div>
             <div class="pass common">
-                <input type="password" placeholder="请输入密码">
+                <input type="password" placeholder="请输入密码" v-model="password">
             </div>
             <div class="login_btn" @click="login()">登录</div>
         </div>
@@ -16,6 +16,12 @@
 <script>
 
 export default {
+    data(){
+        return {
+            unsename:"",
+            password:""
+        }
+    },
     methods:{
         login(){
             this.$ajax.post("/api/login/login_password",{"username":"yangyuan","password":"123456"}).then((res)=>{
