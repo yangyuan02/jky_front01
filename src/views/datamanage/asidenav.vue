@@ -16,13 +16,20 @@
         },
         methods: {
             goTo(url) {
-                console.log(url)
                 this.$router.push(url)
+            },
+            getPath() {
+                this.path = this.$route.path.slice(6)
             }
         },
         created() {
-            this.path = this.$route.path.slice(6)
-            console.log(this.path)
+            this.getPath()
+        },
+        watch: {
+            '$route' (to, from) {
+                // 对路由变化作出响应...
+                this.getPath()
+            }
         }
     }
 </script>
