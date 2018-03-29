@@ -1,76 +1,58 @@
 <template>
     <div style="margin-top:36px;margin-left:40px;">
-        <div class="uploadt_btn" @click="showUpload()">添加 </div>
+        <div class="uploadt_btn" @click="toggleUpload('block')">添加 </div>
         <div class="upload">
             <div class="list">
                 <ul class="head">
                     <li>文件名</li>
                     <li>文件号</li>
                     <li>备注</li>
-                    <li>备注</li>
-                    <li>操作</li>
+                    <li>上传时间</li>
+                    <li>状态</li>
+                    <li></li>
                 </ul>
                 <div class="list_body">
-                    <ul>
-                        <li>材料1.pdf</li>
-                        <li>政府令138号</li>
-                        <li>附件共计3份</li>
-                        <li>正常</li>
-                        <li>删除</li>
-                    </ul>
-                    <ul>
-                        <li>材料1.pdf</li>
-                        <li>政府令138号</li>
-                        <li>附件共计3份</li>
-                        <li>正常</li>
-                        <li>删除</li>
-                    </ul>
-                    <ul>
-                        <li>材料1.pdf</li>
-                        <li>政府令138号</li>
-                        <li>附件共计3份</li>
-                        <li>正常</li>
-                        <li>删除</li>
-                    </ul>
-                    <ul>
-                        <li>材料1.pdf</li>
-                        <li>政府令138号</li>
-                        <li>附件共计3份</li>
-                        <li>正常</li>
-                        <li>删除</li>
+                    <ul v-for="(item,index) in fileList" :key="index">
+                        <li>{{item.title}}</li>
+                        <li>{{item.num}}</li>
+                        <li>{{item.remark}}</li>
+                        <li>{{item.created_at}}</li>
+                        <li>{{item.normal}}</li>
+                        <li @click="showDel('block',item.id)">删除</li>
                     </ul>
                 </div>
             </div>
         </div>
         <!-- 删除对话框 -->
-        <div class="del_dialog" id="_dialog">
+        <div class="del_dialog" id="del_dialog">
             <div class="title">提醒</div>
             <div class="msg">您确认要删除吗？</div>
             <div class="btns">
-                <a href="">确认</a>
-                <a href="">取消</a>
+                <a href="javascript:;" @click="del()">确认</a>
+                <a href="javascript:;" @click="showDel('none',-1)">取消</a>
             </div>
         </div>
         <!-- 上传附件弹窗 -->
         <div class="upload_dialog" id="up_dialog">
+            <div class="close"></div>
             <div class="label">
                 <span>文件名</span>
-                <input type="text">
+                <input type="text" v-model="filename">
             </div>
             <div class="label">
                 <span>文件号</span>
-                <input type="text">
+                <input type="text" v-model="filenum">
             </div>
             <div class="label">
                 <span>备注</span>
-                <input type="text">
+                <input type="text" v-model="remark">
             </div>
             <div class="label">
                 <span>文件性质</span>
                 <div>
-                    <input type="radio">
+                    <input type="radio" id="one" value="one" v-model="picked" :checked="picked=='one'">
                     <span>公开</span>
-                    <input type="radio">
+                    <input type="radio" id="two" value="two" v-model="picked">
                     <span>保密</span>
                 </div>
             </div>
@@ -82,8 +64,8 @@
                 </div>
             </div>
             <div class="btns">
-                <a href="javascript:;" @click="upload(31)">保存</a>
-                <a href="">取消</a>
+                <a href="javascript:;" @click="upload()">保存</a>
+                <a href="javascript:;" @click="toggleUpload('none')">取消</a>
             </div>
         </div>
     </div>
@@ -95,44 +77,63 @@
     export default {
         data() {
             return {
-                "checked": true
+                "filename":'',
+                "filenum":"",
+                "remark":"",
+                "fileId":"",
+                "picked":'one',
+                "fileList": []
             }
         },
         methods: {
             getDetail() { //获取附件列表
                 this.$ajax.get(`/api/self_point_relations/${this.$route.params.id}`, {}).then((res) => {
-                    console.log(res.data)
+                    this.fileList = res.data
                 }, (err) => {
                     console.log(err)
                 })
             },
-            showUpload() {
+            toggleUpload(type) {
                 var upload = document.getElementById("up_dialog")
-                upload.style.display = "block"
+                upload.style.display = type
             },
-            showDel() {
-                var upload = document.getElementById("up_dialog")
-                upload.style.display = "block"
+            showDel(type,id) {
+                var upload = document.getElementById("del_dialog")
+                upload.style.display = type
+                this.fileId = id
+                if(type=='block'){
+                    this.filename=''
+                    this.filenum=''
+                    this.remark=''
+                }
             },
-            del(id) { //删除附件
-                this.$ajax.DELETE(`/api/self_point_relations/${id}`, {}).then((res) => {
-                    console.log(res.data)
+            del() { //删除附件
+                this.$ajax.delete(`/api/self_point_relations/${this.fileId}`, {}).then((res) => {
+                  if(res.data){
+                      this.getDetail()
+                      this.showDel('none',-1)
+                  }
                 }, (err) => {
                     console.log(err)
                 })
             },
             upload(id) {
+                var id = this.$route.params.id
                 var fileData = new FormData()
+                console.log(this.picked)
                 var file = document.getElementById("file").files[0]
                 fileData.append("self_point_relation[file]", file)
-                fileData.append("self_point_relation[title]", '11111')
+                fileData.append("self_point_relation[title]", this.filename)
+                fileData.append("self_point_relation[num]", this.filenum)
+                fileData.append("self_point_relation[remark]", this.remark)
                 console.log(fileData)
                 this.$ajax.post(`/api/self_point_relations?self_point_relation[self_point_id]=${id}`).then((res) => {
                     var faye = new fayes.Client(`http://120.55.116.161:9292/api/events`);
-                    faye.subscribe(`/api/self_point_relations/${res.data.id}`, function(status) {
+                    faye.subscribe(`/api/self_point_relations/${res.data.id}`, (status)=> {
                         console.log(status)
-                        if(status.message=="done"){
-                            //
+                        if (status.message == "done") {
+                            this.getDetail()
+                            this.toggleUpload("none")
                         }
                     });
                     return res.data.id
@@ -199,8 +200,11 @@
         background: #dcdcdc;
     }
     .upload .list .list_body ul li {
-        width: 20%;
+        width: 16.6%;
         text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .del_dialog {
         width: 288px;
@@ -244,7 +248,7 @@
     .upload_dialog {
         width: 340px;
         height: 406px;
-        /* display: none; */
+        display: none;
         border: 2px solid #53a6f6;
         border-radius: 4px;
         box-shadow: 1px 1px 8px #ccc;

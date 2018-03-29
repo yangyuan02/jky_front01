@@ -10,31 +10,6 @@
                     <li style="width:20%;">材料操作</li>
                 </ul>
             </div>
-            <div class="table_body">
-                <!-- 横线列 -->
-                <div class="row clear" v-for="(one_item,one_index) in table" :key="one_index">
-                    <div class="cell_2" v-for="(two_item,two_index) in one_item.role2" :key="two_index">
-                        <div class="cell_2" v-for="(three_item,three_index) in two_item.role3" :key="three_index">
-                            <div class="cell">{{three_item.one}}</div>
-                            <div class="cell">{{three_item.two}}</div>
-                            <div class="cell">{{three_item.three}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="list" v-for="(item,index) in table" :key="index">
-                    <div class="one">{{item.one}}</div>
-                    <div class="two">
-                        <div v-for="(two_item,_index) in item.role2" :key="_index">
-                            {{two_item.two}}
-                        </div>
-                    </div>
-                    <div class="three">
-                        <div v-for="(two_item,_index) in item.role2" :key="_index">
-                            <div v-for="(three_item,_index) in two_item.role3" :key="_index">{{three_item.three}}</div>
-                        </div>
-                    </div>
-                </div> -->
         </div>
     </div>
 </template>
@@ -49,7 +24,8 @@
         methods: {
             getData() {
                 this.$ajax.get('/api/role_points', {}).then((res) => {
-                    this.table = res.data.role1
+                    this.table = res.data
+                    // console.log(this.table)
                 }, (err) => {
                     console.log(err)
                 })
@@ -93,6 +69,7 @@
         color: #fff;
     }
     .row{
+        height:30px;
         border:1px solid red;
     }
     .table_header ul li {
