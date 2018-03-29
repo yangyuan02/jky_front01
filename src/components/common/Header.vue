@@ -5,9 +5,9 @@
         </div>
         <div class="nav">
             <ul>
-                <li class="active" @click="goTo('/home/datamanage')">资料管理</li>
-                <li @click="goTo('/home/grade')">评分标准</li>
-                <li @click="goTo('/home/progress')">查看进度</li>
+                <li @click="goTo('/home/datamanage')" v-bind:class="{ active: 'datamanage'== path||'replenish'== path}">资料管理</li>
+                <li @click="goTo('/home/grade')" v-bind:class="{ active: 'grade'== path}">评分标准</li>
+                <li @click="goTo('/home/progress')" v-bind:class="{ active: 'progress'== path}">查看进度</li>
             </ul>
         </div>
         <div class="person_info">
@@ -25,6 +25,11 @@
 
 <script>
     export default {
+        data() {
+            return {
+                path: ''
+            }
+        },
         methods: {
             goTo(url) {
                 console.log(url)
@@ -35,6 +40,18 @@
                 this.$router.replace({
                     "path": "/"
                 })
+            },
+            getPath() {
+                this.path = this.$route.path.slice(6)
+            }
+        },
+        created() {
+            this.getPath()
+        },
+        watch: {
+            '$route' (to, from) {
+                // 对路由变化作出响应...
+                this.getPath()
             }
         }
     }
