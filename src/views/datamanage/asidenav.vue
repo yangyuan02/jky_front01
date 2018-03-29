@@ -49,7 +49,7 @@
         box-shadow: 1px 1px 8px #ccc
     }
     nav li:nth-child(1) {
-        margin-top: 42px;
+        margin-top: 36px;
     }
     nav li {
         height: 40px;

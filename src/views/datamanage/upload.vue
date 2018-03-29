@@ -1,7 +1,5 @@
 <template>
     <div>
-        <Breadcrumb>
-        </Breadcrumb>
         <div class="upload">
             <div class="list">
                 <ul class="head">
@@ -88,9 +86,6 @@
 <script>
     import Breadcrumb from '@/components/common/breadcrumb'
     export default {
-        components: {
-            Breadcrumb
-        },
         methods: {
             getDetail() { //获取附件列表
                 this.$ajax.get(`/api/self_point_relations/${this.$route.params.id}`, {}).then((res) => {
