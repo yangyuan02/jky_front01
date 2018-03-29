@@ -5,7 +5,7 @@
         </div>
         <div class="nav">
             <ul>
-                <li @click="goTo('/home/datamanage')" v-bind:class="{ active: 'datamanage'== path||'replenish'== path}">资料管理</li>
+                <li @click="goTo('/home/datamanage')" v-bind:class="{ active: 'datamanage'== path||'replenish'== path||'upload'== path}">资料管理</li>
                 <li @click="goTo('/home/grade')" v-bind:class="{ active: 'grade'== path}">评分标准</li>
                 <li @click="goTo('/home/progress')" v-bind:class="{ active: 'progress'== path}">查看进度</li>
             </ul>
@@ -42,7 +42,11 @@
                 })
             },
             getPath() {
-                this.path = this.$route.path.slice(6)
+                if (this.$route.path.indexOf('upload')!=-1) {
+                    this.path = this.$route.path.slice(6, 12)
+                } else {
+                    this.path = this.$route.path.slice(6)
+                }
             }
         },
         created() {
