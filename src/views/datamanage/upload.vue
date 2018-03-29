@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div style="margin-top:36px;margin-left:40px;">
+        <div class="uploadt_btn" @click="showUpload()">添加 </div>
         <div class="upload">
             <div class="list">
                 <ul class="head">
@@ -42,7 +43,7 @@
             </div>
         </div>
         <!-- 删除对话框 -->
-        <div class="del_dialog">
+        <div class="del_dialog" id="_dialog">
             <div class="title">提醒</div>
             <div class="msg">您确认要删除吗？</div>
             <div class="btns">
@@ -51,7 +52,7 @@
             </div>
         </div>
         <!-- 上传附件弹窗 -->
-        <div class="upload_dialog">
+        <div class="upload_dialog" id="up_dialog">
             <div class="label">
                 <span>文件名</span>
                 <input type="text">
@@ -66,7 +67,12 @@
             </div>
             <div class="label">
                 <span>文件性质</span>
-                <input type="text">
+                <div>
+                    <input type="radio">
+                    <span>公开</span>
+                    <input type="radio">
+                    <span>保密</span>
+                </div>
             </div>
             <div class="label access">
                 <span>附件</span>
@@ -76,7 +82,7 @@
                 </div>
             </div>
             <div class="btns">
-                <a href="javascript:;" @click="upload()">确定</a>
+                <a href="javascript:;" @click="upload(31)">保存</a>
                 <a href="">取消</a>
             </div>
         </div>
@@ -84,8 +90,14 @@
 </template>
 
 <script>
+    import fayes from 'faye'
     import Breadcrumb from '@/components/common/breadcrumb'
     export default {
+        data() {
+            return {
+                "checked": true
+            }
+        },
         methods: {
             getDetail() { //获取附件列表
                 this.$ajax.get(`/api/self_point_relations/${this.$route.params.id}`, {}).then((res) => {
@@ -94,6 +106,14 @@
                     console.log(err)
                 })
             },
+            showUpload() {
+                var upload = document.getElementById("up_dialog")
+                upload.style.display = "block"
+            },
+            showDel() {
+                var upload = document.getElementById("up_dialog")
+                upload.style.display = "block"
+            },
             del(id) { //删除附件
                 this.$ajax.DELETE(`/api/self_point_relations/${id}`, {}).then((res) => {
                     console.log(res.data)
@@ -101,9 +121,36 @@
                     console.log(err)
                 })
             },
-            upload(){
+            upload(id) {
+                var fileData = new FormData()
                 var file = document.getElementById("file").files[0]
-                console.log(file)
+                fileData.append("self_point_relation[file]", file)
+                fileData.append("self_point_relation[title]", '11111')
+                console.log(fileData)
+                this.$ajax.post(`/api/self_point_relations?self_point_relation[self_point_id]=${id}`).then((res) => {
+                    var faye = new fayes.Client(`http://120.55.116.161:9292/api/events`);
+                    faye.subscribe(`/api/self_point_relations/${res.data.id}`, function(status) {
+                        console.log(status)
+                        if(status.message=="done"){
+                            //
+                        }
+                    });
+                    return res.data.id
+                }, (err) => {
+                    console.log(err)
+                }).then((data) => {
+                    console.log(data)
+                    let config = {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                    this.$ajax.put(`/api/self_point_relations/${data}`, fileData, config).then((res) => {
+                        console.log(1111)
+                    }, (err) => {
+                        console.log(err)
+                    })
+                })
             }
         },
         created() {
@@ -113,11 +160,22 @@
 </script>
 
 <style>
+    .uploadt_btn {
+        width: 80px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        color: #fff;
+        background: #78b9f3;
+    }
     .upload {
-        width: 915px;
+        width: 1053px;
+        margin-top: 20px;
     }
     .upload .list ul.head {
         display: flex;
+        height: 30px;
+        align-items: center;
         /* justify-content: space-around; */
     }
     .upload .list ul.head {
@@ -130,6 +188,8 @@
     }
     .upload .list .list_body ul {
         display: flex;
+        height: 28px;
+        align-items: center;
         /* justify-content: space-around; */
     }
     .upload .list .list_body ul:nth-child(even) {
@@ -145,7 +205,8 @@
     .del_dialog {
         width: 288px;
         height: 174px;
-        box-shadow: 1px 1px 8px #ccc
+        box-shadow: 1px 1px 8px #ccc;
+        display: none;
     }
     .del_dialog .title {
         background: #fcce3b;
@@ -183,7 +244,9 @@
     .upload_dialog {
         width: 340px;
         height: 406px;
-        border: 1px solid #53a6f6;
+        /* display: none; */
+        border: 2px solid #53a6f6;
+        border-radius: 4px;
         box-shadow: 1px 1px 8px #ccc;
     }
     .upload_dialog .label {
@@ -193,13 +256,13 @@
         color: #666;
         padding: 0px 30px;
     }
-    .upload_dialog .label input {
+    .upload_dialog .label>input {
         height: 30px;
         border: 1px solid #ccc;
         margin-left: 10px;
         width: 80%;
     }
-    .upload_dialog .label span {
+    .upload_dialog .label>span {
         width: 28%;
         text-align: right;
     }

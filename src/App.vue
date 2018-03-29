@@ -11,6 +11,8 @@ export default {
 </script>
 
 <style>
+.clear:after{display:block;clear:both;content:"";visibility:hidden;height:0}
+.clear{zoom:1}
 html,body,#app{
   width: 100%;
   height: 100%;
