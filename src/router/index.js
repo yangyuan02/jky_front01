@@ -11,6 +11,8 @@ const manageMain = r => require.ensure([], () => r(require('@/views/datamanage/m
 
 const replenish = r => require.ensure([], () => r(require('@/views/datamanage/replenish')), 'replenish')
 
+const upload = r => require.ensure([], () => r(require('@/views/datamanage/upload')), 'upload')
+
 const grade = r => require.ensure([], () => r(require('@/views/grade/grade')), 'grade')
 
 const progress = r => require.ensure([], () => r(require('@/views/progress/progress')), 'progress')
@@ -42,6 +44,11 @@ export default new Router({
                         {
                             path: '/home/replenish',
                             component: replenish,
+                        },
+                        {
+                            path: '/home/upload/:id',
+                            name:'upload',
+                            component: upload,
                         }
                     ]
                 },
