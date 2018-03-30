@@ -10,6 +10,9 @@
                     <li style="width:20%;">材料操作</li>
                 </ul>
             </div>
+            <div class="table_body">
+                <div class="row"></div>
+            </div>
         </div>
     </div>
 </template>
@@ -68,28 +71,11 @@
         align-items: center;
         color: #fff;
     }
-    .row{
-        height:30px;
-        border:1px solid red;
-    }
     .table_header ul li {
         text-align: center;
     }
     .table_body {
         width: 100%;
-    }
-    .table_body .row .cell_1 {
-        height: auto;
-        float: left;
-    }
-    .table_body .row:nth-child(odd) .cell_1 {
-        background: #b9f1b9;
-    }
-    .table_body .row:nth-child(even) .cell_1 {
-        background: #bfd5ef;
-    }
-    .cell{
-        float: left;
     }
 </style>
 
