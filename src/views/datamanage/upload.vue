@@ -17,7 +17,7 @@
                         <li>{{item.num}}</li>
                         <li>{{item.remark}}</li>
                         <li>{{item.created_at}}</li>
-                        <li>{{item.normal}}</li>
+                        <li>{{item.normal==true?'公开':'保密'}}</li>
                         <li @click="showDel('block',item.id)">删除</li>
                     </ul>
                 </div>
@@ -50,9 +50,9 @@
             <div class="label">
                 <span>文件性质</span>
                 <div>
-                    <input type="radio" id="one" value="one" v-model="picked" :checked="picked=='one'">
+                    <input type="radio" id="one" value="true" v-model="picked" :checked="picked==true">
                     <span>公开</span>
-                    <input type="radio" id="two" value="two" v-model="picked">
+                    <input type="radio" id="two" value="false" v-model="picked">
                     <span>保密</span>
                 </div>
             </div>
@@ -77,11 +77,12 @@
     export default {
         data() {
             return {
+
                 "filename":'',
                 "filenum":"",
                 "remark":"",
                 "fileId":"",
-                "picked":'one',
+                "picked":true,
                 "fileList": []
             }
         },
@@ -126,6 +127,7 @@
                 fileData.append("self_point_relation[title]", this.filename)
                 fileData.append("self_point_relation[num]", this.filenum)
                 fileData.append("self_point_relation[remark]", this.remark)
+                fileData.append("self_point_relation[normal]", this.picked)
                 console.log(fileData)
                 this.$ajax.post(`/api/self_point_relations?self_point_relation[self_point_id]=${id}`).then((res) => {
                     var faye = new fayes.Client(`http://120.55.116.161:9292/api/events`);
