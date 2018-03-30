@@ -13,7 +13,7 @@
                 </ul>
                 <div class="list_body">
                     <ul v-for="(item,index) in fileList" :key="index">
-                        <li>{{item.title}}</li>
+                        <li @click="open(item.file)">{{item.title}}</li>
                         <li>{{item.num}}</li>
                         <li>{{item.remark}}</li>
                         <li>{{item.created_at}}</li>
@@ -154,6 +154,9 @@
                         console.log(err)
                     })
                 })
+            },
+            open(url){
+                window.open(url)
             }
         },
         created() {
