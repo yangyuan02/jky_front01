@@ -10,6 +10,9 @@
                     <li style="width:20%;">材料操作</li>
                 </ul>
             </div>
+            <div class="table_body">
+                <div class="row"></div>
+            </div>
         </div>
     </div>
 </template>

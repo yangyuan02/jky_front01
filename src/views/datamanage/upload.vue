@@ -206,6 +206,9 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+    .upload .list .list_body ul li:last-child{
+        cursor: pointer;
+    }
     .del_dialog {
         width: 288px;
         height: 174px;
