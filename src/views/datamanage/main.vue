@@ -11,7 +11,17 @@
                 </ul>
             </div>
             <div class="table_body">
-                <div class="row"></div>
+                <div class="row clear" v-for="(one_item,one_index) in table" :key="one_index">
+                    <div class="cell_2" v-for="(two_item,two_index) in one_item" :key="two_index">
+                        <div class="cell_2" v-for="(three_item,three_index) in two_item" :key="three_index">
+                            <div class="cell">
+                                <span style="color:#fff;background:red;">  {{three_item.one=='a'?'':three_item.one}} </span>
+                                <span style="color:green">  {{three_item.two=='b'?'':three_item.two}} </span>
+                                <span style="color:black">  {{three_item.three}} </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -76,6 +86,21 @@
     }
     .table_body {
         width: 100%;
+    }
+    .table_body .row{
+        border: 1px solid red;
+    }
+    .table_body .row .cell span{
+        display: inline-block;
+    }
+    .table_body .row .cell span:nth-child(1){
+        width: 20%;
+    }
+    .table_body .row .cell span:nth-child(2){
+        width: 20%;
+    }
+    .table_body .row .cell span:nth-child(3){
+        width: 20%;
     }
 </style>
 
