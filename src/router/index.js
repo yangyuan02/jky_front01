@@ -15,9 +15,6 @@ const upload = r => require.ensure([], () => r(require('@/views/datamanage/uploa
 
 const grade = r => require.ensure([], () => r(require('@/views/grade/grade')), 'grade')
 
-const progress = r => require.ensure([], () => r(require('@/views/progress/progress')), 'progress')
-
-
 Vue.use(Router)
 
 export default new Router({
@@ -55,10 +52,6 @@ export default new Router({
                 {
                     path: '/home/grade',
                     component: grade
-                },
-                {
-                    path: '/home/progress',
-                    component: progress
                 }
             ]
         }

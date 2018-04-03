@@ -1,23 +1,32 @@
 <template>
     <header>
         <div class="systemname">
-            省级监督考评系统
+            省级人民政府教育工作评价系统
         </div>
         <div class="nav">
             <ul>
                 <li @click="goTo('/home/datamanage')" v-bind:class="{ active: 'datamanage'== path||'replenish'== path||'upload'== path}">资料管理</li>
                 <li @click="goTo('/home/grade')" v-bind:class="{ active: 'grade'== path}">评分标准</li>
-                <li @click="goTo('/home/progress')" v-bind:class="{ active: 'progress'== path}">查看进度</li>
             </ul>
         </div>
-        <div class="person_info">
-            <div class="message">
-                <i></i>
-                <a href="">通知</a>
+        <div class="person_bar">
+            <div class="massage">
+                <i class="iconfont">&#xe60e;</i>
+                <span>截止日期:{{person.end_at}}</span>
+                <i class="iconfont">&#xe607;</i>
+                <span>通知</span>
             </div>
-            <div class="message">
-                <i></i>
-                <a href="" @click="logout()">退出</a>
+            <div class="person">
+                <div class="user" @click="toggle()">
+                    <span>{{person.type}}</span>
+                    <i class="iconfont">&#xe656;</i>
+                </div>
+                <div class="sub"  v-bind:class="{ active: isActive }">
+                    <ul>
+                        <li>账户信息</li>
+                        <li @click="logout()">退出登录</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </header>
@@ -27,7 +36,9 @@
     export default {
         data() {
             return {
-                path: ''
+                path: '',
+                isActive:true,
+                person:{}
             }
         },
         methods: {
@@ -35,11 +46,27 @@
                 console.log(url)
                 this.$router.push(url)
             },
+            getPersonInfo(){
+                var person = JSON.parse(window.localStorage.getItem("user"))
+                if(person.type=='ProvinceUser'){
+                    person.type='省用户'
+                }
+                if(person.type=='LeaderUser'){
+                    person.type='专家用户'
+                }
+                if(person.type=='MasterUser'){
+                    person.type='专家组长'
+                }
+                this.person =  person
+            },
             logout() {
-                window.localStorage.removeItem("token")
+                window.localStorage.removeItem("user")
                 this.$router.replace({
                     "path": "/"
                 })
+            },
+            toggle(){
+                this.isActive = !this.isActive
             },
             getPath() {
                 if (this.$route.path.indexOf('upload')!=-1) {
@@ -51,6 +78,7 @@
         },
         created() {
             this.getPath()
+            this.getPersonInfo()
         },
         watch: {
             '$route' (to, from) {
@@ -70,12 +98,13 @@
         align-items: center;
     }
     header .systemname {
-        font-size: 26px;
+        font-size: 20px;
         color: #fff;
         margin-left: 30px;
+        margin-right:100px;
     }
     header .nav {
-        margin-left: 150px;
+        margin-right: 360px;
     }
     header .nav ul {
         display: flex;
@@ -92,15 +121,41 @@
     header .nav ul li.active {
         background: #65d3e3
     }
-    header .person_info {
-        width: 100px;
+    header .person_bar {
+        width: 400px;
         height: 72px;
-        margin-left: 450px;
+        /* margin-left: 410px; */
         display: flex;
         align-items: center;
-    }
-    header .person_info .message a {
         color: #fff;
+    }
+    header .person{
+        width: 116px;
+        height:30px;
+        background:#fff;
+        border-radius: 40px;
+        color: #666;
+        text-align: center;
+        line-height: 30px;
+        position: relative;
+    }
+    header .person .sub{
+        position: absolute;
+        top: 32px;
+        left:9px;
+        width: 100px;
+    }
+    header .person .sub.active{
+        display: none!important;
+    }
+    header .person .sub ul li{
+       width:100%;
+       height:30px;
+       line-height:30px;
+       text-align: center;
+       background: #fff;
+       color: #666;
+       cursor: pointer;
     }
 </style>
 

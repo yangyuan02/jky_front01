@@ -11,6 +11,21 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: 'iconfont';  /* project id 602941 */
+  src: url('//at.alicdn.com/t/font_602941_8521ofujp6nu3di.eot');
+  src: url('//at.alicdn.com/t/font_602941_8521ofujp6nu3di.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_602941_8521ofujp6nu3di.woff') format('woff'),
+  url('//at.alicdn.com/t/font_602941_8521ofujp6nu3di.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_602941_8521ofujp6nu3di.svg#iconfont') format('svg');
+}
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
 .clear:after{display:block;clear:both;content:"";visibility:hidden;height:0}
 .clear{zoom:1}
 html,body,#app{

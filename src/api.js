@@ -13,10 +13,9 @@ api.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     // store.commit('SET_LOADING', true);
     // 如果有token,添加到请求报文 后台会根据该报文返回status
-    var token = window.localStorage.getItem("token")
-    console.log(token)
+    var token = JSON.parse(window.localStorage.getItem("user"))
     if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+        config.headers.Authorization = `Bearer ${token.result.token}`;
     }
 
     return config;
