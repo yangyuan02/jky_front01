@@ -2,31 +2,31 @@
     <div class="uoload_con">
         <nav>
             <div class="target">
-                <div class="target_title">60</div>
+                <div class="target_title" v-text="titleIndex"></div>
                 <div class="target_con" v-text="fileList.point">
                 </div>
             </div>
             <div class="target">
-                <div class="target_title">A</div>
+                <div class="target_title blue">A</div>
                 <div class="target_con" v-text="fileList.a">
                     1.全面贯彻党的教育方针的具体部署安排和措施落实情况
                 </div>
             </div>
             <div class="target">
-                <div class="target_title">B</div>
+                <div class="target_title blue">B</div>
                 <div class="target_con" v-text="fileList.b">
                     1.全面贯彻党的教育方针的具体部署安排和措施落实情况
                 </div>
             </div>
             <div class="target">
-                <div class="target_title">C</div>
+                <div class="target_title blue">C</div>
                 <div class="target_con" v-text="fileList.c">
                     1.全面贯彻党的教育方针的具体部署安排和措施落实情况
                 </div>
             </div>
         </nav>
         <div class="right_con">
-            <p><span @click="goTo('datamanage')">资料管理</span>><span>资料上传</span></p>
+            <p><i></i><span @click="goTo('datamanage')" style="cursor: pointer;">资料管理</span>><span>资料上传</span></p>
             <div class="review">
                 <div class="review_grade">
                     <span>评价等级</span>
@@ -96,13 +96,13 @@
                 <div class="label">
                     <span>文件性质</span>
                     <div>
-                        <input type="radio" id="one" value="true" v-model="picked" :checked="picked==true">
+                        <input type="radio" id="one" value="one" v-model="picked" :checked="picked=='one'">
                         <span>公开</span>
-                        <input type="radio" id="two" value="false" v-model="picked">
+                        <input type="radio" id="two" value="two" v-model="picked">
                         <span>保密</span>
                     </div>
                 </div>
-                <div class="label access">
+                <div class="label access" v-show="picked=='one'">
                     <span>附件</span>
                     <div class="accessory">
                         <span>请选择文件上传</span>
@@ -129,9 +129,10 @@
                 "filenum": "",
                 "remark": "",
                 "fileId": "",
-                "picked": true,
+                "picked": 'one',
                 "fileList": {},
-                "review": {}
+                "review": {},
+                "titleIndex":''
             }
         },
         components: {
@@ -143,26 +144,28 @@
                     this.fileList = res.data
                     this.review.self_point = res.data.self_point
                     this.review.user_remark = res.data.user_remark
+                    this.titleIndex = this.fileList.point.substring(0,this.fileList.point.indexOf('.'))
                 }, (err) => {
                     console.log(err)
                 })
             },
-            goTo(url){
-                this.$router.push(url)
+            goTo(){
+                this.$router.push('/home/datamanage')
             },
             toggleUpload(type) {
                 var upload = document.getElementById("up_dialog")
                 upload.style.display = type
+                if (type == 'block') {
+                    this.filename = ''
+                    this.filenum = ''
+                    this.remark = ''
+                    document.getElementById("file").value = ''
+                }
             },
             showDel(type, id) {
                 var upload = document.getElementById("del_dialog")
                 upload.style.display = type
                 this.fileId = id
-                if (type == 'block') {
-                    this.filename = ''
-                    this.filenum = ''
-                    this.remark = ''
-                }
             },
             del() { //删除附件
                 this.$ajax.delete(`/api/self_point_relations/${this.fileId}`, {}).then((res) => {
@@ -175,16 +178,19 @@
                 })
             },
             upload(id) {
+                if(this.filename==''){
+                    alert("文件名为必填项")
+                    return
+                }
                 var id = this.$route.params.id
                 var fileData = new FormData()
-                console.log(this.picked)
+                this.picked = this.picked == 'one'?true:false
                 var file = document.getElementById("file").files[0]
                 fileData.append("self_point_relation[file]", file)
                 fileData.append("self_point_relation[title]", this.filename)
                 fileData.append("self_point_relation[num]", this.filenum)
                 fileData.append("self_point_relation[remark]", this.remark)
                 fileData.append("self_point_relation[normal]", this.picked)
-                console.log(fileData)
                 this.$ajax.post(`/api/self_point_relations?self_point_relation[self_point_id]=${id}`).then((res) => {
                     var faye = new fayes.Client(`http://120.55.116.161:9292/api/events`);
                     faye.subscribe(`/api/self_point_relations/${res.data.id}`, (status) => {
@@ -212,6 +218,10 @@
                 })
             },
             open(url) {
+                if(url==null){
+                    alert("该文件为保密文件")
+                    return
+                }
                 window.open(url)
             },
             save() {
@@ -258,6 +268,12 @@
     textarea {
         resize: none;
     }
+    .review{
+        margin-top: 20px;
+    }
+    .review .review_grade{
+        margin-bottom: 10px;
+    }
     .review_text p {
         position: absolute;
         right: 0;
@@ -268,7 +284,8 @@
         text-decoration: underline;
     }
     nav {
-        height: 670px;
+        height: auto;
+        min-height: 670px;
         width: 244px;
         background: #fff;
         margin: 0px 16px;
@@ -279,20 +296,32 @@
     }
     nav .target {
         width: 100%;
-        height: 200px;
+        height: auto;
         border-radius: 4px;
         box-shadow: 1px 1px 8px #ccc;
         background: #fff;
     }
+    nav .target:first-child .target_con{
+        color: #666;
+    }
+    nav .target:not(:first-child){
+         margin-top: 6px;
+    }
     nav .target .target_title {
         background: #f7a31c;
+        color: #fff;
         padding: 0px 10px;
         height: 20px;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
     }
+    nav .target .target_title.blue{
+
+        background: #3485ee !important
+    }
     nav .target .target_con {
         padding: 0px 10px;
+        color: #999;
     }
     .uoload_con {
         display: flex;
@@ -363,6 +392,12 @@
         height: 174px;
         box-shadow: 1px 1px 8px #ccc;
         display: none;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 10;
+        transform: translate(-50%,-50%);
+        background: #fff;
     }
     .del_dialog .title {
         background: #fcce3b;
@@ -399,11 +434,17 @@
     }
     .upload_dialog {
         width: 340px;
-        height: 406px;
+        height: auto;
         display: none;
         border: 2px solid #53a6f6;
         border-radius: 4px;
         box-shadow: 1px 1px 8px #ccc;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 10;
+        transform: translate(-50%,-50%);
+        background: #fff;
     }
     .upload_dialog .label {
         display: flex;
@@ -442,6 +483,14 @@
         opacity: 0;
         cursor: pointer
     }
+    .right_con p i{
+        display: inline-block;
+        width:10px;
+        height:14px;
+        background: url("../../assets/crumbs_bg.png") no-repeat;
+        margin-right: 8px;
+    }
+
 </style>
 
 
