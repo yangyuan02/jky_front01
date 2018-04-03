@@ -2,6 +2,52 @@
 
 > A Vue.js project
 
+#jky
+nginx部署
+server {
+    listen       3001;
+    server_name  localhost;
+
+    #charset koi8-r;
+
+    #access_log  logs/host.access.log  main;
+
+    root /work/jky_front/dist;
+
+     location ~ .*\.(gif|jpg|jpeg|png)$ {
+      root /work/jky_front/dist;
+       if ($request_uri   ~ .*uploads* ) {
+         proxy_pass http://120.55.116.161:1234;
+        }
+      if (-f $request_filename) {
+        expires 1d;
+        break;
+      }
+    }
+
+    location ~ .*\.(js|css)$ {
+     root /work/jky_front/dist;
+     if (-f $request_filename) {
+        expires 1d;
+        break;
+      }
+    }
+   location / {
+      rewrite ^~.*/?(.*)$ /$1;
+      try_files $uri $uri/ /index.html;
+   }
+
+     location ~ ^/(api|download|template)/ {
+
+      #rewrite ^~api/?(.*)$ /$1 break;
+
+      proxy_pass http://120.55.116.161:1234;
+   }
+
+}
+
+
+
 ## Build Setup
 
 ``` bash
