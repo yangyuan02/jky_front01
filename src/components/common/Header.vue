@@ -1,6 +1,6 @@
 <template>
     <header>
-        <div class="systemname">
+        <div class="systemname" @click="goTo('/home/datamanage')">
             省级人民政府教育工作评价系统
         </div>
         <div class="nav">
@@ -102,6 +102,7 @@
         color: #fff;
         margin-left: 30px;
         margin-right:100px;
+        cursor: pointer;
     }
     header .nav {
         margin-right: 360px;
