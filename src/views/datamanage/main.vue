@@ -28,7 +28,9 @@
                     <td :rowspan="item.one_row" v-bind:class="{ show: item.show_one=='false'}" style="width:17.02%;">{{item.one}}</td>
                     <td :rowspan="item.two_row" v-bind:class="{ show: item.show_two=='false'}" style="width:19.312%;">{{item.two}}</td>
                     <td style="width:20.949%;">{{item.three}}</td>
-                    <td style="width:12.2749%;">状态</td>
+                    <td style="width:12.2749%;text-align:center;">
+                        <i class="iconfont">{{item.status==1?'&#xe610;':'&#xe60f;'}}</i>
+                    </td>
                     <td style="width:12.2749%;text-align: center;">{{item.self_point}}</td>
                     <td style="width:18.739%;">
                         <a href="javascript:;" @click="goDatail(item.id)">上传</a>
