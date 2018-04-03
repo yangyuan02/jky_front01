@@ -1,6 +1,18 @@
 <template>
     <div>
         <div class="data">
+            <div class="data_header">
+                <div class="crumbs">
+                    <p>
+                        <i></i>
+                        <span>材料管理</span>
+                    </p>
+                </div>
+                <div class="data_satus">
+                    <a href="javascrip:;">已完成60</a>
+                    <a href="javascrip:;">未完成32</a>
+                </div>
+            </div>
             <div class="table_header">
                 <ul>
                     <li style="width:20%;">评价内容</li>
@@ -10,35 +22,6 @@
                     <li style="width:20%;">材料操作</li>
                 </ul>
             </div>
-            <!-- <table border="1" cellspacing="0" width="50%" height="150">
-                <tr>
-                    <td rowspan="2">601班</td>
-                    <td>Jack</td>
-                    <td>24</td>
-                    <td>1351234567</td>
-                </tr>
-                <tr>
-                    <td>Tom</td>
-                    <td>22</td>
-                    <td>1351234567</td>
-                </tr>
-                <tr>
-                    <td rowspan="3">602班</td>
-                    <td>Rose</td>
-                    <td>22</td>
-                    <td>1351234567</td>
-                </tr>
-                <tr>
-                    <td>张三</td>
-                    <td>25</td>
-                    <td>1351234567</td>
-                </tr>
-                <tr>
-                    <td>李四</td>
-                    <td>25</td>
-                    <td>1351234567</td>
-                </tr>
-            </table> -->
             <table border="1" cellspacing="0">
                 <tr v-for="(item,index) in table" :key="index">
                     <td :rowspan="item.one_row" v-bind:class="{ show: item.show_one=='false'}">{{item.one}}</td>
@@ -64,9 +47,7 @@
         methods: {
             getData() {
                 this.$ajax.get('/api/role_points', {}).then((res) => {
-                    // this.combineCell(res.data)
                     this.table = res.data
-                    // console.log(JSON.stringify(this.table))
                 }, (err) => {
                     console.log(err)
                 })
@@ -78,13 +59,6 @@
                         id: id
                     }
                 })
-            },
-            combineCell(list){
-                for(var field in list){
-                    console.log(list[field])
-                    var k = 0;
-                    if(list[field]){}
-                }
             }
         },
         mounted() {
@@ -98,9 +72,9 @@
         display:none;
     }
     .data {
-        width: 1053px;
-        margin-top: 36px;
-        margin-left: 40px;
+       background:#fff;
+       margin: 0px 15px;
+       box-shadow: 1px 1px 8px #ccc;
     }
     .table_header ul {
         display: flex;
@@ -134,6 +108,33 @@
         width: 1053px;
         border: 1px solid red;
         margin-top: 10px;
+    }
+    .data_header{
+        display: flex;
+        height:38px;
+        align-items: center;
+        justify-content: space-between;
+        padding-left:20px;
+    }
+    .data_header .data_satus a{
+        display: inline-block;
+        text-align: center;
+        line-height:38px;
+        width: 108px;
+        height: 38px;
+        color: #fff;
+    }
+    .data_header .data_satus a:nth-child(1){
+        background: #1f6ed4
+    }
+    .data_header .data_satus a:nth-child(2){
+        background: #65d3e3
+    }
+    .data_header .crumbs i{
+        display: inline-block;
+        width:10px;
+        height:14px;
+        background: url("../../assets/crumbs_bg.png") no-repeat;
     }
 </style>
 

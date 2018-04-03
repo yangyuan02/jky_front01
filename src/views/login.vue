@@ -25,8 +25,8 @@ export default {
     methods:{
         login(){
             this.$ajax.post("/api/login/login_password",{"username":this.unsename,"password":this.password}).then((res)=>{
-                if(res.data.token){
-                    window.localStorage.setItem("token",res.data.token)
+                if(res.data.result.token){
+                    window.localStorage.setItem("token",res.data.result.token)
                     this.$router.push('./home/datamanage')
                 }
             },(err)=>{

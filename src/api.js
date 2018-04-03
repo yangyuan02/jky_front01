@@ -14,6 +14,7 @@ api.interceptors.request.use(function (config) {
     // store.commit('SET_LOADING', true);
     // 如果有token,添加到请求报文 后台会根据该报文返回status
     var token = window.localStorage.getItem("token")
+    console.log(token)
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
