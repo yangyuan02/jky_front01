@@ -106,7 +106,7 @@
                     <span>附件</span>
                     <div class="accessory">
                         <span>请选择文件上传</span>
-                        <input type="file" name="" id="file">
+                        <input type="file" name="" id="file"  accept=".pdf">
                     </div>
                 </div>
                 <div class="btns">
