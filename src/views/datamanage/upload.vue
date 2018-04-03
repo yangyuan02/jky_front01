@@ -26,7 +26,7 @@
             </div>
         </nav>
         <div class="right_con">
-            <Breadcrumb></Breadcrumb>
+            <p><span @click="goTo('datamanage')">资料管理</span>><span>资料上传</span></p>
             <div class="review">
                 <div class="review_grade">
                     <span>评价等级</span>
@@ -121,7 +121,7 @@
 <script>
     import fayes from 'faye'
     // import asideNav from "./asidenav";
-    import Breadcrumb from '@/components/common/breadcrumb'
+    // import Breadcrumb from '@/components/common/breadcrumb'
     export default {
         data() {
             return {
@@ -135,7 +135,7 @@
             }
         },
         components: {
-            Breadcrumb
+            // Breadcrumb
         },
         methods: {
             getDetail() { //获取附件列表
@@ -146,6 +146,9 @@
                 }, (err) => {
                     console.log(err)
                 })
+            },
+            goTo(url){
+                this.$router.push(url)
             },
             toggleUpload(type) {
                 var upload = document.getElementById("up_dialog")
@@ -212,15 +215,23 @@
                 window.open(url)
             },
             save() {
-                console.log(this.review.self_point)
-                if (this.review.self_point == undefined && this.review.user_remark == '' && this.review.user_remark == null && this.review.user_remark == undefined) {
-                    alert('请填写完整的评价')
+                if(this.review.self_point == null){
+                    alert("请选择评价等级")
+                    return
+                }
+                console.log(this.review.user_remark)
+                if(this.review.user_remark == null){
+                    alert("请写评价详情")
+                    return
+                }
+                if(this.review.user_remark.length>500){
+                    alert("最多500字")
                     return
                 }
                 this.review.point_id = this.$route.params.id
                 this.$ajax.post("/api/role_points/save_point", this.review)
                     .then((res) => {
-                        console.log(res)
+                        alert("感谢您的评价")
                     }, (err) => {})
             }
         },
@@ -233,7 +244,7 @@
 <style>
     .review_text {
         position: relative;
-        width: 1000px;
+        width: 652px;
     }
     .review_text textarea {
         width: 100%;
@@ -264,6 +275,7 @@
         padding: 0px 15px;
         box-shadow: 1px 1px 8px #ccc;
         box-sizing: border-box;
+        padding-top:14px;
     }
     nav .target {
         width: 100%;
@@ -286,7 +298,8 @@
         display: flex;
     }
     .right_con {
-        padding-top: 36px;
+        width: 80%;
+        padding-top: 14px;
         padding-left: 40px;
         background: #fff;
         box-shadow: 1px 1px 8px #ccc;
@@ -328,6 +341,12 @@
     }
     .upload .list .list_body ul:nth-child(odd) {
         background: #dcdcdc;
+    }
+    .upload .list .list_body ul li:nth-child(1){
+        cursor: pointer;
+    }
+    .upload .list .list_body ul li:nth-child(1):hover{
+        color: #4fa4f4;
     }
     .upload .list .list_body ul li {
         width: 16.6%;

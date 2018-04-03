@@ -4,7 +4,7 @@ import router from './router'
 
 const api = axios.create();
 
-api.defaults.timeout = 5000;
+// api.defaults.timeout = 5000;
 api.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 api.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
