@@ -10,19 +10,46 @@
                     <li style="width:20%;">材料操作</li>
                 </ul>
             </div>
-            <div class="table_body">
-                <div class="row clear" v-for="(one_item,one_index) in table" :key="one_index">
-                    <div class="cell_2" v-for="(two_item,two_index) in one_item" :key="two_index">
-                        <div class="cell_2" v-for="(three_item,three_index) in two_item" :key="three_index">
-                            <div class="cell">
-                                <span style="color:#fff;background:red;">  {{three_item.one=='a'?'':three_item.one}} </span>
-                                <span style="color:green">  {{three_item.two=='b'?'':three_item.two}} </span>
-                                <span style="color:black">  {{three_item.three}} </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- <table border="1" cellspacing="0" width="50%" height="150">
+                <tr>
+                    <td rowspan="2">601班</td>
+                    <td>Jack</td>
+                    <td>24</td>
+                    <td>1351234567</td>
+                </tr>
+                <tr>
+                    <td>Tom</td>
+                    <td>22</td>
+                    <td>1351234567</td>
+                </tr>
+                <tr>
+                    <td rowspan="3">602班</td>
+                    <td>Rose</td>
+                    <td>22</td>
+                    <td>1351234567</td>
+                </tr>
+                <tr>
+                    <td>张三</td>
+                    <td>25</td>
+                    <td>1351234567</td>
+                </tr>
+                <tr>
+                    <td>李四</td>
+                    <td>25</td>
+                    <td>1351234567</td>
+                </tr>
+            </table> -->
+            <table border="1" cellspacing="0">
+                <tr v-for="(item,index) in table" :key="index">
+                    <td :rowspan="item.one_row" v-bind:class="{ show: item.show_one=='false'}">{{item.one}}</td>
+                    <td :rowspan="item.two_row" v-bind:class="{ show: item.show_two=='false'}">{{item.two}}</td>
+                    <td>{{item.three}}</td>
+                    <td>状态</td>
+                    <td>{{item.self_point}}</td>
+                    <td @click="goDatail(item.id)">上传</td>
+                    <td @click="goDatail(item.id)">补传</td>
+                </tr>
+            </table>
         </div>
     </div>
 </template>
@@ -37,18 +64,9 @@
         methods: {
             getData() {
                 this.$ajax.get('/api/role_points', {}).then((res) => {
+                    // this.combineCell(res.data)
                     this.table = res.data
-                    // console.log(this.table)
-                }, (err) => {
-                    console.log(err)
-                })
-            },
-            grade(level, point_id) { //评分
-                this.$ajax.post('/api/role_points/save_point', {
-                    "point_id": point_id,
-                    "self_point": level
-                }).then((res) => {
-                    console.log(res.data)
+                    // console.log(JSON.stringify(this.table))
                 }, (err) => {
                     console.log(err)
                 })
@@ -60,15 +78,25 @@
                         id: id
                     }
                 })
+            },
+            combineCell(list){
+                for(var field in list){
+                    console.log(list[field])
+                    var k = 0;
+                    if(list[field]){}
+                }
             }
         },
-        created() {
+        mounted() {
             this.getData()
         }
     }
 </script>
 
 <style>
+    .show{
+        display:none;
+    }
     .data {
         width: 1053px;
         margin-top: 36px;
@@ -87,20 +115,25 @@
     .table_body {
         width: 100%;
     }
-    .table_body .row{
+    .table_body .row {
         border: 1px solid red;
     }
-    .table_body .row .cell span{
+    .table_body .row .cell span {
         display: inline-block;
     }
-    .table_body .row .cell span:nth-child(1){
+    .table_body .row .cell span:nth-child(1) {
         width: 20%;
     }
-    .table_body .row .cell span:nth-child(2){
+    .table_body .row .cell span:nth-child(2) {
         width: 20%;
     }
-    .table_body .row .cell span:nth-child(3){
+    .table_body .row .cell span:nth-child(3) {
         width: 20%;
+    }
+    table {
+        width: 1053px;
+        border: 1px solid red;
+        margin-top: 10px;
     }
 </style>
 

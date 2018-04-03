@@ -1,6 +1,5 @@
 <template>
     <div class="box">
-        <asideNav></asideNav>
         <main>
             <transition name="move" mode="out-in">
                 <router-view></router-view>
@@ -10,10 +9,10 @@
 </template>
 
 <script>
-    import asideNav from "./asidenav";
+    // import asideNav from "./asidenav";
     export default {
         components: {
-            asideNav
+            // asideNav
         }
     }
 </script>
@@ -21,12 +20,13 @@
 <style>
 .box{
     display: flex;
+    width:100%;
 }
 main {
-        width: 1136px;
+        width: 100%;
         height: auto;
-        background: #fff;
-        box-shadow: 1px 1px 8px #ccc;
+        /* background: #fff; */
+        /* box-shadow: 1px 1px 8px #ccc; */
     }
 </style>
 

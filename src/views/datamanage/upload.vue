@@ -1,71 +1,118 @@
 <template>
-    <div style="margin-top:36px;margin-left:40px;">
-        <div class="uploadt_btn" @click="toggleUpload('block')">添加 </div>
-        <div class="upload">
-            <div class="list">
-                <ul class="head">
-                    <li>文件名</li>
-                    <li>文件号</li>
-                    <li>备注</li>
-                    <li>上传时间</li>
-                    <li>状态</li>
-                    <li></li>
-                </ul>
-                <div class="list_body">
-                    <ul v-for="(item,index) in fileList" :key="index">
-                        <li @click="open(item.file)">{{item.title}}</li>
-                        <li>{{item.num}}</li>
-                        <li>{{item.remark}}</li>
-                        <li>{{item.created_at}}</li>
-                        <li>{{item.normal==true?'公开':'保密'}}</li>
-                        <li @click="showDel('block',item.id)">删除</li>
+    <div class="uoload_con">
+        <nav>
+            <div class="target">
+                <div class="target_title">60</div>
+                <div class="target_con" v-text="fileList.point">
+                </div>
+            </div>
+            <div class="target">
+                <div class="target_title">A</div>
+                <div class="target_con" v-text="fileList.a">
+                    1.全面贯彻党的教育方针的具体部署安排和措施落实情况
+                </div>
+            </div>
+            <div class="target">
+                <div class="target_title">B</div>
+                <div class="target_con" v-text="fileList.b">
+                    1.全面贯彻党的教育方针的具体部署安排和措施落实情况
+                </div>
+            </div>
+            <div class="target">
+                <div class="target_title">C</div>
+                <div class="target_con" v-text="fileList.c">
+                    1.全面贯彻党的教育方针的具体部署安排和措施落实情况
+                </div>
+            </div>
+        </nav>
+        <div class="right_con">
+            <Breadcrumb></Breadcrumb>
+            <div class="review">
+                <div class="review_grade">
+                    <span>评价等级</span>
+                    <input type="radio" id="A" value="A" name="self_point" v-model="review.self_point">
+                    <span>A</span>
+                    <input type="radio" id="B" value="B" name="self_point" v-model="review.self_point">
+                    <span>B</span>
+                    <input type="radio" id="C" value="C" name="self_point" v-model="review.self_point">
+                    <span>C</span>
+                </div>
+                <div class="review_text">
+                    <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model="review.user_remark">
+                                </textarea>
+                    <p>
+                        <span>字数限制：500</span>
+                        <a href="javascript:;" @click="save()">保存</a>
+                    </p>
+                </div>
+            </div>
+            <div class="uploadt_btn" @click="toggleUpload('block')">添加 </div>
+            <div class="upload">
+                <div class="list">
+                    <ul class="head">
+                        <li>文件名</li>
+                        <li>文件号</li>
+                        <li>文件性质</li>
+                        <li>上传时间</li>
+                        <li>备注</li>
+                        <li></li>
                     </ul>
+                    <div class="list_body">
+                        <ul v-for="(item,index) in fileList.data" :key="index">
+                            <li @click="open(item.file)">{{item.title}}</li>
+                            <li>{{item.num}}</li>
+                            <li>{{item.normal==true?'公开':'保密'}}</li>
+                            <li>{{item.created_at}}</li>
+                            <li>{{item.remark}}</li>
+                            <li @click="showDel('block',item.id)">删除</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- 删除对话框 -->
-        <div class="del_dialog" id="del_dialog">
-            <div class="title">提醒</div>
-            <div class="msg">您确认要删除吗？</div>
-            <div class="btns">
-                <a href="javascript:;" @click="del()">确认</a>
-                <a href="javascript:;" @click="showDel('none',-1)">取消</a>
-            </div>
-        </div>
-        <!-- 上传附件弹窗 -->
-        <div class="upload_dialog" id="up_dialog">
-            <div class="close"></div>
-            <div class="label">
-                <span>文件名</span>
-                <input type="text" v-model="filename">
-            </div>
-            <div class="label">
-                <span>文件号</span>
-                <input type="text" v-model="filenum">
-            </div>
-            <div class="label">
-                <span>备注</span>
-                <input type="text" v-model="remark">
-            </div>
-            <div class="label">
-                <span>文件性质</span>
-                <div>
-                    <input type="radio" id="one" value="true" v-model="picked" :checked="picked==true">
-                    <span>公开</span>
-                    <input type="radio" id="two" value="false" v-model="picked">
-                    <span>保密</span>
+            <!-- 删除对话框 -->
+            <div class="del_dialog" id="del_dialog">
+                <div class="title">提醒</div>
+                <div class="msg">您确认要删除吗？</div>
+                <div class="btns">
+                    <a href="javascript:;" @click="del()">确认</a>
+                    <a href="javascript:;" @click="showDel('none',-1)">取消</a>
                 </div>
             </div>
-            <div class="label access">
-                <span>附件</span>
-                <div class="accessory">
-                    <span>请选择文件上传</span>
-                    <input type="file" name="" id="file">
+            <!-- 上传附件弹窗 -->
+            <div class="upload_dialog" id="up_dialog">
+                <div class="close"></div>
+                <div class="label">
+                    <span>文件名</span>
+                    <input type="text" v-model="filename">
                 </div>
-            </div>
-            <div class="btns">
-                <a href="javascript:;" @click="upload()">保存</a>
-                <a href="javascript:;" @click="toggleUpload('none')">取消</a>
+                <div class="label">
+                    <span>文件号</span>
+                    <input type="text" v-model="filenum">
+                </div>
+                <div class="label">
+                    <span>备注</span>
+                    <input type="text" v-model="remark">
+                </div>
+                <div class="label">
+                    <span>文件性质</span>
+                    <div>
+                        <input type="radio" id="one" value="true" v-model="picked" :checked="picked==true">
+                        <span>公开</span>
+                        <input type="radio" id="two" value="false" v-model="picked">
+                        <span>保密</span>
+                    </div>
+                </div>
+                <div class="label access">
+                    <span>附件</span>
+                    <div class="accessory">
+                        <span>请选择文件上传</span>
+                        <input type="file" name="" id="file">
+                    </div>
+                </div>
+                <div class="btns">
+                    <a href="javascript:;" @click="upload()">保存</a>
+                    <a href="javascript:;" @click="toggleUpload('none')">取消</a>
+                </div>
             </div>
         </div>
     </div>
@@ -73,23 +120,29 @@
 
 <script>
     import fayes from 'faye'
+    // import asideNav from "./asidenav";
     import Breadcrumb from '@/components/common/breadcrumb'
     export default {
         data() {
             return {
-
-                "filename":'',
-                "filenum":"",
-                "remark":"",
-                "fileId":"",
-                "picked":true,
-                "fileList": []
+                "filename": '',
+                "filenum": "",
+                "remark": "",
+                "fileId": "",
+                "picked": true,
+                "fileList": {},
+                "review": {}
             }
+        },
+        components: {
+            Breadcrumb
         },
         methods: {
             getDetail() { //获取附件列表
                 this.$ajax.get(`/api/self_point_relations/${this.$route.params.id}`, {}).then((res) => {
                     this.fileList = res.data
+                    this.review.self_point = res.data.self_point
+                    this.review.user_remark = res.data.user_remark
                 }, (err) => {
                     console.log(err)
                 })
@@ -98,22 +151,22 @@
                 var upload = document.getElementById("up_dialog")
                 upload.style.display = type
             },
-            showDel(type,id) {
+            showDel(type, id) {
                 var upload = document.getElementById("del_dialog")
                 upload.style.display = type
                 this.fileId = id
-                if(type=='block'){
-                    this.filename=''
-                    this.filenum=''
-                    this.remark=''
+                if (type == 'block') {
+                    this.filename = ''
+                    this.filenum = ''
+                    this.remark = ''
                 }
             },
             del() { //删除附件
                 this.$ajax.delete(`/api/self_point_relations/${this.fileId}`, {}).then((res) => {
-                  if(res.data){
-                      this.getDetail()
-                      this.showDel('none',-1)
-                  }
+                    if (res.data) {
+                        this.getDetail()
+                        this.showDel('none', -1)
+                    }
                 }, (err) => {
                     console.log(err)
                 })
@@ -131,7 +184,7 @@
                 console.log(fileData)
                 this.$ajax.post(`/api/self_point_relations?self_point_relation[self_point_id]=${id}`).then((res) => {
                     var faye = new fayes.Client(`http://120.55.116.161:9292/api/events`);
-                    faye.subscribe(`/api/self_point_relations/${res.data.id}`, (status)=> {
+                    faye.subscribe(`/api/self_point_relations/${res.data.id}`, (status) => {
                         console.log(status)
                         if (status.message == "done") {
                             this.getDetail()
@@ -155,8 +208,20 @@
                     })
                 })
             },
-            open(url){
+            open(url) {
                 window.open(url)
+            },
+            save() {
+                console.log(this.review.self_point)
+                if (this.review.self_point == undefined && this.review.user_remark == '' && this.review.user_remark == null && this.review.user_remark == undefined) {
+                    alert('请填写完整的评价')
+                    return
+                }
+                this.review.point_id = this.$route.params.id
+                this.$ajax.post("/api/role_points/save_point", this.review)
+                    .then((res) => {
+                        console.log(res)
+                    }, (err) => {})
             }
         },
         created() {
@@ -166,6 +231,66 @@
 </script>
 
 <style>
+    .review_text {
+        position: relative;
+        width: 1000px;
+    }
+    .review_text textarea {
+        width: 100%;
+    }
+    input,
+    button,
+    select,
+    textarea {
+        outline: none;
+    }
+    textarea {
+        resize: none;
+    }
+    .review_text p {
+        position: absolute;
+        right: 0;
+        bottom: 10px;
+    }
+    .review_text p a {
+        color: #4fa4f4;
+        text-decoration: underline;
+    }
+    nav {
+        height: 670px;
+        width: 244px;
+        background: #fff;
+        margin: 0px 16px;
+        padding: 0px 15px;
+        box-shadow: 1px 1px 8px #ccc;
+        box-sizing: border-box;
+    }
+    nav .target {
+        width: 100%;
+        height: 200px;
+        border-radius: 4px;
+        box-shadow: 1px 1px 8px #ccc;
+        background: #fff;
+    }
+    nav .target .target_title {
+        background: #f7a31c;
+        padding: 0px 10px;
+        height: 20px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+    nav .target .target_con {
+        padding: 0px 10px;
+    }
+    .uoload_con {
+        display: flex;
+    }
+    .right_con {
+        padding-top: 36px;
+        padding-left: 40px;
+        background: #fff;
+        box-shadow: 1px 1px 8px #ccc;
+    }
     .uploadt_btn {
         width: 80px;
         height: 30px;
@@ -211,7 +336,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .upload .list .list_body ul li:last-child{
+    .upload .list .list_body ul li:last-child {
         cursor: pointer;
     }
     .del_dialog {
