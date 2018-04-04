@@ -345,7 +345,7 @@
         background: #3485ee !important
     }
     nav .target .target_con {
-        padding: 0px 10px;
+        padding: 5px 10px;
         color: #999;
     }
     .uoload_con {
