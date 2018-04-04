@@ -1,8 +1,8 @@
 <template>
     <div class="uoload_con">
         <nav>
-            <div class="target">
-                <div class="target_title"></div>
+            <div class="target" style="margin-bottom:30px;">
+                <div class="target_title">测评点</div>
                 <div class="target_con" v-text="fileList.point">
                 </div>
             </div>
@@ -330,7 +330,7 @@
         color: #666;
     }
     nav .target:not(:first-child){
-         margin-top: 6px;
+         margin-top: 10px;
     }
     nav .target .target_title {
         background: #f7a31c;
