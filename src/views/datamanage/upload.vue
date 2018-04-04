@@ -162,6 +162,8 @@
                     this.filename = ''
                     this.filenum = ''
                     this.remark = ''
+                    this.isFile = 0,
+                    this._filename = ''
                     document.getElementById("file").value = ''
                 }
             },
