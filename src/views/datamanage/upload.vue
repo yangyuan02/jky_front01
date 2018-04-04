@@ -106,7 +106,7 @@
                     <span>附件</span>
                     <div class="accessory">
                         <i class="iconfont" v-bind:class="{ active: '1'== isFile}">&#xe615;</i>
-                        <span>{{isFile==1?'已选择文件':'请选择文件上传'}}</span>
+                        <span>{{isFile==1?_filename:'请选择文件上传'}}</span>
                         <input type="file" name="" id="file"  accept=".pdf" @change="changeFile()">
                     </div>
                 </div>
@@ -134,7 +134,8 @@
                 "fileList": {},
                 "review": {},
                 "titleIndex":'',
-                isFile:0
+                isFile:0,
+                _filename:''
             }
         },
         components: {
@@ -228,8 +229,10 @@
             },
             changeFile(){
                 var file = document.getElementById("file").files[0]
+                console.log(file)
                 if(file){
                     this.isFile = 1
+                    this._filename =  file.name
                 }else{
                     this.isFile = 0
                 }
