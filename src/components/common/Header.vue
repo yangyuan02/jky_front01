@@ -13,7 +13,7 @@
             <div class="massage">
                 <i class="iconfont">&#xe60e;</i>
                 <span>截止日期:{{person.end_at}}</span>
-                <i class="iconfont">&#xe607;</i>
+                <i class="iconfont">&#xe614;</i>
                 <span>通知</span>
             </div>
             <div class="person">
@@ -139,6 +139,7 @@
         text-align: center;
         line-height: 30px;
         position: relative;
+        margin-left: 10px;
     }
     header .person .sub{
         position: absolute;

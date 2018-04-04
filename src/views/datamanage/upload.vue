@@ -105,8 +105,9 @@
                 <div class="label access" v-show="picked=='one'">
                     <span>附件</span>
                     <div class="accessory">
-                        <span>请选择文件上传</span>
-                        <input type="file" name="" id="file"  accept=".pdf">
+                        <i class="iconfont" v-bind:class="{ active: '1'== isFile}">&#xe615;</i>
+                        <span>{{isFile==1?'已选择文件':'请选择文件上传'}}</span>
+                        <input type="file" name="" id="file"  accept=".pdf" @change="changeFile()">
                     </div>
                 </div>
                 <div class="btns">
@@ -132,7 +133,8 @@
                 "picked": 'one',
                 "fileList": {},
                 "review": {},
-                "titleIndex":''
+                "titleIndex":'',
+                isFile:0
             }
         },
         components: {
@@ -155,7 +157,7 @@
             toggleUpload(type) {
                 var upload = document.getElementById("up_dialog")
                 upload.style.display = type
-                if (type == 'block') {
+                if (type == 'none') {
                     this.filename = ''
                     this.filenum = ''
                     this.remark = ''
@@ -223,6 +225,15 @@
                     return
                 }
                 window.open(url)
+            },
+            changeFile(){
+                var file = document.getElementById("file").files[0]
+                if(file){
+                    this.isFile = 1
+                }else{
+                    this.isFile = 0
+                }
+                // this.changFile = 0
             },
             save() {
                 if(this.review.self_point == null){
@@ -482,6 +493,23 @@
         top: 0;
         opacity: 0;
         cursor: pointer
+    }
+    .upload_dialog .label .accessory i{
+        position: absolute;
+        left:50%;
+        top: 34%;
+        font-size:34px;
+        transform: translate(-50%,-50%)
+    }
+    .upload_dialog .label .accessory i.active{
+        color: #3485ee;
+    }
+    .upload_dialog .label .accessory span{
+        position: absolute;
+        left:50%;
+        top: 60%;
+        width: 100%;
+        transform: translate(-50%,-50%)
     }
     .right_con p i{
         display: inline-block;

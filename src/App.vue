@@ -13,11 +13,11 @@ export default {
 <style>
 @font-face {
   font-family: 'iconfont';  /* project id 602941 */
-  src: url('//at.alicdn.com/t/font_602941_8521ofujp6nu3di.eot');
-  src: url('//at.alicdn.com/t/font_602941_8521ofujp6nu3di.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_602941_8521ofujp6nu3di.woff') format('woff'),
-  url('//at.alicdn.com/t/font_602941_8521ofujp6nu3di.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_602941_8521ofujp6nu3di.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_602941_nkhcadux6hkf0f6r.eot');
+  src: url('//at.alicdn.com/t/font_602941_nkhcadux6hkf0f6r.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_602941_nkhcadux6hkf0f6r.woff') format('woff'),
+  url('//at.alicdn.com/t/font_602941_nkhcadux6hkf0f6r.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_602941_nkhcadux6hkf0f6r.svg#iconfont') format('svg');
 }
 .iconfont{
     font-family:"iconfont" !important;
