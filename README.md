@@ -2,8 +2,10 @@
 
 > A Vue.js project
 
+# jky_front
 
-pm2
+npm install -g pm2
+
 pm2 start npm -- run dev守护vue-cli项目
 
 #jky
