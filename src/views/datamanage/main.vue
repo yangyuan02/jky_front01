@@ -8,9 +8,18 @@
                         <span>材料管理</span>
                     </p>
                 </div>
-                <div class="data_satus">
-                    <a href="javascrip:;" @click="getData('/api/role_points/finish_point')">已完成{{point_count.finish}}</a>
-                    <a href="javascrip:;" @click="getData('/api/role_points/no_finish_point')">未完成{{point_count.no_finish}}</a>
+                <div class="data_header_right">
+                    <div class="progress_box">
+                        <span>{{point_count.finish}}</span>
+                        <div class="progress">
+                            <div class="progress_bar" :style="{width:progress}"></div>
+                        </div>
+                        <span>{{point_count.finish+point_count.no_finish}}</span>
+                    </div>
+                    <div class="data_satus">
+                        <a href="javascrip:;" @click="getData('/api/role_points/finish_point')">已完成{{point_count.finish}}</a>
+                        <a href="javascrip:;" @click="getData('/api/role_points/no_finish_point')">未完成{{point_count.no_finish}}</a>
+                    </div>
                 </div>
             </div>
             <div class="table_header">
@@ -23,21 +32,23 @@
                     <li style="width:18.739%;">材料操作</li>
                 </ul>
             </div>
-            <table border="1" cellspacing="0">
-                <tr v-for="(item,index) in table" :key="index">
-                    <td :rowspan="item.one_row" v-bind:class="{ show: item.show_one=='false'}" style="width:22%;">{{item.one.replace(/\s/g,"")}}</td>
-                    <td :rowspan="item.two_row" v-bind:class="{ show: item.show_two=='false'}" style="width:25%;">{{item.two.replace(/\s/g,"")}}</td>
-                    <td style="width:20.949%;">{{item.three.replace(/\s/g,"")}}</td>
-                    <td style="width:7%;text-align:center;">
-                        <i class="iconfont">{{item.status==1?'&#xe610;':'&#xe60f;'}}</i>
-                    </td>
-                    <td style="width:7%;text-align: center;">{{item.self_point}}</td>
-                    <td style="width:18.739%;">
-                        <a href="javascript:;" @click="goDatail(item.id)">上传</a>
-                        <a href="javascript:;" @click="goDatail(item.id)">补传</a>
-                    </td>
-                </tr>
-            </table>
+            <div class="table_scroll" style="height:540px;width:1222px;margin:0 auto;overflow:scroll;">
+                <table border="1" cellspacing="0">
+                    <tr v-for="(item,index) in table" :key="index">
+                        <td :rowspan="item.one_row" v-bind:class="{ show: item.show_one=='false'}" style="width:22%;">{{item.one.replace(/\s/g,"")}}</td>
+                        <td :rowspan="item.two_row" v-bind:class="{ show: item.show_two=='false'}" style="width:25%;">{{item.two.replace(/\s/g,"")}}</td>
+                        <td style="width:20.949%;">{{item.three.replace(/\s/g,"")}}</td>
+                        <td style="width:7%;text-align:center;">
+                            <i :class="item.status==1?'status1':'status2'"></i>
+                        </td>
+                        <td style="width:7%;text-align: center;">{{item.self_point}}</td>
+                        <td style="width:18.739%;">
+                            <a href="javascript:;" @click="goDatail(item.id)">上传</a>
+                            <a href="javascript:;" @click="goDatail(item.id)">补传</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </template>
@@ -47,22 +58,23 @@
         data() {
             return {
                 table: [],
-                point_count:{},
-                state:['../../assets/status2.png','../../assets/status1.png']
+                point_count: {},
+                progress: ''
             }
         },
         methods: {
-            getData(url) {//获取数据
+            getData(url) { //获取数据
                 this.$ajax.get(url, {}).then((res) => {
                     this.table = res.data
                 }, (err) => {
                     console.log(err)
                 })
             },
-            getPoint_count(){
-                this.$ajax.get('/api/role_points/point_count',{}).then((res)=>{
-                   this.point_count = res.data
-                },(err)=>{
+            getPoint_count() {
+                this.$ajax.get('/api/role_points/point_count', {}).then((res) => {
+                    this.progress = (res.data.finish / (res.data.finish + res.data.no_finish)) * 100 + '%'
+                    this.point_count = res.data
+                }, (err) => {
                     console.log(err)
                 })
             },
@@ -83,17 +95,17 @@
 </script>
 
 <style>
-    .show{
-        display:none;
+    .show {
+        display: none;
     }
     .data {
-       background:#fff;
-       margin: 0px 15px;
-       box-shadow: 1px 1px 8px #ccc;
+        background: #fff;
+        margin: 0px 15px;
+        box-shadow: 1px 1px 8px #ccc;
     }
-    .table_header{
+    .table_header {
         width: 1222px;
-        margin:0 auto;
+        margin: 0 auto;
     }
     .table_header ul {
         display: flex;
@@ -128,51 +140,84 @@
         border: 1px solid #ccc;
         margin: 0 auto;
     }
-    table tr td:nth-child(6){
+    table tr td:nth-child(6) {
         text-align: center;
     }
-    table tr td{
+    table tr td:nth-child(4) i.status1 {
+        display: inline-block;
+        width: 33px;
+        height: 32px;
+        background: url("../../assets/status1.png")
+    }
+    table tr td:nth-child(4) i.status2 {
+        display: inline-block;
+        width: 33px;
+        height: 32px;
+        background: url("../../assets/status2.png")
+    }
+    table tr td {
         padding: 4px 10px;
     }
-    table tr td:nth-child(6) a{
-        color:#fff;
+    table tr td:nth-child(6) a {
+        color: #fff;
         background: #7acedf;
-        width:70px;
+        width: 70px;
         height: 24px;
         line-height: 24px;
         text-align: center;
         display: inline-block;
         border-radius: 4px;
     }
-    table tr td:nth-child(6) a:last-child{
+    table tr td:nth-child(6) a:last-child {
         background: #ccc;
     }
-    .data_header{
+    .data_header {
         display: flex;
-        height:68px;
+        height: 68px;
         align-items: center;
         justify-content: space-between;
-        padding-left:20px;
+        padding-left: 20px;
         padding-right: 92px;
     }
-    .data_header .data_satus a{
+    .data_header .progress_box {
+        display: flex;
+        color: #61aef8;
+        margin-right: 28px;
+    }
+    .data_header .progress {
+        width: 200px;
+        height: 18px;
+        margin: 0px 8px;
+        background: #e2e0e0;
+        border-radius: 12px;
+    }
+    .data_header .progress .progress_bar {
+        height: 18px;
+        background: #61aef8;
+        border-radius: 12px;
+    }
+    .data_header .data_satus a {
         display: inline-block;
         text-align: center;
-        line-height:38px;
+        line-height: 38px;
         width: 108px;
         height: 38px;
         color: #fff;
     }
-    .data_header .data_satus a:nth-child(1){
+    .data_header .data_satus a:nth-child(1) {
         background: #1f6ed4
     }
-    .data_header .data_satus a:nth-child(2){
+    .data_header .data_satus a:nth-child(2) {
         background: #65d3e3
     }
-    .data_header .crumbs i{
+    .data_header .data_header_right{
+        display: flex;
+        align-items: center;
+    }
+    .data_header .crumbs i {
         display: inline-block;
-        width:10px;
-        height:14px;
+        width: 10px;
+        height: 14px;
         background: url("../../assets/crumbs_bg.png") no-repeat;
     }
 </style>

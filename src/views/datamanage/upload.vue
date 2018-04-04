@@ -42,10 +42,10 @@
                         <span>简述</span>
                     </div>
                     <div class="review_text">
-                        <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model="review.user_remark">
-                                                                        </textarea>
+                        <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model="review.user_remark" @input="descInput" maxlength="500">
+                                                                            </textarea>
                         <p>
-                            <span>字数限制：500</span>
+                            <span>字数限制：{{remnant}}/500</span>
                         </p>
                     </div>
                     <div class="review_btn">
@@ -90,7 +90,7 @@
             </div>
             <div class="label">
                 <span>资料名称</span>
-                <input type="text" v-model="filename">
+                <input type="text" v-model="filename" placeholder="此项为必填">
             </div>
             <div class="label">
                 <span>文件编号</span>
@@ -147,7 +147,8 @@
                 "review": {},
                 "titleIndex": '',
                 isFile: 0,
-                _filename: ''
+                _filename: '',
+                remnant:500
             }
         },
         components: {
@@ -160,6 +161,7 @@
                     this.review.self_point = res.data.self_point
                     this.review.user_remark = res.data.user_remark
                     this.titleIndex = this.fileList.point.substring(0, this.fileList.point.indexOf('.'))
+                    this.descInput()
                 }, (err) => {
                     console.log(err)
                 })
@@ -275,14 +277,13 @@
                     .then((res) => {
                         alert("感谢您的评价")
                     }, (err) => {})
+            },
+            descInput() { 
+                var txtVal = this.review.user_remark.length; 
+                this.remnant = 500 - txtVal; 
             }
         },
-        computed: {
-            // count(){
-            //     return 500-this.review.user_remark.length
-            // }
-        },
-        created() {
+        mounted() {
             this.getDetail()
         }
     }
@@ -522,6 +523,7 @@
         border: 1px solid #ccc;
         margin-left: 10px;
         width: 80%;
+        padding-left: 6px;
     }
     .upload_dialog .label>span {
         width: 28%;
