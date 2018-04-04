@@ -25,9 +25,9 @@
             </div>
             <table border="1" cellspacing="0">
                 <tr v-for="(item,index) in table" :key="index">
-                    <td :rowspan="item.one_row" v-bind:class="{ show: item.show_one=='false'}" style="width:22%;">{{item.one}}</td>
-                    <td :rowspan="item.two_row" v-bind:class="{ show: item.show_two=='false'}" style="width:25%;">{{item.two}}</td>
-                    <td style="width:20.949%;">{{item.three}}</td>
+                    <td :rowspan="item.one_row" v-bind:class="{ show: item.show_one=='false'}" style="width:22%;">{{item.one.replace(/\s/g,"")}}</td>
+                    <td :rowspan="item.two_row" v-bind:class="{ show: item.show_two=='false'}" style="width:25%;">{{item.two.replace(/\s/g,"")}}</td>
+                    <td style="width:20.949%;">{{item.three.replace(/\s/g,"")}}</td>
                     <td style="width:7%;text-align:center;">
                         <i class="iconfont">{{item.status==1?'&#xe610;':'&#xe60f;'}}</i>
                     </td>
