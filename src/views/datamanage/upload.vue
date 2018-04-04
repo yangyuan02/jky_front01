@@ -26,94 +26,106 @@
             </div>
         </nav>
         <div class="right_con">
-            <p><i></i><span @click="goTo('datamanage')" style="cursor: pointer;">资料管理</span>><span>资料上传</span></p>
-            <div class="review">
-                <div class="review_grade">
-                    <span>评价等级</span>
-                    <input type="radio" id="A" value="A" name="self_point" v-model="review.self_point">
-                    <span>A</span>
-                    <input type="radio" id="B" value="B" name="self_point" v-model="review.self_point">
-                    <span>B</span>
-                    <input type="radio" id="C" value="C" name="self_point" v-model="review.self_point">
-                    <span>C</span>
-                </div>
-                <div class="review_text">
-                    <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model="review.user_remark">
-                                </textarea>
-                    <p>
-                        <span>字数限制：500</span>
-                        <a href="javascript:;" @click="save()">保存</a>
-                    </p>
-                </div>
-            </div>
-            <div class="uploadt_btn" @click="toggleUpload('block')">添加 </div>
-            <div class="upload">
-                <div class="list">
-                    <ul class="head">
-                        <li>文件名</li>
-                        <li>文件号</li>
-                        <li>文件性质</li>
-                        <li>上传时间</li>
-                        <li>备注</li>
-                        <li></li>
-                    </ul>
-                    <div class="list_body">
-                        <ul v-for="(item,index) in fileList.data" :key="index">
-                            <li @click="open(item.file,item.normal)">{{item.title}}</li>
-                            <li>{{item.num}}</li>
-                            <li>{{item.normal==true?'公开':'保密'}}</li>
-                            <li>{{item.created_at}}</li>
-                            <li>{{item.remark}}</li>
-                            <li @click="showDel('block',item.id)">删除</li>
-                        </ul>
+            <div class="review_con">
+                <div class="review">
+                    <div class="review_grade">
+                        <span class="title">自评等级</span>
+                        <input type="radio" id="A" value="A" name="self_point" v-model="review.self_point">
+                        <span>A</span>
+                        <input type="radio" id="B" value="B" name="self_point" v-model="review.self_point">
+                        <span>B</span>
+                        <input type="radio" id="C" value="C" name="self_point" v-model="review.self_point">
+                        <span>C</span>
+                    </div>
+                    <div class="review_head">
+                        <i class="iconfont">&#xe609;</i>
+                        <span>简述</span>
+                    </div>
+                    <div class="review_text">
+                        <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model="review.user_remark">
+                                                                        </textarea>
+                        <p>
+                            <span>字数限制：500</span>
+                        </p>
+                    </div>
+                    <div class="review_btn">
+                        <a href="javascrip:;" @click="save()">保存</a>
                     </div>
                 </div>
             </div>
-            <!-- 删除对话框 -->
-            <div class="del_dialog" id="del_dialog">
-                <div class="title">提醒</div>
-                <div class="msg">您确认要删除吗？</div>
-                <div class="btns">
-                    <a href="javascript:;" @click="del()">确认</a>
-                    <a href="javascript:;" @click="showDel('none',-1)">取消</a>
-                </div>
-            </div>
-            <!-- 上传附件弹窗 -->
-            <div class="upload_dialog" id="up_dialog">
-                <div class="close"></div>
-                <div class="label">
-                    <span>文件名</span>
-                    <input type="text" v-model="filename">
-                </div>
-                <div class="label">
-                    <span>文件号</span>
-                    <input type="text" v-model="filenum">
-                </div>
-                <div class="label">
-                    <span>备注</span>
-                    <input type="text" v-model="remark">
-                </div>
-                <div class="label">
-                    <span>文件性质</span>
+            <div class="upload_con">
+                <div class="uploadt_btn" @click="toggleUpload('block')">
                     <div>
-                        <input type="radio" id="one" value="one" v-model="picked" :checked="picked=='one'">
-                        <span>公开</span>
-                        <input type="radio" id="two" value="two" v-model="picked">
-                        <span>保密</span>
+                        材料列表
+                    </div>
+                    <div>
+                        <i class="iconfont">&#xe616;</i>
+                        <span>添加</span>
                     </div>
                 </div>
-                <div class="label access" v-show="picked=='one'">
-                    <span>附件</span>
-                    <div class="accessory">
-                        <i class="iconfont" v-bind:class="{ active: '1'== isFile}">&#xe615;</i>
-                        <span>{{isFile==1?_filename:'请选择文件上传'}}</span>
-                        <input type="file" name="" id="file"  accept=".pdf" @change="changeFile()">
-                    </div>
+                <div class="upload">
+                    <ul>
+                        <li v-for="(item,index) in fileList.data" :key="index">
+                            <a href="">{{item.title}}</a>
+                            <i class="iconfont" style="color:red;">&#xe612;</i>
+                        </li>
+                    </ul>
                 </div>
-                <div class="btns">
-                    <a href="javascript:;" @click="upload()">保存</a>
-                    <a href="javascript:;" @click="toggleUpload('none')">取消</a>
+            </div>
+        </div>
+        <!-- 删除对话框 -->
+        <div class="del_dialog" id="del_dialog">
+            <div class="title">提醒</div>
+            <div class="msg">您确认要删除吗？</div>
+            <div class="btns">
+                <a href="javascript:;" @click="del()">确认</a>
+                <a href="javascript:;" @click="showDel('none',-1)">取消</a>
+            </div>
+        </div>
+        <!-- 上传附件弹窗 -->
+        <div class="upload_dialog" id="up_dialog">
+            <div class="close" @click="toggleUpload('none')">X</div>
+            <div class="title_dialog">
+                资料上传
+            </div>
+            <div class="label">
+                <span>资料名称</span>
+                <input type="text" v-model="filename">
+            </div>
+            <div class="label">
+                <span>文件编号</span>
+                <input type="text" v-model="filenum">
+            </div>
+            <div class="label">
+                <span>备注</span>
+                <input type="text" v-model="remark">
+            </div>
+            <div class="label">
+                <span>文件性质</span>
+                <div>
+                    <input type="radio" id="one" value="one" v-model="picked" :checked="picked=='one'">
+                    <span>公开</span>
+                    <input type="radio" id="two" value="two" v-model="picked">
+                    <span>保密</span>
                 </div>
+            </div>
+            <div class="label access" v-if="picked=='one'">
+                <div class="accessory">
+                    <i class="iconfont" v-bind:class="{ active: '1'== isFile}">&#xe615;</i>
+                    <span>{{isFile==1?_filename:'请选择文件上传'}}</span>
+                    <input type="file" name="" id="file" accept=".pdf" @change="changeFile()">
+                </div>
+            </div>
+            <div class="label access" v-if="picked=='two'">
+                <div class="accessory disabled">
+                    <i class="iconfont" v-bind:class="{ active: '1'== isFile}">&#xe615;</i>
+                    <span>{{isFile==1?_filename:'请选择文件上传'}}</span>
+                    <input type="file" name="" id="file" accept=".pdf" @change="changeFile()" disabled>
+                </div>
+            </div>
+            <div class="btns">
+                <a href="javascript:;" @click="upload()">上传</a>
+                <a href="javascript:;" @click="toggleUpload('none')">取消</a>
             </div>
         </div>
     </div>
@@ -133,9 +145,9 @@
                 "picked": 'one',
                 "fileList": {},
                 "review": {},
-                "titleIndex":'',
-                isFile:0,
-                _filename:''
+                "titleIndex": '',
+                isFile: 0,
+                _filename: ''
             }
         },
         components: {
@@ -147,12 +159,12 @@
                     this.fileList = res.data
                     this.review.self_point = res.data.self_point
                     this.review.user_remark = res.data.user_remark
-                    this.titleIndex = this.fileList.point.substring(0,this.fileList.point.indexOf('.'))
+                    this.titleIndex = this.fileList.point.substring(0, this.fileList.point.indexOf('.'))
                 }, (err) => {
                     console.log(err)
                 })
             },
-            goTo(){
+            goTo() {
                 this.$router.push('/home/datamanage')
             },
             toggleUpload(type) {
@@ -163,7 +175,7 @@
                     this.filenum = ''
                     this.remark = ''
                     this.isFile = 0,
-                    this._filename = ''
+                        this._filename = ''
                     document.getElementById("file").value = ''
                 }
             },
@@ -183,13 +195,13 @@
                 })
             },
             upload(id) {
-                if(this.filename==''){
+                if (this.filename == '') {
                     alert("文件名为必填项")
                     return
                 }
                 var id = this.$route.params.id
                 var fileData = new FormData()
-                this.picked = this.picked == 'one'?true:false
+                this.picked = this.picked == 'one' ? true : false
                 var file = document.getElementById("file").files[0]
                 fileData.append("self_point_relation[file]", file)
                 fileData.append("self_point_relation[title]", this.filename)
@@ -222,39 +234,39 @@
                     })
                 })
             },
-            open(url,normal) {
-                if(normal&&url==null){
+            open(url, normal) {
+                if (normal && url == null) {
                     alert("没有附件")
                     return
                 }
-                if(url==null){
+                if (url == null) {
                     alert("该文件为保密文件")
                     return
                 }
                 window.open(url)
             },
-            changeFile(){
+            changeFile() {
                 var file = document.getElementById("file").files[0]
                 console.log(file)
-                if(file){
+                if (file) {
                     this.isFile = 1
-                    this._filename =  file.name
-                }else{
+                    this._filename = file.name
+                } else {
                     this.isFile = 0
                 }
                 // this.changFile = 0
             },
             save() {
-                if(this.review.self_point == null){
+                if (this.review.self_point == null) {
                     alert("请选择评价等级")
                     return
                 }
                 console.log(this.review.user_remark)
-                if(this.review.user_remark == null){
+                if (this.review.user_remark == null) {
                     alert("请写评价详情")
                     return
                 }
-                if(this.review.user_remark.length>500){
+                if (this.review.user_remark.length > 500) {
                     alert("最多500字")
                     return
                 }
@@ -265,7 +277,7 @@
                     }, (err) => {})
             }
         },
-        computed:{
+        computed: {
             // count(){
             //     return 500-this.review.user_remark.length
             // }
@@ -279,10 +291,12 @@
 <style>
     .review_text {
         position: relative;
-        width: 652px;
+        width: 660px;
+        height: 500px;
     }
     .review_text textarea {
-        width: 100%;
+        width: 660px;
+        height: 500px;
     }
     input,
     button,
@@ -293,20 +307,39 @@
     textarea {
         resize: none;
     }
-    .review{
-        margin-top: 20px;
-    }
-    .review .review_grade{
+    .review .review_grade {
         margin-bottom: 10px;
+    }
+    .review .review_grade .title {
+        color: #4fa4f4;
+    }
+    .review .review_head {
+        color: #4fa4f4;
+    }
+    .review .review_head i {
+        font-size: 20px;
+    }
+    .review .review_btn {
+        margin-top: 20px;
+        width: 92%;
+        position: relative;
+    }
+    .review .review_btn a {
+        display: inline-block;
+        width: 60px;
+        height: 24px;
+        text-align: center;
+        line-height: 24px;
+        color: #ffffff;
+        background: #4fa4f4;
+        position: absolute;
+        right: 0px;
     }
     .review_text p {
         position: absolute;
-        right: 0;
-        bottom: 10px;
-    }
-    .review_text p a {
-        color: #4fa4f4;
-        text-decoration: underline;
+        right: 14px;
+        bottom: 0px;
+        color: #ccc;
     }
     nav {
         height: auto;
@@ -317,7 +350,7 @@
         padding: 0px 15px;
         box-shadow: 1px 1px 8px #ccc;
         box-sizing: border-box;
-        padding-top:14px;
+        padding-top: 14px;
     }
     nav .target {
         width: 100%;
@@ -326,11 +359,11 @@
         box-shadow: 1px 1px 8px #ccc;
         background: #fff;
     }
-    nav .target:first-child .target_con{
+    nav .target:first-child .target_con {
         color: #666;
     }
-    nav .target:not(:first-child){
-         margin-top: 10px;
+    nav .target:not(:first-child) {
+        margin-top: 10px;
     }
     nav .target .target_title {
         background: #f7a31c;
@@ -340,8 +373,7 @@
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
     }
-    nav .target .target_title.blue{
-
+    nav .target .target_title.blue {
         background: #3485ee !important
     }
     nav .target .target_con {
@@ -350,67 +382,55 @@
     }
     .uoload_con {
         display: flex;
+        /* height:690px; */
+        padding-bottom: 10px;
     }
     .right_con {
         width: 80%;
+        display: flex;
+    }
+    .right_con .review_con {
+        width: 736px;
         padding-top: 14px;
         padding-left: 40px;
         background: #fff;
         box-shadow: 1px 1px 8px #ccc;
+        margin-right: 10px;
+    }
+    .right_con .upload_con {
+        background: #fff;
+        box-shadow: 1px 1px 8px #ccc;
     }
     .uploadt_btn {
-        width: 80px;
+        width: 100%;
         height: 30px;
-        text-align: center;
         line-height: 30px;
         color: #fff;
-        background: #78b9f3;
+        background: #327bca;
+        padding: 0px 16px;
+        display: flex;
+        justify-content: space-between;
     }
     .upload {
-        width: 1053px;
-        margin-top: 20px;
+        width: 400px;
     }
-    .upload .list ul.head {
-        display: flex;
+    .upload ul li {
         height: 30px;
-        align-items: center;
-        /* justify-content: space-around; */
-    }
-    .upload .list ul.head {
-        background: #f4f2f3
-    }
-    .upload .list ul.head li {
-        width: 20%;
-        color: #3b83cd;
-        text-align: center;
-    }
-    .upload .list .list_body ul {
+        line-height: 30px;
         display: flex;
-        height: 28px;
-        align-items: center;
-        /* justify-content: space-around; */
+        justify-content: space-between;
+        padding: 0px 20px;
     }
-    .upload .list .list_body ul:nth-child(even) {
-        background: #f4f2f3;
-    }
-    .upload .list .list_body ul:nth-child(odd) {
-        background: #dcdcdc;
-    }
-    .upload .list .list_body ul li:nth-child(1){
-        cursor: pointer;
-    }
-    .upload .list .list_body ul li:nth-child(1):hover{
-        color: #4fa4f4;
-    }
-    .upload .list .list_body ul li {
-        width: 16.6%;
-        text-align: center;
+    .upload ul li a {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .upload .list .list_body ul li:last-child {
-        cursor: pointer;
+    .upload ul li:nth-child(odd) {
+        background: #dcdcdc;
+    }
+    .upload ul li:nth-child(even) {
+        background: #f4f2f3;
     }
     .del_dialog {
         width: 288px;
@@ -421,7 +441,7 @@
         left: 50%;
         top: 50%;
         z-index: 10;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         background: #fff;
     }
     .del_dialog .title {
@@ -468,13 +488,32 @@
         left: 50%;
         top: 50%;
         z-index: 10;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         background: #fff;
+    }
+    .upload_dialog .close {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        color: #fff;
+        text-align: center;
+        line-height: 26px;
+        position: absolute;
+        right: -13px;
+        top: -13px;
+        background: #53a6f6;
+        cursor: pointer;
+    }
+    .upload_dialog .title_dialog {
+        width: 100%;
+        padding: 10px 0px;
+        color: #1f6ed4;
+        text-align: center;
     }
     .upload_dialog .label {
         display: flex;
         align-items: center;
-        height: 44px;
+        height: 36px;
         color: #666;
         padding: 0px 30px;
     }
@@ -489,50 +528,56 @@
         text-align: right;
     }
     .upload_dialog .access {
-        height: 170px;
+        height: 140px;
     }
     .upload_dialog .label .accessory {
-        width: 150px;
-        height: 150px;
-        border: 1px dashed #cccccc;
+        width: 110px;
+        height: 110px;
+        border: 1px dashed #1f6ed4;
         border-radius: 4px;
         text-align: center;
         position: relative;
+        margin: 0 auto;
+    }
+    .upload_dialog .label .accessory.disabled {
+        border-color: #ccc;
+    }
+    .upload_dialog .label .accessory.disabled input[type="file"] {
+        cursor: not-allowed;
     }
     .upload_dialog .label .accessory input[type="file"] {
-        width: 150px;
-        height: 150px;
+        width: 110px;
+        height: 110px;
         position: absolute;
         left: 0;
         top: 0;
         opacity: 0;
-        cursor: pointer
+        cursor: pointer;
     }
-    .upload_dialog .label .accessory i{
+    .upload_dialog .label .accessory i {
         position: absolute;
-        left:50%;
+        left: 50%;
         top: 34%;
-        font-size:34px;
-        transform: translate(-50%,-50%)
+        font-size: 34px;
+        transform: translate(-50%, -50%)
     }
-    .upload_dialog .label .accessory i.active{
+    .upload_dialog .label .accessory i.active {
         color: #3485ee;
     }
-    .upload_dialog .label .accessory span{
+    .upload_dialog .label .accessory span {
         position: absolute;
-        left:50%;
+        left: 50%;
         top: 60%;
         width: 100%;
-        transform: translate(-50%,-50%)
+        transform: translate(-50%, -50%)
     }
-    .right_con p i{
+    .right_con p i {
         display: inline-block;
-        width:10px;
-        height:14px;
+        width: 10px;
+        height: 14px;
         background: url("../../assets/crumbs_bg.png") no-repeat;
         margin-right: 8px;
     }
-
 </style>
 
 
