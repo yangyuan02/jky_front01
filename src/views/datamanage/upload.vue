@@ -59,7 +59,7 @@
                     </ul>
                     <div class="list_body">
                         <ul v-for="(item,index) in fileList.data" :key="index">
-                            <li @click="open(item.file)">{{item.title}}</li>
+                            <li @click="open(item.file,item.normal)">{{item.title}}</li>
                             <li>{{item.num}}</li>
                             <li>{{item.normal==true?'公开':'保密'}}</li>
                             <li>{{item.created_at}}</li>
@@ -222,7 +222,11 @@
                     })
                 })
             },
-            open(url) {
+            open(url,normal) {
+                if(normal&&url==null){
+                    alert("没有附件")
+                    return
+                }
                 if(url==null){
                     alert("该文件为保密文件")
                     return
