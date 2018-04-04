@@ -1,7 +1,7 @@
 <template>
     <header>
         <div class="systemname" @click="goTo('/home/datamanage')">
-            省级人民政府教育工作评价系统
+            省级政府履行教育职责测评系统
         </div>
         <div class="nav">
             <ul>
