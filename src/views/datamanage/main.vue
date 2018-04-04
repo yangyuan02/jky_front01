@@ -15,9 +15,9 @@
             </div>
             <div class="table_header">
                 <ul>
-                    <li style="width:22%;">A一级指标</li>
-                    <li style="width:25%;">B二级指标</li>
-                    <li style="width:20.949%;">C三级指标</li>
+                    <li style="width:22%;">评价内容</li>
+                    <li style="width:25%;">具体测评内容</li>
+                    <li style="width:20.949%;">测评点</li>
                     <li style="width:7%;">状态</li>
                     <li style="width:7%">自评等级</li>
                     <li style="width:18.739%;">材料操作</li>
