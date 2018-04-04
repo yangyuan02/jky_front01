@@ -2,7 +2,7 @@
     <div class="uoload_con">
         <nav>
             <div class="target">
-                <div class="target_title" v-text="titleIndex"></div>
+                <div class="target_title"></div>
                 <div class="target_con" v-text="fileList.point">
                 </div>
             </div>
