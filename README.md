@@ -2,6 +2,10 @@
 
 > A Vue.js project
 
+
+pm2
+pm2 start npm -- run dev守护vue-cli项目
+
 #jky
 nginx部署
 server {
