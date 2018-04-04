@@ -15,23 +15,23 @@
             </div>
             <div class="table_header">
                 <ul>
-                    <li style="width:17.02%;">A一级指标</li>
-                    <li style="width:19.312%;">B二级指标</li>
+                    <li style="width:22%;">A一级指标</li>
+                    <li style="width:25%;">B二级指标</li>
                     <li style="width:20.949%;">C三级指标</li>
-                    <li style="width:12.2749%;">状态</li>
-                    <li style="width:12.2749%;">自评等级</li>
+                    <li style="width:7%;">状态</li>
+                    <li style="width:7%">自评等级</li>
                     <li style="width:18.739%;">材料操作</li>
                 </ul>
             </div>
             <table border="1" cellspacing="0">
                 <tr v-for="(item,index) in table" :key="index">
-                    <td :rowspan="item.one_row" v-bind:class="{ show: item.show_one=='false'}" style="width:17.02%;">{{item.one}}</td>
-                    <td :rowspan="item.two_row" v-bind:class="{ show: item.show_two=='false'}" style="width:19.312%;">{{item.two}}</td>
+                    <td :rowspan="item.one_row" v-bind:class="{ show: item.show_one=='false'}" style="width:22%;">{{item.one}}</td>
+                    <td :rowspan="item.two_row" v-bind:class="{ show: item.show_two=='false'}" style="width:25%;">{{item.two}}</td>
                     <td style="width:20.949%;">{{item.three}}</td>
-                    <td style="width:12.2749%;text-align:center;">
+                    <td style="width:7%;text-align:center;">
                         <i class="iconfont">{{item.status==1?'&#xe610;':'&#xe60f;'}}</i>
                     </td>
-                    <td style="width:12.2749%;text-align: center;">{{item.self_point}}</td>
+                    <td style="width:7%;text-align: center;">{{item.self_point}}</td>
                     <td style="width:18.739%;">
                         <a href="javascript:;" @click="goDatail(item.id)">上传</a>
                         <a href="javascript:;" @click="goDatail(item.id)">补传</a>
@@ -129,6 +129,9 @@
     }
     table tr td:nth-child(6){
         text-align: center;
+    }
+    table tr td{
+        padding: 4px 10px;
     }
     table tr td:nth-child(6) a{
         color:#fff;
