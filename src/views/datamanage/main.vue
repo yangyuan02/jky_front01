@@ -47,7 +47,8 @@
         data() {
             return {
                 table: [],
-                point_count:{}
+                point_count:{},
+                state:['../../assets/status2.png','../../assets/status1.png']
             }
         },
         methods: {
