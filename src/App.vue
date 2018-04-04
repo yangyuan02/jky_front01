@@ -42,6 +42,10 @@ html,body,#app{
 div,input{
     box-sizing: border-box;
 }
+body{
+    font-family: "仿宋" !important;
+    font-size:14px;
+}
 body,
 dd,
 dl,

@@ -265,6 +265,11 @@
                     }, (err) => {})
             }
         },
+        computed:{
+            // count(){
+            //     return 500-this.review.user_remark.length
+            // }
+        },
         created() {
             this.getDetail()
         }
