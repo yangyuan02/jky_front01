@@ -140,6 +140,9 @@
         display: inline-block;
         border-radius: 4px;
     }
+    table tr td:nth-child(6) a:last-child{
+        background: #ccc;
+    }
     .data_header{
         display: flex;
         height:68px;
