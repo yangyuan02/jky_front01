@@ -11,7 +11,7 @@ const manageMain = r => require.ensure([], () => r(require('@/views/datamanage/m
 
 const upload = r => require.ensure([], () => r(require('@/views/datamanage/upload')), 'upload')
 
-const grade = r => require.ensure([], () => r(require('@/views/grade/index')), 'grade')
+const grade = r => require.ensure([], () => r(require('@/views/datamanage/grade')), 'grade')
 
 Vue.use(Router)
 
@@ -40,13 +40,14 @@ export default new Router({
                             path: '/home/upload/:id',
                             name:'upload',
                             component: upload,
+                        },
+                        {
+                            path: '/home/grade',
+                            component: grade
                         }
                     ]
-                },
-                {
-                    path: '/home/grade',
-                    component: grade
                 }
+
             ]
         }
     ]
