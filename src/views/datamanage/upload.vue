@@ -279,7 +279,7 @@
                     }, (err) => {})
             },
             descInput() { 
-                var txtVal = this.review.user_remark.length; 
+                var txtVal = this.review.user_remark?this.review.user_remark.length:0; 
                 this.remnant = 500 - txtVal; 
             }
         },
