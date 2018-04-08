@@ -383,8 +383,6 @@
     }
     .uoload_con {
         display: flex;
-        /* height:690px; */
-        padding-bottom: 10px;
     }
     .right_con {
         width: 80%;
