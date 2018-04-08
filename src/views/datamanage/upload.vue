@@ -67,7 +67,7 @@
                     <ul>
                         <li v-for="(item,index) in fileList.data" :key="index">
                             <a href="">{{item.title}}</a>
-                            <i class="iconfont" style="color:red;">&#xe612;</i>
+                            <i class="iconfont" style="color:red;" @click="showDel('block',item.id)">&#xe612;</i>
                         </li>
                     </ul>
                 </div>
@@ -279,7 +279,7 @@
                     }, (err) => {})
             },
             descInput() { 
-                var txtVal = this.review.user_remark.length; 
+                var txtVal = this.review.user_remark?this.review.user_remark.length:0; 
                 this.remnant = 500 - txtVal; 
             }
         },
