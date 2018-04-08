@@ -6,9 +6,9 @@
                 <input type="text" placeholder="请输入用户名" v-model="unsename">
             </div>
             <div class="pass common">
-                <input type="password" placeholder="请输入密码" v-model="password">
+                <input type="password" placeholder="请输入密码" v-model="password" @keyup.enter="login">
             </div>
-            <div class="login_btn" @click="login()">登录</div>
+            <div class="login_btn" @click="login">登录</div>
         </div>
     </div>
 </template>
