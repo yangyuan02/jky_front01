@@ -5,15 +5,13 @@ const login = r => require.ensure([], () => r(require('@/views/login')), 'Login'
 
 const home = r => require.ensure([], () => r(require('@/views/home')), 'home')
 
-const datamanage = r => require.ensure([], () => r(require('@/views/datamanage/datamanage')), 'datamanage')
+const datamanage = r => require.ensure([], () => r(require('@/views/datamanage/index')), 'datamanage')
 
 const manageMain = r => require.ensure([], () => r(require('@/views/datamanage/main')), 'main')
 
-const replenish = r => require.ensure([], () => r(require('@/views/datamanage/replenish')), 'replenish')
-
 const upload = r => require.ensure([], () => r(require('@/views/datamanage/upload')), 'upload')
 
-const grade = r => require.ensure([], () => r(require('@/views/grade/grade')), 'grade')
+const grade = r => require.ensure([], () => r(require('@/views/grade/index')), 'grade')
 
 Vue.use(Router)
 
@@ -37,10 +35,6 @@ export default new Router({
                         {
                             path: '/',
                             component: manageMain,
-                        },
-                        {
-                            path: '/home/replenish',
-                            component: replenish,
                         },
                         {
                             path: '/home/upload/:id',
