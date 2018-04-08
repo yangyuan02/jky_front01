@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="data">
+        <div class="data manage">
             <div class="data_header">
                 <div class="crumbs">
                     <p>
@@ -103,62 +103,47 @@
         margin: 0px 15px;
         box-shadow: 1px 1px 8px #ccc;
     }
-    .table_header {
+    .manage .table_header {
         width: 1222px;
         margin: 0 auto;
     }
-    .table_header ul {
+    .manage .table_header ul {
         display: flex;
         height: 52px;
         background: #2dc9b9;
         align-items: center;
         color: #fff;
     }
-    .table_header ul li {
+    .manage .table_header ul li {
         text-align: center;
     }
-    .table_body {
+    .manage .table_body {
         width: 100%;
     }
-    .table_body .row {
-        border: 1px solid red;
-    }
-    .table_body .row .cell span {
-        display: inline-block;
-    }
-    .table_body .row .cell span:nth-child(1) {
-        width: 20%;
-    }
-    .table_body .row .cell span:nth-child(2) {
-        width: 20%;
-    }
-    .table_body .row .cell span:nth-child(3) {
-        width: 20%;
-    }
-    table {
+    .manage table {
         width: 1222px;
         border: 1px solid #ccc;
         margin: 0 auto;
     }
-    table tr td:nth-child(6) {
+    .manage table tr td:nth-child(6) {
         text-align: center;
     }
-    table tr td:nth-child(4) i.status1 {
+    .manage table tr td:nth-child(4) i.status1 {
         display: inline-block;
         width: 33px;
         height: 32px;
         background: url("../../assets/status1.png")
     }
-    table tr td:nth-child(4) i.status2 {
+    .manage table tr td:nth-child(4) i.status2 {
         display: inline-block;
         width: 33px;
         height: 32px;
         background: url("../../assets/status2.png")
     }
-    table tr td {
+    .manage table tr td {
         padding: 4px 10px;
     }
-    table tr td:nth-child(6) a {
+    .manage table tr td:nth-child(6) a {
         color: #fff;
         background: #7acedf;
         width: 70px;
@@ -168,7 +153,7 @@
         display: inline-block;
         border-radius: 4px;
     }
-    table tr td:nth-child(6) a:last-child {
+    .manage table tr td:nth-child(6) a:last-child {
         background: #ccc;
     }
     .data_header {
