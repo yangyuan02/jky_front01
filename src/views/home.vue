@@ -23,7 +23,7 @@
         height: 100%;
         background: #edecec;
         display: flex;
-        padding-top: 16px;
+        padding: 16px 0px;
     }
 </style>
 
