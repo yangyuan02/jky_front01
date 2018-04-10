@@ -39,7 +39,7 @@
                         <td style="width:7%;text-align:center;">未填写</td>
                         <td style="width:7%;text-align: center;">-</td>
                         <td style="width:18.739%;">
-                            <a href="javascript:;">填写</a>
+                            <a href="javascript:;" @click="goReport">填写</a>
                         </td>
                     </tr>
                     <tr v-for="(item,index) in table" :key="index">
@@ -101,7 +101,7 @@
                 })
             },
             goReport(){
-                this.$router.push('./home/report')
+                this.$router.push('./report')
             }
         },
         mounted() {

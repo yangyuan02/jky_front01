@@ -98,12 +98,6 @@
 </script>
 
 <style>
-    input,
-    button,
-    select,
-    textarea {
-        outline: none;
-    }
     .expert_pdf_header{
         display: flex;
         justify-content: space-between;

@@ -101,6 +101,12 @@ textarea {
     font-size: 12px;
     margin: 0;
 }
+input,
+    button,
+    select,
+    textarea {
+        outline: none;
+    }
 textarea {
     resize: none;
 }
