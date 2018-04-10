@@ -11,9 +11,7 @@
                 <div class="data_header_right">
                     <div class="progress_box">
                         <span>{{point_count.finish}}</span>
-                        <div class="progress">
-                            <div class="progress_bar" :style="{width:progress}"></div>
-                        </div>
+                        <Progress :progress="progress"></Progress>
                         <span>{{point_count.finish+point_count.no_finish}}</span>
                     </div>
                     <div class="data_satus">
@@ -54,6 +52,9 @@
 </template>
 
 <script>
+
+    import Progress from "@/components/common/Progress";
+
     export default {
         data() {
             return {
@@ -61,6 +62,9 @@
                 point_count: {},
                 progress: ''
             }
+        },
+        components:{
+            Progress
         },
         methods: {
             getData(url) { //获取数据

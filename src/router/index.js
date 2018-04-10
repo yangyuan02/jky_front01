@@ -5,6 +5,8 @@ const login = r => require.ensure([], () => r(require('@/views/login')), 'Login'
 
 const home = r => require.ensure([], () => r(require('@/views/home')), 'home')
 
+//省用户
+
 const datamanage = r => require.ensure([], () => r(require('@/views/datamanage/index')), 'datamanage')
 
 const manageMain = r => require.ensure([], () => r(require('@/views/datamanage/main')), 'main')
@@ -12,6 +14,15 @@ const manageMain = r => require.ensure([], () => r(require('@/views/datamanage/m
 const upload = r => require.ensure([], () => r(require('@/views/datamanage/upload')), 'upload')
 
 const grade = r => require.ensure([], () => r(require('@/views/datamanage/grade')), 'grade')
+
+const error = r => require.ensure([], () => r(require('@/components/common/error')), 'error')
+
+
+// 专家
+const specialist = r => require.ensure([], () => r(require('@/views/specialist/index')), 'specialist')
+
+const specialistMain = r => require.ensure([], () => r(require('@/views/specialist/main')), 'specialistMain')
+
 
 Vue.use(Router)
 
@@ -29,7 +40,7 @@ export default new Router({
             component: home,
             children: [
                 {
-                    path: '/home/datamanage',
+                    path: '/home/datamanage',//省用户
                     component: datamanage,
                     children: [
                         {
@@ -46,9 +57,23 @@ export default new Router({
                             component: grade
                         }
                     ]
+                },
+                {
+                    path: '/home/specialist',//专家用户
+                    component: specialist,
+                    children: [
+                        {
+                            path: '/',
+                            component: specialistMain,
+                        }
+                    ]
                 }
-
             ]
+        },
+        {
+            path: '*',
+            name: 'error',
+            component: error
         }
     ]
 })
