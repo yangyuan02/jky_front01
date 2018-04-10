@@ -11,14 +11,14 @@
 </script>
 
 <style>
-    .data_header .progress {
+    .progress {
         width: 200px;
         height: 18px;
         margin: 0px 8px;
         background: #e2e0e0;
         border-radius: 12px;
     }
-    .data_header .progress .progress_bar {
+    .progress .progress_bar {
         height: 18px;
         background: #61aef8;
         border-radius: 12px;

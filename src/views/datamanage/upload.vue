@@ -145,7 +145,6 @@
                 "picked": 'one',
                 "fileList": {},
                 "review": {},
-                "titleIndex": '',
                 isFile: 0,
                 _filename: '',
                 remnant:500
@@ -160,14 +159,10 @@
                     this.fileList = res.data
                     this.review.self_point = res.data.self_point
                     this.review.user_remark = res.data.user_remark
-                    this.titleIndex = this.fileList.point.substring(0, this.fileList.point.indexOf('.'))
                     this.descInput()
                 }, (err) => {
                     console.log(err)
                 })
-            },
-            goTo() {
-                this.$router.push('/home/datamanage')
             },
             toggleUpload(type) {
                 var upload = document.getElementById("up_dialog")

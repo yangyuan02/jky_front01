@@ -23,6 +23,8 @@ const specialist = r => require.ensure([], () => r(require('@/views/specialist/i
 
 const specialistMain = r => require.ensure([], () => r(require('@/views/specialist/main')), 'specialistMain')
 
+const specialistGrade = r => require.ensure([], () => r(require('@/views/specialist/grade')), 'specialistGrade')
+
 
 Vue.use(Router)
 
@@ -65,7 +67,12 @@ export default new Router({
                         {
                             path: '/',
                             component: specialistMain,
-                        }
+                        },
+                        {
+                            path: '/home/expert/:id',
+                            name:'expert',
+                            component: specialistGrade,
+                        },
                     ]
                 }
             ]

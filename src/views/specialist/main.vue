@@ -17,7 +17,7 @@
                         <td :rowspan="item.two_row" v-bind:class="{ show: item.show_two=='false'}">{{item.two.replace(/\s/g,"")}}</td>
                         <td>{{item.three.replace(/\s/g,"")}}</td>
                         <td>
-
+                            <Progress :progress="progress"></Progress>
                         </td>
                         <td>
                             <a href="javascript:;" @click="goDatail(item.id)">评估</a>
@@ -30,6 +30,9 @@
 </template>
 
 <script>
+
+    import Progress from "@/components/common/Progress";
+
     export default {
         data() {
             return {
@@ -37,6 +40,9 @@
                 point_count: {},
                 progress: ''
             }
+        },
+        components:{
+            Progress
         },
         methods: {
             getData(url) { //获取数据
@@ -46,9 +52,17 @@
                     console.log(err)
                 })
             },
+             getPoint_count() {
+                this.$ajax.get('/api/role_points/point_count', {}).then((res) => {
+                    this.progress = (res.data.finish / (res.data.finish + res.data.no_finish)) * 100 + '%'
+                    this.point_count = res.data
+                }, (err) => {
+                    console.log(err)
+                })
+            },
             goDatail(id) { //跳转详情
                 this.$router.push({
-                    name: 'upload',
+                    name: 'expert',
                     params: {
                         id: id
                     }
