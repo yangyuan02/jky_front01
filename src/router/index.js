@@ -15,7 +15,10 @@ const upload = r => require.ensure([], () => r(require('@/views/datamanage/uploa
 
 const grade = r => require.ensure([], () => r(require('@/views/datamanage/grade')), 'grade')
 
+const report = r => require.ensure([], () => r(require('@/views/datamanage/report')), 'report')
+
 const error = r => require.ensure([], () => r(require('@/components/common/error')), 'error')
+
 
 
 // 专家
@@ -57,6 +60,10 @@ export default new Router({
                         {
                             path: '/home/grade',
                             component: grade
+                        },
+                        {
+                            path: '/home/report',
+                            component: report
                         }
                     ]
                 },

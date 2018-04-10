@@ -26,8 +26,22 @@
             </div>
         </nav>
         <div class="right_con">
-            <div class="review_con" style="position:relative;overflow: hidden;">
-                <embed src="http://www.gov.cn/zhengce/pdfFile/2018_PDF.pdf" type="application/pdf" width="100%" height="100%" style="position:absolute;top:-55px;">
+            <div class="review_con">
+                <div class="expert_pdf_header">
+                    <div class="province_box">
+                        <select name="" id="">
+                            <option value="请选择">请选择</option>
+                            <option value="北京市">北京市</option>
+                            <option value="上海市">上海市</option>
+                            <option value="重庆市">重庆市</option>
+                        </select>
+                    </div>
+                    <div class="expert_write">
+                        <i class="iconfont">&#xe609;</i>
+                        <span>评价</span>
+                    </div>
+                </div>
+                <embed src="http://www.gov.cn/zhengce/pdfFile/2018_PDF.pdf" type="application/pdf" width="100%" height="100%">
             </div>
             <div class="upload_con">
                 <div class="uploadt_btn" @click="toggleUpload('block')">
@@ -84,57 +98,22 @@
 </script>
 
 <style>
-    .review_text {
-        position: relative;
-        width: 660px;
-        height: 500px;
-    }
-    .review_text textarea {
-        width: 660px;
-        height: 500px;
-    }
     input,
     button,
     select,
     textarea {
         outline: none;
     }
-    textarea {
-        resize: none;
+    .expert_pdf_header{
+        display: flex;
+        justify-content: space-between;
     }
-    .review .review_grade {
-        margin-bottom: 10px;
-    }
-    .review .review_grade .title {
+    .expert_pdf_header .expert_write{
         color: #4fa4f4;
-    }
-    .review .review_head {
-        color: #4fa4f4;
-    }
-    .review .review_head i {
         font-size: 20px;
     }
-    .review .review_btn {
-        margin-top: 20px;
-        width: 92%;
-        position: relative;
-    }
-    .review .review_btn a {
-        display: inline-block;
-        width: 60px;
-        height: 24px;
-        text-align: center;
-        line-height: 24px;
-        color: #ffffff;
-        background: #4fa4f4;
-        position: absolute;
-        right: 0px;
-    }
-    .review_text p {
-        position: absolute;
-        right: 14px;
-        bottom: 0px;
-        color: #ccc;
+    textarea {
+        resize: none;
     }
     nav {
         height: auto;
@@ -183,10 +162,12 @@
         display: flex;
     }
     .right_con .review_con {
-        width: 736px;
+        width: 886px;
         background: #fff;
         box-shadow: 1px 1px 8px #ccc;
         margin-right: 10px;
+        padding:38px 30px;
+        overflow: hidden;
     }
     .right_con .upload_con {
         background: #fff;
@@ -203,7 +184,7 @@
         justify-content: space-between;
     }
     .upload {
-        width: 400px;
+        width: 250px;
     }
     .upload ul li {
         height: 30px;

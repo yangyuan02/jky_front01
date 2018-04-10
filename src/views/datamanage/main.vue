@@ -32,6 +32,16 @@
             </div>
             <div class="table_scroll" style="height:540px;width:1222px;margin:0 auto;overflow:scroll;">
                 <table border="1" cellspacing="0">
+                    <tr>
+                        <td style="width:22%;">自评总报告</td>
+                        <td style="width:25%;"></td>
+                        <td style="width:20.949%;"></td>
+                        <td style="width:7%;text-align:center;">未填写</td>
+                        <td style="width:7%;text-align: center;">-</td>
+                        <td style="width:18.739%;">
+                            <a href="javascript:;">填写</a>
+                        </td>
+                    </tr>
                     <tr v-for="(item,index) in table" :key="index">
                         <td :rowspan="item.one_row" v-bind:class="{ show: item.show_one=='false'}" style="width:22%;">{{item.one.replace(/\s/g,"")}}</td>
                         <td :rowspan="item.two_row" v-bind:class="{ show: item.show_two=='false'}" style="width:25%;">{{item.two.replace(/\s/g,"")}}</td>
@@ -89,6 +99,9 @@
                         id: id
                     }
                 })
+            },
+            goReport(){
+                this.$router.push('./home/report')
             }
         },
         mounted() {
@@ -128,6 +141,12 @@
         width: 1222px;
         border: 1px solid #ccc;
         margin: 0 auto;
+    }
+    .manage table tr:nth-child(1) td{
+        height: 40px;
+    }
+    .manage table tr:nth-child(1) td:last-child a{
+        background: #7acedf !important;
     }
     .manage table tr td:nth-child(6) {
         text-align: center;
