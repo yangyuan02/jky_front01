@@ -1,6 +1,8 @@
 <template>
     <div class="report">
-        <div class="report_title">自评总报告</div>
+        <div class="report_title">
+            <span></span>
+        </div>
         <div class="report_box">
             <div class="report_item">
                 <div class="report_item_title">
@@ -8,7 +10,7 @@
                 </div>
                 <div class="report_item_body">
                     <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="content.one"></textarea>
-                    <a href="javascript:;">保存</a>
+                    <a href="javascript:;" @click="save('one')">保存</a>
                 </div>
             </div>
             <div class="report_item">
@@ -17,7 +19,7 @@
                 </div>
                 <div class="report_item_body">
                     <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="content.two"></textarea>
-                    <a href="javascript:;">保存</a>
+                    <a href="javascript:;" @click="save('two')">保存</a>
                 </div>
             </div>
             <div class="report_item">
@@ -26,7 +28,7 @@
                 </div>
                 <div class="report_item_body">
                     <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="content.three"></textarea>
-                    <a href="javascript:;">保存</a>
+                    <a href="javascript:;" @click="save('three')">保存</a>
                 </div>
             </div>
             <div class="report_item">
@@ -35,7 +37,7 @@
                 </div>
                 <div class="report_item_body">
                     <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="content.four"></textarea>
-                    <a href="javascript:;">保存</a>
+                    <a href="javascript:;" @click="save('four')">保存</a>
                 </div>
             </div>
             <div class="report_item">
@@ -44,7 +46,7 @@
                 </div>
                 <div class="report_item_body">
                     <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="content.five"></textarea>
-                    <a href="javascript:;">保存</a>
+                    <a href="javascript:;" @click="save('five')">保存</a>
                 </div>
             </div>
         </div>
@@ -59,7 +61,10 @@
            }
         },
         methods:{
-            save(){}
+            save(data){
+
+                console.log(this.content[data])
+            }
         }
     }
 </script>
@@ -68,10 +73,16 @@
     .report{
         padding:0px 20px;
     }
+    .report .report_title span{
+        display: inline-block;
+        width: 172px;
+        height: 84px;
+        background: url(../../assets/report.png) no-repeat;
+    }
     .report .report_title{
         background: #fff;
         text-align: center;
-
+        padding: 20px 0px;
     }
     .report .report_box .report_item{
         width: 100%;
@@ -85,6 +96,7 @@
         margin-top: 0px;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
+        padding-top: 0px;
     }
     .report .report_box .report_item textarea{
         width: 100%;
