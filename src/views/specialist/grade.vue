@@ -41,7 +41,7 @@
                         <span>评价</span>
                     </div>
                 </div>
-                <embed src="http://www.gov.cn/zhengce/pdfFile/2018_PDF.pdf" type="application/pdf" width="100%" height="100%">
+                <embed :src="pdfsrc" type="application/pdf" width="100%" height="100%">
             </div>
             <div class="upload_con">
                 <div class="uploadt_btn" @click="toggleUpload('block')">
@@ -55,8 +55,8 @@
                 </div>
                 <div class="upload">
                     <ul>
-                        <li v-for="(item,index) in fileList.data" :key="index">
-                            <a href="">{{item.title}}</a>
+                        <li v-for="(item,index) in fileList.data" :key="index" @click="changePdf(item.file)">
+                            <a href="javascript:;">{{item.title}}</a>
                             <i class="iconfont" style="color:red;" @click="showDel('block',item.id)">&#xe612;</i>
                         </li>
                     </ul>
@@ -72,7 +72,8 @@
             return {
                 "fileList": {},
                 "review": {},
-                remnant:500
+                remnant:500,
+                pdfsrc:'',
             }
         },
         methods: {
@@ -81,10 +82,14 @@
                     this.fileList = res.data
                     this.review.self_point = res.data.self_point
                     this.review.user_remark = res.data.user_remark
+                    this.pdfsrc = this.fileList.data[0].file
                     this.descInput()
                 }, (err) => {
                     console.log(err)
                 })
+            },
+            changePdf(src){
+                this.pdfsrc = src
             },
             descInput() { 
                 var txtVal = this.review.user_remark?this.review.user_remark.length:0; 
