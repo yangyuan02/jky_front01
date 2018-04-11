@@ -28,6 +28,13 @@ const specialistMain = r => require.ensure([], () => r(require('@/views/speciali
 
 const specialistGrade = r => require.ensure([], () => r(require('@/views/specialist/grade')), 'specialistGrade')
 
+//督导用户
+const supervisorIndex = r => require.ensure([], () => r(require('@/views/supervisor/index')), 'supervisorIndex')
+
+const supervisorMain = r => require.ensure([], () => r(require('@/views/supervisor/main')), 'supervisorMain')
+
+const department = r => require.ensure([], () => r(require('@/views/supervisor/department')), 'department')
+
 
 Vue.use(Router)
 
@@ -80,6 +87,20 @@ export default new Router({
                             name:'expert',
                             component: specialistGrade,
                         },
+                    ]
+                },
+                {
+                    path: '/home/supervisor',//督导用户
+                    component: supervisorIndex,
+                    children: [
+                        {
+                            path: '/',
+                            component: supervisorMain,
+                        },
+                        {
+                            path: '/home/department',
+                            component: department,
+                        }
                     ]
                 }
             ]
