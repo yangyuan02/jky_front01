@@ -35,6 +35,8 @@ const supervisorMain = r => require.ensure([], () => r(require('@/views/supervis
 
 const department = r => require.ensure([], () => r(require('@/views/supervisor/department')), 'department')
 
+const departmentDetail = r => require.ensure([], () => r(require('@/views/supervisor/detail')), 'departmentDetail')
+
 
 Vue.use(Router)
 
@@ -100,6 +102,10 @@ export default new Router({
                         {
                             path: '/home/department',
                             component: department,
+                        },
+                        {
+                            path: '/home/department/detail',
+                            component: departmentDetail,
                         }
                     ]
                 }
