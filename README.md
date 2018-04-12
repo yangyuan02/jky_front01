@@ -15,8 +15,12 @@
 
 ### 访问项目
 
-项目注意:npm装新包之后需要重新执行 docker-compose run app yarn install  docker-compose up -d
+### 项目注意npm装新包之后需要重新执行
+    docker-compose run app yarn install
 
+    docker-compose up -d
+
+vuex博客 [vuex采坑](https://www.cnblogs.com/liningstyle/p/8335129.html)
 后端 [jky_backend](http://120.55.242.229/root/jky_backend) 项目.
 点击访问 [http://127.0.0.1:8082](http://127.0.0.1:8082)
 
