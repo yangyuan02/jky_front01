@@ -49,7 +49,6 @@
         },
         methods: {
             goTo(url) {
-                console.log(url)
                 this.$router.push(url)
             },
             getPersonInfo() {

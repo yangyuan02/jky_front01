@@ -61,12 +61,7 @@
                 })
             },
             goDatail(id) { //跳转详情
-                this.$router.push({
-                    name: 'expert',
-                    params: {
-                        id: id
-                    }
-                })
+                this.$router.push('/home/department')
             }
         },
         mounted() {

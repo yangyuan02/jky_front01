@@ -11,15 +11,15 @@
             </div>
             <div class="depart_con">
                 <ul>
-                    <li class="active"><span>北京市</span><span>10/10</span></li>
-                    <li class="active"><span>北京市</span><span>10/10</span></li>
-                    <li class="active"><span>北京市</span><span>10/10</span></li>
-                    <li class="active"><span>北京市</span><span>10/10</span></li>
-                    <li class="active"><span>北京市</span><span>10/10</span></li>
-                    <li class="active"><span>北京市</span><span>10/10</span></li>
-                    <li class="active"><span>北京市</span><span>10/10</span></li>
-                    <li><span>北京市</span><span>10/10</span></li>
-                    <li><span>北京市</span><span>10/10</span></li>
+                    <li class="active" @click="goDetail"><span>北京市</span><span>10/10</span></li>
+                    <li class="active" @click="goDetail"><span>北京市</span><span>10/10</span></li>
+                    <li class="active" @click="goDetail"><span>北京市</span><span>10/10</span></li>
+                    <li class="active" @click="goDetail"><span>北京市</span><span>10/10</span></li>
+                    <li class="active" @click="goDetail"><span>北京市</span><span>10/10</span></li>
+                    <li class="active" @click="goDetail"><span>北京市</span><span>10/10</span></li>
+                    <li class="active" @click="goDetail"><span>北京市</span><span>10/10</span></li>
+                    <li @click="goDetail"><span>北京市</span><span>10/10</span></li>
+                    <li @click="goDetail"><span>北京市</span><span>10/10</span></li>
                 </ul>
             </div>
         </div>
@@ -34,6 +34,11 @@ import SideNav from "@/components/supervisor/SideNav";
 export default {
     components:{
         SideNav
+    },
+    methods:{
+        goDetail(){//跳转详情
+            this.$router.push('/home/department/detail')
+        }
     }
 }
 </script>
@@ -45,7 +50,6 @@ export default {
     .sup_right{
         width: calc(100% - 352px - 20px - 40px);
         height: 600px;
-        border:1px solid red;
         background: #fff;
         box-shadow: 1px 1px 8px #ccc;
         padding: 20px;

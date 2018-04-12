@@ -67,7 +67,6 @@
     .sup_right {
         width: calc(100% - 352px - 20px - 40px);
         height: 600px;
-        border: 1px solid red;
         background: #fff;
         box-shadow: 1px 1px 8px #ccc;
         padding: 20px;
