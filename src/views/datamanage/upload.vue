@@ -120,7 +120,7 @@
                 <div class="accessory disabled">
                     <i class="iconfont" v-bind:class="{ active: '1'== isFile}">&#xe615;</i>
                     <span>{{isFile==1?_filename:'请选择文件上传'}}</span>
-                    <input type="file" name="" id="file" accept=".pdf" @change="changeFile()" disabled>
+                    <input type="file" name="" accept=".pdf" @change="changeFile()" disabled>
                 </div>
             </div>
             <div class="btns">
@@ -150,9 +150,6 @@
                 remnant:500
             }
         },
-        components: {
-            // Breadcrumb
-        },
         methods: {
             getDetail() { //获取附件列表
                 this.$ajax.get(`/api/self_point_relations/${this.$route.params.id}`, {}).then((res) => {
@@ -167,13 +164,15 @@
             toggleUpload(type) {
                 var upload = document.getElementById("up_dialog")
                 upload.style.display = type
+
                 if (type == 'none') {
                     this.filename = ''
                     this.filenum = ''
                     this.remark = ''
                     this.isFile = 0,
-                        this._filename = ''
-                    document.getElementById("file").value = ''
+                    this._filename = ''
+                    this.picked = 'one'
+                    // document.getElementById("file").value = ''
                 }
             },
             showDel(type, id) {
@@ -230,17 +229,6 @@
                         console.log(err)
                     })
                 })
-            },
-            open(url, normal) {
-                if (normal && url == null) {
-                    alert("没有附件")
-                    return
-                }
-                if (url == null) {
-                    alert("该文件为保密文件")
-                    return
-                }
-                window.open(url)
             },
             changeFile() {
                 var file = document.getElementById("file").files[0]
