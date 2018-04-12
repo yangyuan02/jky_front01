@@ -82,6 +82,7 @@
             }
         },
         created() {
+            console.log(this.$store.state.author)
             this.getPath()
             this.getPersonInfo()
         },

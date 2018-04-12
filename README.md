@@ -6,16 +6,18 @@
 ### 开发环境
 
 	cp config/index.js.example config/index.js
-	
+
 	docker network create thrive_jky
-	
+
 	docker-compose build
 	docker-compose run app yarn install
 	docker-compose up -d
-	
+
 ### 访问项目
 
-后端 [jky_backend](http://120.55.242.229/root/jky_backend) 项目.  
+项目注意:npm装新包之后需要重新执行 docker-compose run app yarn install  docker-compose up -d
+
+后端 [jky_backend](http://120.55.242.229/root/jky_backend) 项目.
 点击访问 [http://127.0.0.1:8082](http://127.0.0.1:8082)
 
 
