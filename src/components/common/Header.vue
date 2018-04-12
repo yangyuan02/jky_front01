@@ -39,6 +39,7 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
     export default {
         data() {
             return {
@@ -81,8 +82,13 @@
                 }
             }
         },
+        computed:{
+            ...mapGetters({
+                'isUpdata' : 'getIsUpdata'
+            })
+        },
         created() {
-            // console.log(this.$store.state.author)
+            console.log(this.isUpdata)
             this.getPath()
             this.getPersonInfo()
         },
