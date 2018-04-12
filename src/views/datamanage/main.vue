@@ -65,6 +65,8 @@
 
     import Progress from "@/components/common/Progress";
 
+    import {mapActions,mapGetters} from 'vuex'
+
     export default {
         data() {
             return {
@@ -77,9 +79,13 @@
             Progress
         },
         methods: {
+            ...mapActions([
+                'updataIsData'
+            ]),
             getData(url) { //获取数据
                 this.$ajax.get(url, {}).then((res) => {
                     this.table = res.data
+                    this.updataIsData(url)
                 }, (err) => {
                     console.log(err)
                 })
@@ -102,6 +108,18 @@
             },
             goReport(){
                 this.$router.push('./report')
+            }
+        },
+        computed :{
+             ...mapGetters({
+                'isUpdata' : 'getIsUpdata'
+            })
+        },
+        watch:{
+            isUpdata(OloData,NewData){
+                if(OloData=='/api/role_points'){
+                    this.getData('/api/role_points')
+                }
             }
         },
         mounted() {

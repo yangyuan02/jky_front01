@@ -39,7 +39,8 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {mapActions,mapGetters} from 'vuex'
+
     export default {
         data() {
             return {
@@ -49,8 +50,12 @@
             }
         },
         methods: {
+            ...mapActions([
+                'updataIsData'
+            ]),
             goTo(url) {
                 this.$router.push(url)
+                this.updataIsData('/api/role_points')
             },
             getPersonInfo() {
                 var person = JSON.parse(window.localStorage.getItem("user"))
@@ -82,13 +87,7 @@
                 }
             }
         },
-        computed:{
-            ...mapGetters({
-                'isUpdata' : 'getIsUpdata'
-            })
-        },
         created() {
-            console.log(this.isUpdata)
             this.getPath()
             this.getPersonInfo()
         },
