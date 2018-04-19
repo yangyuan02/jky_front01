@@ -13,7 +13,7 @@ Vue.config.productionTip = false
 // 用钩子函数beforeEach()对路由进行判断
 router.beforeEach((to,from,next)=>{
     if(to.name !== 'login'){//除了登录页
-        if(window.localStorage.getItem("user")){
+        if(window.localStorage.getItem("token")){
 
             next()
 
