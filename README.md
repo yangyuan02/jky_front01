@@ -7,7 +7,7 @@
 
 	cp config/index.js.example config/index.js
 
-	docker network create thrive_jky
+	docker network create jky_bear
 
 	docker-compose build
 	docker-compose run app yarn install
