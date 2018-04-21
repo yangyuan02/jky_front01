@@ -33,15 +33,27 @@
             },
             login() {
                 this.$ajax.post("/api/user_token", {
-                    "account": "thrive_4",
+                    "account": "thrive_2",
                     "password": "123456"
                 }).then((res) => {
                     if (res.data.jwt) {
                         var token = res.data.jwt
                         var user = jsrsasign.KJUR.jws.JWS.parse(token).payloadObj
+                        window.localStorage.setItem("user",JSON.stringify(user))
                         console.log(user)
                         window.localStorage.setItem("token", JSON.stringify(token))
-                        this.$router.push('./home/datamanage')
+                        if(user.role=='省用户'){
+                            this.$router.push('./home/datamanage')
+                        }
+                        if(user.role=='网评专家'){
+                            this.$router.push('./home/specialist')
+                        }
+                        if(user.role=='实地专家'){
+                            // this.$router.push('./home/specialist')
+                        }
+                        if(user.role=='督导'){
+                            this.$router.push('./home/supervisor')
+                        }
                     }
                 }, (err) => {
                     console.log(err)

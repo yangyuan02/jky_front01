@@ -40,6 +40,7 @@ const departmentDetail = r => require.ensure([], () => r(require('@/views/superv
 
 Vue.use(Router)
 
+
 export default new Router({
     mode: 'history',
     routes: [
@@ -56,56 +57,68 @@ export default new Router({
                 {
                     path: '/home/datamanage',//省用户
                     component: datamanage,
+                    meta: { requiresAuth: '省用户' },
                     children: [
                         {
                             path: '/',
                             component: manageMain,
+                            meta: { requiresAuth: '省用户' }
                         },
                         {
                             path: '/home/upload/:id',
                             name:'upload',
                             component: upload,
+                            meta: { requiresAuth: '省用户' }
                         },
                         {
                             path: '/home/grade',
-                            component: grade
+                            component: grade,
+                            meta: { requiresAuth: '省用户' }
                         },
                         {
                             path: '/home/report',
-                            component: report
+                            component: report,
+                            meta: { requiresAuth: '省用户' }
                         }
                     ]
                 },
                 {
-                    path: '/home/specialist',//专家用户
+                    path: '/home/specialist',//网评专家
                     component: specialist,
+                    meta: { requiresAuth: '网评专家' },
                     children: [
                         {
                             path: '/',
                             component: specialistMain,
+                            meta: { requiresAuth: '网评专家' },
                         },
                         {
                             path: '/home/expert/:id',
                             name:'expert',
                             component: specialistGrade,
+                            meta: { requiresAuth: '网评专家' },
                         },
                     ]
                 },
                 {
-                    path: '/home/supervisor',//督导用户
+                    path: '/home/supervisor',//督导
                     component: supervisorIndex,
+                    meta: { requiresAuth: '督导' },
                     children: [
                         {
                             path: '/',
                             component: supervisorMain,
+                            meta: { requiresAuth: '督导' },
                         },
                         {
                             path: '/home/department',
                             component: department,
+                            meta: { requiresAuth: '督导' },
                         },
                         {
                             path: '/home/department/detail',
                             component: departmentDetail,
+                            meta: { requiresAuth: '督导' },
                         }
                     ]
                 }

@@ -6,14 +6,14 @@
             </div>
             <div class="person_bar">
                 <div class="massage">
-                    <i class="iconfont">&#xe60e;</i>
-                    <span>截止日期:{{person.end_at}}</span>
-                    <i class="iconfont">&#xe614;</i>
-                    <span>通知</span>
+                    <!-- <i class="iconfont">&#xe60e;</i> -->
+                    <!-- <span>截止日期:{{person.end_at}}</span> -->
+                    <!-- <i class="iconfont">&#xe614;</i> -->
+                    <!-- <span>通知</span> -->
                 </div>
                 <div class="person">
                     <div class="user" @click="toggle()">
-                        <span>{{person.type}}</span>
+                        <span>{{person.name}}</span>
                         <i class="iconfont">&#xe656;</i>
                     </div>
                     <div class="sub" v-bind:class="{ active: isActive }">
@@ -58,20 +58,10 @@
                 this.updataIsData('/api/role_points')
             },
             getPersonInfo() {
-                var person = JSON.parse(window.localStorage.getItem("user"))
-                if (person.type == 'ProvinceUser') {
-                    person.type = '省用户'
-                }
-                if (person.type == 'LeaderUser') {
-                    person.type = '专家用户'
-                }
-                if (person.type == 'MasterUser') {
-                    person.type = '专家组长'
-                }
-                this.person = person
+                this.person = JSON.parse(window.localStorage.getItem("user"))
             },
             logout() {
-                window.localStorage.removeItem("user")
+                window.localStorage.removeItem("token")
                 this.$router.replace({
                     "path": "/"
                 })
@@ -88,6 +78,7 @@
             }
         },
         created() {
+            // console.log(this.person)
             this.getPath()
             this.getPersonInfo()
         },
