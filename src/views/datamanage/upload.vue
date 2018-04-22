@@ -42,7 +42,7 @@
                         <span>简述</span>
                     </div>
                     <div class="review_text">
-                        <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model="review.user_remark" @input="descInput" maxlength="500">
+                        <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model="review.content" @input="descInput" maxlength="500">
                                                                             </textarea>
                         <p>
                             <span>字数限制：{{remnant}}/500</span>
@@ -147,20 +147,30 @@
                 isFile: 0,
                 _filename: '',
                 remnant:500,
-                assessments:{
-                }
+                assessments:{}
             }
         },
         methods: {
-            getDetail() { //获取附件列表
-                this.$ajax.get(`/api/assessments/${this.$route.params.id}`, {}).then((res) => {
+            getDetail() { //获取abc评测标准
+                this.$ajax.get(`/api/assessments/${this.$route.params.id}`).then((res) => {
                     this.assessments = res.data
-                    // this.fileList = res.data
-                    // this.review.self_point = res.data.self_point
-                    // this.review.user_remark = res.data.user_remark
                     this.descInput()
                 }, (err) => {
                     console.log(err)
+                })
+            },
+            getScores(){//获取评测详情
+                this.$ajax.get(`/api/province/scores/${this.$route.params.id}`).then((res)=>{
+                    this.review = res.data
+                    if(this.review.level=='less'){
+                        this.review.self_point = 'A'
+                    }
+                    if(this.review.level=='basic'){
+                        this.review.self_point = 'B'
+                    }
+                    if(this.review.level=='fully'){
+                        this.review.self_point = 'C'
+                    }
                 })
             },
             toggleUpload(type) {
@@ -248,15 +258,14 @@
                     alert("请选择评价等级")
                     return
                 }
-                console.log(this.review.user_remark)
-                // if (this.review.user_remark == null) {
-                //     alert("请写评价详情")
-                //     return
-                // }
-                // if (this.review.user_remark.length > 500) {
-                //     alert("最多500字")
-                //     return
-                // }
+                if (this.review.content == null) {
+                    alert("请写评价详情")
+                    return
+                }
+                if (this.review.content.length > 500) {
+                    alert("最多500字")
+                    return
+                }
                 this.review.assessment_std_id = this.$route.params.id
                 this.$ajax.post("/api/assessments/score", this.review)
                     .then((res) => {
@@ -264,12 +273,13 @@
                     }, (err) => {})
             },
             descInput() { 
-                var txtVal = this.review.user_remark?this.review.user_remark.length:0; 
+                var txtVal = this.review.content?this.review.content.length:0; 
                 this.remnant = 500 - txtVal; 
             }
         },
         mounted() {
             this.getDetail()
+            this.getScores()
         }
     }
 </script>
