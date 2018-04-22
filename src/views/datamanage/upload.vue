@@ -160,7 +160,7 @@
                 })
             },
             getScores(){//获取评测详情
-                this.$ajax.get(`/api/province/scores/${this.$route.params.id}`).then((res)=>{
+                this.$ajax.get(`/api/scores/${this.$route.params.id}`).then((res)=>{
                     this.review = res.data
                     if(this.review.level=='less'){
                         this.review.self_point = 'A'
@@ -254,6 +254,7 @@
                 // this.changFile = 0
             },
             save() {
+                var assessment_std_id = ''
                 if (this.review.self_point == null) {
                     alert("请选择评价等级")
                     return
@@ -266,11 +267,32 @@
                     alert("最多500字")
                     return
                 }
-                this.review.assessment_std_id = this.$route.params.id
-                this.$ajax.post("/api/assessments/score", this.review)
+                if(this.review.self_point == "A"){
+                    assessment_std_id = this.assessments.stds[0].std_id
+                }
+                if(this.review.self_point == "B"){
+                    assessment_std_id = this.assessments.stds[1].std_id
+                }
+                if(this.review.self_point == "C"){
+                    assessment_std_id = this.assessments.stds[2].std_id
+                }
+
+                var param = {
+                    "assessment_std_id":assessment_std_id,
+                    "content":this.review.content
+                }
+                if(this.assessments.content){
+                    this.$ajax.patch(`/api/assessments/${this.$route.params.id}/scores`, param)
                     .then((res) => {
                         alert("感谢您的评价")
                     }, (err) => {})
+                }else{
+                    this.$ajax.post(`/api/assessments/${this.$route.params.id}/scores`, param)
+                    .then((res) => {
+                        alert("感谢您的评价")
+                    }, (err) => {})
+                }
+
             },
             descInput() { 
                 var txtVal = this.review.content?this.review.content.length:0; 

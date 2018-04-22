@@ -90,7 +90,7 @@
             getData(url) { //获取数据
                 this.$ajax.get(url, {}).then((res) => {
                     var data = res.data
-                    this.$ajax.get("/api/province/scores").then((res)=>{
+                    this.$ajax.get("/api/scores").then((res)=>{
                         var scores = res.data
                         data.forEach(item => {
                             scores.forEach(itemScore =>{
