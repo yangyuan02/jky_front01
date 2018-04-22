@@ -93,6 +93,11 @@ export default new Router({
                             meta: { requiresAuth: '网评专家' },
                         },
                         {
+                            path: '/home/specialist/grade',
+                            component: grade,
+                            meta: { requiresAuth: '网评专家' },
+                        },
+                        {
                             path: '/home/expert/:id',
                             name:'expert',
                             component: specialistGrade,
@@ -118,6 +123,11 @@ export default new Router({
                         {
                             path: '/home/department/detail',
                             component: departmentDetail,
+                            meta: { requiresAuth: '督导' },
+                        },
+                        {
+                            path: '/home/supervisor/result',
+                            component: grade,
                             meta: { requiresAuth: '督导' },
                         }
                     ]

@@ -47,9 +47,9 @@
                         <td :rowspan="item.two_row_span" v-bind:class="{ show: item.two_display.toString()=='false'}" style="width:25%;">{{item.two_content.replace(/\s/g,"")}}</td>
                         <td style="width:20.949%;">{{item.three_content.replace(/\s/g,"")}}</td>
                         <td style="width:7%;text-align:center;">
-                            <i></i>
+                            {{item.attach}}
                         </td>
-                        <td style="width:7%;text-align: center;">-</td>
+                        <td style="width:7%;text-align: center;">{{grade[item.level]}}</td>
                         <td style="width:18.739%;">
                             <a href="javascript:;" @click="goDatail(item.three_id)">上传</a>
                             <!-- <a href="javascript:;" @click="goDatail(item.three_id)">补传</a> -->
@@ -72,7 +72,12 @@
             return {
                 table: [],
                 point_count: {},
-                progress: '0%'
+                progress: '0%',
+                grade:{
+                    less:"A",
+                    basic:"B",
+                    fully:"C"
+                }
             }
         },
         components:{
@@ -84,8 +89,19 @@
             ]),
             getData(url) { //获取数据
                 this.$ajax.get(url, {}).then((res) => {
-                    console.log(res)
-                    this.table = res.data
+                    var data = res.data
+                    this.$ajax.get("/api/scores").then((res)=>{
+                        var scores = res.data
+                        data.forEach(item => {
+                            scores.forEach(itemScore =>{
+                                if(item.three_id==itemScore.assessment){
+                                    item.attach = itemScore.attach
+                                    item.level = itemScore.level
+                                }
+                            })
+                        });
+                        this.table = data
+                    })
                     // this.updataIsData(url)
                 }, (err) => {
                     console.log(err)
