@@ -3,25 +3,25 @@
         <nav>
             <div class="target" style="margin-bottom:30px;">
                 <div class="target_title">测评点</div>
-                <div class="target_con" v-text="assessments.content">
+                <div class="target_con" v-if="assessments.content" v-text="assessments.content">
                 </div>
             </div>
             <div class="target">
                 <div class="target_title blue">A</div>
-                <div class="target_con" v-text="assessments.stds[0].content">
-                    1.全面贯彻党的教育方针的具体部署安排和措施落实情况
+                <div class="target_con" v-if="assessments.content">
+                    {{assessments.stds[0].content}}
                 </div>
             </div>
             <div class="target">
                 <div class="target_title blue">B</div>
-                <div class="target_con" v-text="assessments.stds[1].content">
-                    1.全面贯彻党的教育方针的具体部署安排和措施落实情况
+                <div class="target_con" v-if="assessments.content">
+                    {{assessments.stds[1].content}}
                 </div>
             </div>
             <div class="target">
                 <div class="target_title blue">C</div>
-                <div class="target_con" v-text="assessments.stds[2].content">
-                    1.全面贯彻党的教育方针的具体部署安排和措施落实情况
+                <div class="target_con" v-if="assessments.content">
+                    {{assessments.stds[2].content}}
                 </div>
             </div>
         </nav>
@@ -147,13 +147,13 @@
                 isFile: 0,
                 _filename: '',
                 remnant:500,
-                assessments:{}
+                assessments:{
+                }
             }
         },
         methods: {
             getDetail() { //获取附件列表
                 this.$ajax.get(`/api/assessments/${this.$route.params.id}`, {}).then((res) => {
-                    console.log(res.data)
                     this.assessments = res.data
                     // this.fileList = res.data
                     // this.review.self_point = res.data.self_point
