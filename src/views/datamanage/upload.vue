@@ -281,13 +281,13 @@
                     "assessment_std_id":assessment_std_id,
                     "content":this.review.content
                 }
-                if(this.assessments.content){
-                    this.$ajax.patch(`/api/assessments/${this.$route.params.id}/scores`, param)
+                if(this.review.code=='404'){
+                    this.$ajax.post(`/api/assessments/${this.$route.params.id}/scores`, param)
                     .then((res) => {
                         alert("感谢您的评价")
                     }, (err) => {})
                 }else{
-                    this.$ajax.post(`/api/assessments/${this.$route.params.id}/scores`, param)
+                    this.$ajax.patch(`/api/assessments/${this.$route.params.id}/scores`, param)
                     .then((res) => {
                         alert("感谢您的评价")
                     }, (err) => {})
