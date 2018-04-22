@@ -3,24 +3,24 @@
         <nav>
             <div class="target" style="margin-bottom:30px;">
                 <div class="target_title">测评点</div>
-                <div class="target_con" v-text="fileList.point">
+                <div class="target_con" v-text="assessments.content">
                 </div>
             </div>
             <div class="target">
                 <div class="target_title blue">A</div>
-                <div class="target_con" v-text="fileList.a">
+                <div class="target_con" v-text="assessments.stds[0].content">
                     1.全面贯彻党的教育方针的具体部署安排和措施落实情况
                 </div>
             </div>
             <div class="target">
                 <div class="target_title blue">B</div>
-                <div class="target_con" v-text="fileList.b">
+                <div class="target_con" v-text="assessments.stds[1].content">
                     1.全面贯彻党的教育方针的具体部署安排和措施落实情况
                 </div>
             </div>
             <div class="target">
                 <div class="target_title blue">C</div>
-                <div class="target_con" v-text="fileList.c">
+                <div class="target_con" v-text="assessments.stds[2].content">
                     1.全面贯彻党的教育方针的具体部署安排和措施落实情况
                 </div>
             </div>
@@ -133,8 +133,7 @@
 
 <script>
     import fayes from 'faye'
-    // import asideNav from "./asidenav";
-    // import Breadcrumb from '@/components/common/breadcrumb'
+
     export default {
         data() {
             return {
@@ -147,15 +146,18 @@
                 "review": {},
                 isFile: 0,
                 _filename: '',
-                remnant:500
+                remnant:500,
+                assessments:{}
             }
         },
         methods: {
             getDetail() { //获取附件列表
-                this.$ajax.get(`/api/self_point_relations/${this.$route.params.id}`, {}).then((res) => {
-                    this.fileList = res.data
-                    this.review.self_point = res.data.self_point
-                    this.review.user_remark = res.data.user_remark
+                this.$ajax.get(`/api/assessments/${this.$route.params.id}`, {}).then((res) => {
+                    console.log(res.data)
+                    this.assessments = res.data
+                    // this.fileList = res.data
+                    // this.review.self_point = res.data.self_point
+                    // this.review.user_remark = res.data.user_remark
                     this.descInput()
                 }, (err) => {
                     console.log(err)
@@ -247,16 +249,16 @@
                     return
                 }
                 console.log(this.review.user_remark)
-                if (this.review.user_remark == null) {
-                    alert("请写评价详情")
-                    return
-                }
-                if (this.review.user_remark.length > 500) {
-                    alert("最多500字")
-                    return
-                }
-                this.review.point_id = this.$route.params.id
-                this.$ajax.post("/api/role_points/save_point", this.review)
+                // if (this.review.user_remark == null) {
+                //     alert("请写评价详情")
+                //     return
+                // }
+                // if (this.review.user_remark.length > 500) {
+                //     alert("最多500字")
+                //     return
+                // }
+                this.review.assessment_std_id = this.$route.params.id
+                this.$ajax.post("/api/assessments/score", this.review)
                     .then((res) => {
                         alert("感谢您的评价")
                     }, (err) => {})

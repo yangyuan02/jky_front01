@@ -13,14 +13,14 @@
             <div class="table_scroll" style="height:540px;width:1222px;margin:0 auto;overflow:scroll;">
                 <table border="1" cellspacing="0">
                     <tr v-for="(item,index) in table" :key="index">
-                        <td :rowspan="item.one_row" v-bind:class="{ show: item.show_one=='false'}">{{item.one.replace(/\s/g,"")}}</td>
-                        <td :rowspan="item.two_row" v-bind:class="{ show: item.show_two=='false'}">{{item.two.replace(/\s/g,"")}}</td>
-                        <td>{{item.three.replace(/\s/g,"")}}</td>
+                        <td :rowspan="item.one_row_span" v-bind:class="{ show: item.one_display.toString()=='false'}">{{item.one_content.replace(/\s/g,"")}}</td>
+                        <td :rowspan="item.two_row_span" v-bind:class="{ show: item.two_display.toString()=='false'}">{{item.two_content.replace(/\s/g,"")}}</td>
+                        <td>{{item.three_content.replace(/\s/g,"")}}</td>
                         <td>
                             <Progress :progress="progress"></Progress>
                         </td>
                         <td>
-                            <a href="javascript:;" @click="goDatail(item.id)">评估</a>
+                            <a href="javascript:;" @click="goDatail(item.three_id)">评估</a>
                         </td>
                     </tr>
                 </table>
@@ -70,7 +70,7 @@
             }
         },
         mounted() {
-            this.getData('/api/role_points')
+            this.getData('/api/assessments')
         }
     }
 </script>

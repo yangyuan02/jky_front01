@@ -14,11 +14,11 @@
                 <div class="person">
                     <div class="user" @click="toggle()">
                         <span>{{person.name}}</span>
-                        <i class="iconfont">&#xe656;</i>
+                        <!-- <i class="iconfont">&#xe656;</i> -->
                     </div>
                     <div class="sub" v-bind:class="{ active: isActive }">
                         <ul>
-                            <li>账户信息</li>
+                            <!-- <li>账户信息</li> -->
                             <li @click="logout()">退出登录</li>
                         </ul>
                     </div>
@@ -62,6 +62,7 @@
             },
             logout() {
                 window.localStorage.removeItem("token")
+                window.localStorage.removeItem("user")
                 this.$router.replace({
                     "path": "/"
                 })
@@ -99,12 +100,14 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding: 0 30px;
+        box-sizing:border-box;
     }
     header .systemname {
         font-size: 20px;
         color: #fff;
-        margin-left: 30px;
-        margin-right: 100px;
+        /* margin-left: 30px; */
+        /* margin-right: 100px; */
         cursor: pointer;
     }
     .nav ul {
@@ -124,7 +127,7 @@
         color: #327bca;
     }
     header .person_bar {
-        width: 400px;
+        width: 140px;
         height: 72px;
         /* margin-left: 410px; */
         display: flex;
@@ -141,6 +144,13 @@
         line-height: 30px;
         position: relative;
         margin-left: 10px;
+    }
+    header .person .user span{
+        width: 100%;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
     }
     header .person .sub {
         position: absolute;

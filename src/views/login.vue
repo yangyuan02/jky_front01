@@ -33,14 +33,13 @@
             },
             login() {
                 this.$ajax.post("/api/user_token", {
-                    "account": "thrive_2",
+                    "account": "thrive_1_1",
                     "password": "123456"
                 }).then((res) => {
                     if (res.data.jwt) {
                         var token = res.data.jwt
                         var user = jsrsasign.KJUR.jws.JWS.parse(token).payloadObj
                         window.localStorage.setItem("user",JSON.stringify(user))
-                        console.log(user)
                         window.localStorage.setItem("token", JSON.stringify(token))
                         if(user.role=='省用户'){
                             this.$router.push('./home/datamanage')

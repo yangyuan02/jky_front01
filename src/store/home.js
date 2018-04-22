@@ -1,7 +1,7 @@
 import * as types from './mutation-types'
 
 const state = {
-    isUpdata: '/api/role_points'
+    isUpdata: '/api/assessments'
 }
 
 const getters = {
