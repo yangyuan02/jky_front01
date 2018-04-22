@@ -39,14 +39,27 @@
 </template>
 
 <script>
-    import {mapActions,mapGetters} from 'vuex'
-
+    import {
+        mapActions,
+        mapGetters
+    } from 'vuex'
     export default {
         data() {
             return {
                 path: '',
                 isActive: true,
-                person: {}
+                person: {},
+                nav: [
+                    [{
+                            "path": "/home/datamanage",
+                            "title": "资料管理"
+                        },
+                        {
+                            "path": "/home/grade",
+                            "title": "评分标准"
+                        }
+                    ]
+                ]
             }
         },
         methods: {
@@ -58,7 +71,20 @@
                 this.updataIsData('/api/role_points')
             },
             getPersonInfo() {
+                console.log(window.localStorage.getItem("user"))
                 this.person = JSON.parse(window.localStorage.getItem("user"))
+                if (this.person.role == '省用户') {
+                    this.person.level = 0
+                }
+                if (this.person.role == '网评专家') {
+                    this.person.level = 1
+                }
+                if (this.person.role == '实地专家') {
+                    this.person.level = 2
+                }
+                if (this.person.role == '督导') {
+                    this.person.level = 3
+                }
             },
             logout() {
                 window.localStorage.removeItem("token")
@@ -101,7 +127,7 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 30px;
-        box-sizing:border-box;
+        box-sizing: border-box;
     }
     header .systemname {
         font-size: 20px;
@@ -145,11 +171,11 @@
         position: relative;
         margin-left: 10px;
     }
-    header .person .user span{
+    header .person .user span {
         width: 100%;
         display: inline-block;
         overflow: hidden;
-        text-overflow:ellipsis;
+        text-overflow: ellipsis;
         white-space: nowrap;
     }
     header .person .sub {

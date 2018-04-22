@@ -39,18 +39,24 @@
                     if (res.data.jwt) {
                         var token = res.data.jwt
                         var user = jsrsasign.KJUR.jws.JWS.parse(token).payloadObj
-                        window.localStorage.setItem("user",JSON.stringify(user))
+
                         window.localStorage.setItem("token", JSON.stringify(token))
+
+                        window.localStorage.setItem("user",JSON.stringify(user))
                         if(user.role=='省用户'){
                             this.$router.push('./home/datamanage')
+                            user.level = 0
                         }
                         if(user.role=='网评专家'){
                             this.$router.push('./home/specialist')
+                            user.level = 1
                         }
                         if(user.role=='实地专家'){
+                            user.level = 2
                             // this.$router.push('./home/specialist')
                         }
                         if(user.role=='督导'){
+                            user.level = 3
                             this.$router.push('./home/supervisor')
                         }
                     }
