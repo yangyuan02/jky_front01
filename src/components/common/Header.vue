@@ -6,19 +6,19 @@
             </div>
             <div class="person_bar">
                 <div class="massage">
-                    <i class="iconfont">&#xe60e;</i>
-                    <span>截止日期:{{person.end_at}}</span>
-                    <i class="iconfont">&#xe614;</i>
-                    <span>通知</span>
+                    <!-- <i class="iconfont">&#xe60e;</i> -->
+                    <!-- <span>截止日期:{{person.end_at}}</span> -->
+                    <!-- <i class="iconfont">&#xe614;</i> -->
+                    <!-- <span>通知</span> -->
                 </div>
                 <div class="person">
                     <div class="user" @click="toggle()">
-                        <span>{{person.type}}</span>
-                        <i class="iconfont">&#xe656;</i>
+                        <span>{{person.name}}</span>
+                        <!-- <i class="iconfont">&#xe656;</i> -->
                     </div>
                     <div class="sub" v-bind:class="{ active: isActive }">
                         <ul>
-                            <li>账户信息</li>
+                            <!-- <li>账户信息</li> -->
                             <li @click="logout()">退出登录</li>
                         </ul>
                     </div>
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+    import {mapActions,mapGetters} from 'vuex'
+
     export default {
         data() {
             return {
@@ -48,24 +50,18 @@
             }
         },
         methods: {
+            ...mapActions([
+                'updataIsData'
+            ]),
             goTo(url) {
-                console.log(url)
                 this.$router.push(url)
+                this.updataIsData('/api/role_points')
             },
             getPersonInfo() {
-                var person = JSON.parse(window.localStorage.getItem("user"))
-                if (person.type == 'ProvinceUser') {
-                    person.type = '省用户'
-                }
-                if (person.type == 'LeaderUser') {
-                    person.type = '专家用户'
-                }
-                if (person.type == 'MasterUser') {
-                    person.type = '专家组长'
-                }
-                this.person = person
+                this.person = JSON.parse(window.localStorage.getItem("user"))
             },
             logout() {
+                window.localStorage.removeItem("token")
                 window.localStorage.removeItem("user")
                 this.$router.replace({
                     "path": "/"
@@ -83,6 +79,7 @@
             }
         },
         created() {
+            // console.log(this.person)
             this.getPath()
             this.getPersonInfo()
         },
@@ -103,12 +100,14 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding: 0 30px;
+        box-sizing:border-box;
     }
     header .systemname {
         font-size: 20px;
         color: #fff;
-        margin-left: 30px;
-        margin-right: 100px;
+        /* margin-left: 30px; */
+        /* margin-right: 100px; */
         cursor: pointer;
     }
     .nav ul {
@@ -128,7 +127,7 @@
         color: #327bca;
     }
     header .person_bar {
-        width: 400px;
+        width: 140px;
         height: 72px;
         /* margin-left: 410px; */
         display: flex;
@@ -145,6 +144,13 @@
         line-height: 30px;
         position: relative;
         margin-left: 10px;
+    }
+    header .person .user span{
+        width: 100%;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
     }
     header .person .sub {
         position: absolute;

@@ -3,25 +3,25 @@
         <nav>
             <div class="target" style="margin-bottom:30px;">
                 <div class="target_title">测评点</div>
-                <div class="target_con" v-text="fileList.point">
+                <div class="target_con" v-if="assessments.content" v-text="assessments.content">
                 </div>
             </div>
             <div class="target">
                 <div class="target_title blue">A</div>
-                <div class="target_con" v-text="fileList.a">
-                    1.全面贯彻党的教育方针的具体部署安排和措施落实情况
+                <div class="target_con" v-if="assessments.content">
+                    {{assessments.stds[0].content}}
                 </div>
             </div>
             <div class="target">
                 <div class="target_title blue">B</div>
-                <div class="target_con" v-text="fileList.b">
-                    1.全面贯彻党的教育方针的具体部署安排和措施落实情况
+                <div class="target_con" v-if="assessments.content">
+                    {{assessments.stds[1].content}}
                 </div>
             </div>
             <div class="target">
                 <div class="target_title blue">C</div>
-                <div class="target_con" v-text="fileList.c">
-                    1.全面贯彻党的教育方针的具体部署安排和措施落实情况
+                <div class="target_con" v-if="assessments.content">
+                    {{assessments.stds[2].content}}
                 </div>
             </div>
         </nav>
@@ -120,7 +120,7 @@
                 <div class="accessory disabled">
                     <i class="iconfont" v-bind:class="{ active: '1'== isFile}">&#xe615;</i>
                     <span>{{isFile==1?_filename:'请选择文件上传'}}</span>
-                    <input type="file" name="" id="file" accept=".pdf" @change="changeFile()" disabled>
+                    <input type="file" name="" accept=".pdf" @change="changeFile()" disabled>
                 </div>
             </div>
             <div class="btns">
@@ -133,8 +133,7 @@
 
 <script>
     import fayes from 'faye'
-    // import asideNav from "./asidenav";
-    // import Breadcrumb from '@/components/common/breadcrumb'
+
     export default {
         data() {
             return {
@@ -145,40 +144,37 @@
                 "picked": 'one',
                 "fileList": {},
                 "review": {},
-                "titleIndex": '',
                 isFile: 0,
                 _filename: '',
-                remnant:500
+                remnant:500,
+                assessments:{
+                }
             }
-        },
-        components: {
-            // Breadcrumb
         },
         methods: {
             getDetail() { //获取附件列表
-                this.$ajax.get(`/api/self_point_relations/${this.$route.params.id}`, {}).then((res) => {
-                    this.fileList = res.data
-                    this.review.self_point = res.data.self_point
-                    this.review.user_remark = res.data.user_remark
-                    this.titleIndex = this.fileList.point.substring(0, this.fileList.point.indexOf('.'))
+                this.$ajax.get(`/api/assessments/${this.$route.params.id}`, {}).then((res) => {
+                    this.assessments = res.data
+                    // this.fileList = res.data
+                    // this.review.self_point = res.data.self_point
+                    // this.review.user_remark = res.data.user_remark
                     this.descInput()
                 }, (err) => {
                     console.log(err)
                 })
             },
-            goTo() {
-                this.$router.push('/home/datamanage')
-            },
             toggleUpload(type) {
                 var upload = document.getElementById("up_dialog")
                 upload.style.display = type
+
                 if (type == 'none') {
                     this.filename = ''
                     this.filenum = ''
                     this.remark = ''
                     this.isFile = 0,
-                        this._filename = ''
-                    document.getElementById("file").value = ''
+                    this._filename = ''
+                    this.picked = 'one'
+                    // document.getElementById("file").value = ''
                 }
             },
             showDel(type, id) {
@@ -236,17 +232,6 @@
                     })
                 })
             },
-            open(url, normal) {
-                if (normal && url == null) {
-                    alert("没有附件")
-                    return
-                }
-                if (url == null) {
-                    alert("该文件为保密文件")
-                    return
-                }
-                window.open(url)
-            },
             changeFile() {
                 var file = document.getElementById("file").files[0]
                 console.log(file)
@@ -264,16 +249,16 @@
                     return
                 }
                 console.log(this.review.user_remark)
-                if (this.review.user_remark == null) {
-                    alert("请写评价详情")
-                    return
-                }
-                if (this.review.user_remark.length > 500) {
-                    alert("最多500字")
-                    return
-                }
-                this.review.point_id = this.$route.params.id
-                this.$ajax.post("/api/role_points/save_point", this.review)
+                // if (this.review.user_remark == null) {
+                //     alert("请写评价详情")
+                //     return
+                // }
+                // if (this.review.user_remark.length > 500) {
+                //     alert("最多500字")
+                //     return
+                // }
+                this.review.assessment_std_id = this.$route.params.id
+                this.$ajax.post("/api/assessments/score", this.review)
                     .then((res) => {
                         alert("感谢您的评价")
                     }, (err) => {})

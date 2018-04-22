@@ -10,11 +10,9 @@
                 </div>
                 <div class="data_header_right">
                     <div class="progress_box">
-                        <span>{{point_count.finish}}</span>
-                        <div class="progress">
-                            <div class="progress_bar" :style="{width:progress}"></div>
-                        </div>
-                        <span>{{point_count.finish+point_count.no_finish}}</span>
+                        <span>{{0}}</span>
+                        <Progress :progress="progress"></Progress>
+                        <span>{{92}}</span>
                     </div>
                     <div class="data_satus">
                         <a href="javascrip:;" @click="getData('/api/role_points/finish_point')">已完成{{point_count.finish}}</a>
@@ -34,17 +32,27 @@
             </div>
             <div class="table_scroll" style="height:540px;width:1222px;margin:0 auto;overflow:scroll;">
                 <table border="1" cellspacing="0">
-                    <tr v-for="(item,index) in table" :key="index">
-                        <td :rowspan="item.one_row" v-bind:class="{ show: item.show_one=='false'}" style="width:22%;">{{item.one.replace(/\s/g,"")}}</td>
-                        <td :rowspan="item.two_row" v-bind:class="{ show: item.show_two=='false'}" style="width:25%;">{{item.two.replace(/\s/g,"")}}</td>
-                        <td style="width:20.949%;">{{item.three.replace(/\s/g,"")}}</td>
-                        <td style="width:7%;text-align:center;">
-                            <i :class="item.status==1?'status1':'status2'"></i>
-                        </td>
-                        <td style="width:7%;text-align: center;">{{item.self_point}}</td>
+                    <tr>
+                        <td style="width:22%;">自评总报告</td>
+                        <td style="width:25%;"></td>
+                        <td style="width:20.949%;"></td>
+                        <td style="width:7%;text-align:center;">未填写</td>
+                        <td style="width:7%;text-align: center;">-</td>
                         <td style="width:18.739%;">
-                            <a href="javascript:;" @click="goDatail(item.id)">上传</a>
-                            <a href="javascript:;" @click="goDatail(item.id)">补传</a>
+                            <a href="javascript:;" @click="goReport">填写</a>
+                        </td>
+                    </tr>
+                    <tr v-for="(item,index) in table" :key="index">
+                        <td :rowspan="item.one_row_span" v-bind:class="{ show: item.one_display.toString()=='false'}" style="width:22%;">{{item.one_content.replace(/\s/g,"")}}</td>
+                        <td :rowspan="item.two_row_span" v-bind:class="{ show: item.two_display.toString()=='false'}" style="width:25%;">{{item.two_content.replace(/\s/g,"")}}</td>
+                        <td style="width:20.949%;">{{item.three_content.replace(/\s/g,"")}}</td>
+                        <td style="width:7%;text-align:center;">
+                            <i></i>
+                        </td>
+                        <td style="width:7%;text-align: center;">-</td>
+                        <td style="width:18.739%;">
+                            <a href="javascript:;" @click="goDatail(item.three_id)">上传</a>
+                            <!-- <a href="javascript:;" @click="goDatail(item.three_id)">补传</a> -->
                         </td>
                     </tr>
                 </table>
@@ -54,18 +62,31 @@
 </template>
 
 <script>
+
+    import Progress from "@/components/common/Progress";
+
+    import {mapActions,mapGetters} from 'vuex'
+
     export default {
         data() {
             return {
                 table: [],
                 point_count: {},
-                progress: ''
+                progress: '0%'
             }
         },
+        components:{
+            Progress
+        },
         methods: {
+            ...mapActions([
+                'updataIsData'
+            ]),
             getData(url) { //获取数据
                 this.$ajax.get(url, {}).then((res) => {
+                    console.log(res)
                     this.table = res.data
+                    // this.updataIsData(url)
                 }, (err) => {
                     console.log(err)
                 })
@@ -85,11 +106,26 @@
                         id: id
                     }
                 })
+            },
+            goReport(){
+                this.$router.push('./report')
+            }
+        },
+        computed :{
+             ...mapGetters({
+                'isUpdata' : 'getIsUpdata'
+            })
+        },
+        watch:{
+            isUpdata(OloData,NewData){
+                if(OloData=='/api/assessments'){
+                    this.getData('/api/role_points')
+                }
             }
         },
         mounted() {
-            this.getData('/api/role_points')
-            this.getPoint_count()
+            this.getData('/api/assessments')
+            // this.getPoint_count()
         }
     }
 </script>
@@ -125,6 +161,12 @@
         border: 1px solid #ccc;
         margin: 0 auto;
     }
+    .manage table tr:nth-child(1) td{
+        height: 40px;
+    }
+    .manage table tr:nth-child(1) td:last-child a{
+        background: #7acedf !important;
+    }
     .manage table tr td:nth-child(6) {
         text-align: center;
     }
@@ -154,7 +196,7 @@
         border-radius: 4px;
     }
     .manage table tr td:nth-child(6) a:last-child {
-        background: #ccc;
+        /* background: #ccc; */
     }
     .data_header {
         display: flex;

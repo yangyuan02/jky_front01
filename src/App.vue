@@ -13,11 +13,11 @@ export default {
 <style>
 @font-face {
   font-family: 'iconfont';  /* project id 602941 */
-  src: url('//at.alicdn.com/t/font_602941_v2x9vvu8bvn53ik9.eot');
-  src: url('//at.alicdn.com/t/font_602941_v2x9vvu8bvn53ik9.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_602941_v2x9vvu8bvn53ik9.woff') format('woff'),
-  url('//at.alicdn.com/t/font_602941_v2x9vvu8bvn53ik9.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_602941_v2x9vvu8bvn53ik9.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_602941_ghp2461if55c23xr.eot');
+  src: url('//at.alicdn.com/t/font_602941_ghp2461if55c23xr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_602941_ghp2461if55c23xr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_602941_ghp2461if55c23xr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_602941_ghp2461if55c23xr.svg#iconfont') format('svg');
 }
 .iconfont{
     font-family:"iconfont" !important;
@@ -101,6 +101,12 @@ textarea {
     font-size: 12px;
     margin: 0;
 }
+input,
+    button,
+    select,
+    textarea {
+        outline: none;
+    }
 textarea {
     resize: none;
 }

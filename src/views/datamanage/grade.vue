@@ -23,9 +23,9 @@
                 <div class="table_body" style="height: 540px;margin: 0px auto; overflow: scroll;">
                     <table border="1" cellspacing="0">
                         <tr v-for="(item,index) in table" :key="index">
-                            <td :rowspan="item.one_row" v-bind:class="{ show: item.show_one=='false'}">{{item.one.replace(/\s/g,"")}}</td>
-                            <td :rowspan="item.two_row" v-bind:class="{ show: item.show_two=='false'}">{{item.two.replace(/\s/g,"")}}</td>
-                            <td>{{item.three.replace(/\s/g,"")}}</td>
+                            <td :rowspan="item.one_row_span" v-bind:class="{ show: item.one_display.toString()=='false'}">{{item.one_content.replace(/\s/g,"")}}</td>
+                            <td :rowspan="item.two_row_span" v-bind:class="{ show: item.two_display.toString()=='false'}">{{item.two_content.replace(/\s/g,"")}}</td>
+                            <td>{{item.three_content.replace(/\s/g,"")}}</td>
                             <td>{{item.a}}</td>
                             <td>{{item.b}}</td>
                             <td>{{item.c}}</td>
@@ -54,7 +54,7 @@
             }
         },
         mounted() {
-            this.getData('/api/role_points')
+            this.getData('/api/assessments')
         }
     }
 </script>
