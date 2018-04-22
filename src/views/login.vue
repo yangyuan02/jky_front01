@@ -33,8 +33,8 @@
             },
             login() {
                 this.$ajax.post("/api/user_token", {
-                    "account": "thrive_4_1",
-                    "password": "123456"
+                    "account": this.unsename,
+                    "password": this.password
                 }).then((res) => {
                     if (res.data.jwt) {
                         var token = res.data.jwt
