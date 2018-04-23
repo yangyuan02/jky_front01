@@ -110,14 +110,6 @@
                     console.log(err)
                 })
             },
-            getPoint_count() {
-                this.$ajax.get('/api/role_points/point_count', {}).then((res) => {
-                    this.progress = (res.data.finish / (res.data.finish + res.data.no_finish)) * 100 + '%'
-                    this.point_count = res.data
-                }, (err) => {
-                    console.log(err)
-                })
-            },
             goDatail(id) { //跳转详情
                 this.$router.push({
                     name: 'upload',
@@ -144,7 +136,6 @@
         },
         mounted() {
             this.getData('/api/assessments')
-            // this.getPoint_count()
         }
     }
 </script>

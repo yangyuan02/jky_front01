@@ -49,7 +49,7 @@
                         </p>
                     </div>
                     <div class="review_btn">
-                        <a href="javascrip:;" @click="save()">保存</a>
+                        <a href="javascrip:;" @click="save()">{{review.code=='404'?'保存':'更新'}}</a>
                     </div>
                 </div>
             </div>
