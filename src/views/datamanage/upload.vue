@@ -65,8 +65,8 @@
                 </div>
                 <div class="upload">
                     <ul>
-                        <li v-for="(item,index) in fileList.data" :key="index">
-                            <a href="">{{item.title}}</a>
+                        <li v-for="(item,index) in fileList" :key="index">
+                            <a href="">{{item.name}}</a>
                             <i class="iconfont" style="color:red;" @click="showDel('block',item.id)">&#xe612;</i>
                         </li>
                     </ul>
@@ -142,7 +142,7 @@
                 "remark": "",
                 "fileId": "",
                 "picked": 'one',
-                "fileList": {},
+                "fileList": [],
                 "review": {},
                 isFile: 0,
                 _filename: '',
@@ -173,6 +173,11 @@
                     }
                 })
             },
+            getFils(){//获取文件列表
+                this.$ajax.get(`/api/assessments/${this.$route.params.id}/assessment_files`).then((res)=>{
+                    this.fileList =  res.data
+                })
+            },
             toggleUpload(type) {
                 var upload = document.getElementById("up_dialog")
                 upload.style.display = type
@@ -193,9 +198,9 @@
                 this.fileId = id
             },
             del() { //删除附件
-                this.$ajax.delete(`/api/self_point_relations/${this.fileId}`, {}).then((res) => {
+                this.$ajax.delete(`/api/assessment_files/${this.fileId}`, {}).then((res) => {
                     if (res.data) {
-                        this.getDetail()
+                        this.getFils()
                         this.showDel('none', -1)
                     }
                 }, (err) => {
@@ -211,36 +216,24 @@
                 var fileData = new FormData()
                 this.picked = this.picked == 'one' ? true : false
                 var file = document.getElementById("file").files[0]
-                fileData.append("self_point_relation[file]", file)
-                fileData.append("self_point_relation[title]", this.filename)
-                fileData.append("self_point_relation[num]", this.filenum)
-                fileData.append("self_point_relation[remark]", this.remark)
-                fileData.append("self_point_relation[normal]", this.picked)
-                this.$ajax.post(`/api/self_point_relations?self_point_relation[self_point_id]=${id}`).then((res) => {
-                    var faye = new fayes.Client(`http://120.55.116.161:9292/api/events`);
-                    faye.subscribe(`/api/self_point_relations/${res.data.id}`, (status) => {
-                        console.log(status)
-                        if (status.message == "done") {
-                            this.getDetail()
-                            this.toggleUpload("none")
-                        }
-                    });
-                    return res.data.id
-                }, (err) => {
-                    console.log(err)
-                }).then((data) => {
-                    console.log(data)
-                    let config = {
+
+                fileData.append("file", file)
+                fileData.append("name", this.filename)
+                fileData.append("file_code", this.filenum)
+                fileData.append("remark", this.remark)
+                fileData.append("normal", this.picked)
+
+                let config = {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
                     }
-                    this.$ajax.put(`/api/self_point_relations/${data}`, fileData, config).then((res) => {
-                        console.log(1111)
-                    }, (err) => {
-                        console.log(err)
-                    })
+
+                this.$ajax.post(`/api//assessments/${id}/assessment_files`,fileData,config).then((res)=>{
+                    this.toggleUpload("none")
+                    this.getFils()
                 })
+
             },
             changeFile() {
                 var file = document.getElementById("file").files[0]
@@ -302,6 +295,7 @@
         mounted() {
             this.getDetail()
             this.getScores()
+            this.getFils()
         }
     }
 </script>
