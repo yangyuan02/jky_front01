@@ -10,7 +10,7 @@
                 </div>
                 <div class="data_header_right">
                     <div class="progress_box">
-                        <span>{{0}}</span>
+                        <span>{{finish}}</span>
                         <Progress :progress="progress"></Progress>
                         <span>{{92}}</span>
                     </div>
@@ -73,6 +73,7 @@
                 table: [],
                 point_count: {},
                 progress: '0%',
+                finish:'',
                 grade:{
                     less:"A",
                     basic:"B",
@@ -92,6 +93,8 @@
                     var data = res.data
                     this.$ajax.get("/api/scores").then((res)=>{
                         var scores = res.data
+                        this.progress = res.data.length/92 * 100 + '%'
+                        this.finish = res.data.length
                         data.forEach(item => {
                             scores.forEach(itemScore =>{
                                 if(item.three_id==itemScore.assessment){
