@@ -47,7 +47,20 @@
         methods: {
             getData(url) { //获取数据
                 this.$ajax.get(url, {}).then((res) => {
-                    this.table = res.data
+                    var data = res.data
+                    this.$ajax.get("/api/assessment_stds").then((res)=>{
+                        var scores = res.data
+                        data.forEach(item => {
+                            scores.forEach(itemScore =>{
+                                if(item.three_id==itemScore.assessment_id){
+                                    item.a = itemScore.a
+                                    item.b = itemScore.b
+                                    item.c = itemScore.c
+                                }
+                            })
+                        });
+                        this.table = data
+                    })
                 }, (err) => {
                     console.log(err)
                 })
