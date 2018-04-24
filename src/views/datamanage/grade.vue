@@ -23,12 +23,12 @@
                 <div class="table_body" style="height: 540px;margin: 0px auto; overflow: scroll;">
                     <table border="1" cellspacing="0">
                         <tr v-for="(item,index) in table" :key="index">
-                            <td :rowspan="item.one_row_span" v-bind:class="{ show: item.one_display.toString()=='false'}">{{item.one_content.replace(/\s/g,"")}}</td>
-                            <td :rowspan="item.two_row_span" v-bind:class="{ show: item.two_display.toString()=='false'}">{{item.two_content.replace(/\s/g,"")}}</td>
-                            <td>{{item.three_content.replace(/\s/g,"")}}</td>
-                            <td>{{item.a}}</td>
-                            <td>{{item.b}}</td>
-                            <td>{{item.c}}</td>
+                            <td :rowspan="item.one_row_span" v-bind:class="{ show: item.one_display.toString()=='false'}" style="padding:10px;">{{item.one_content.replace(/\s/g,"")}}</td>
+                            <td :rowspan="item.two_row_span" v-bind:class="{ show: item.two_display.toString()=='false'}" style="padding:10px;">{{item.two_content.replace(/\s/g,"")}}</td>
+                            <td style="padding:10px;">{{item.three_content.replace(/\s/g,"")}}</td>
+                            <td style="padding:10px;">{{item.a}}</td>
+                            <td style="padding:10px;">{{item.b}}</td>
+                            <td style="padding:10px;">{{item.c}}</td>
                         </tr>
                     </table>
                 </div>
@@ -47,7 +47,20 @@
         methods: {
             getData(url) { //获取数据
                 this.$ajax.get(url, {}).then((res) => {
-                    this.table = res.data
+                    var data = res.data
+                    this.$ajax.get("/api/assessment_stds").then((res)=>{
+                        var scores = res.data
+                        data.forEach(item => {
+                            scores.forEach(itemScore =>{
+                                if(item.three_id==itemScore.assessment_id){
+                                    item.a = itemScore.a
+                                    item.b = itemScore.b
+                                    item.c = itemScore.c
+                                }
+                            })
+                        });
+                        this.table = data
+                    })
                 }, (err) => {
                     console.log(err)
                 })

@@ -10,7 +10,7 @@
                 </div>
                 <div class="data_header_right">
                     <div class="progress_box">
-                        <span>{{0}}</span>
+                        <span>{{finish}}</span>
                         <Progress :progress="progress"></Progress>
                         <span>{{92}}</span>
                     </div>
@@ -30,7 +30,7 @@
                     <li style="width:18.739%;">材料操作</li>
                 </ul>
             </div>
-            <div class="table_scroll" style="height:540px;width:1222px;margin:0 auto;overflow:scroll;">
+            <div class="table_scroll" style="height:540px;width:100%;margin:0 auto;overflow:scroll;">
                 <table border="1" cellspacing="0">
                     <tr>
                         <td style="width:22%;">自评总报告</td>
@@ -73,10 +73,11 @@
                 table: [],
                 point_count: {},
                 progress: '0%',
+                finish:'',
                 grade:{
-                    less:"A",
+                    fully:"A",
                     basic:"B",
-                    fully:"C"
+                    less:"C"
                 }
             }
         },
@@ -92,6 +93,8 @@
                     var data = res.data
                     this.$ajax.get("/api/scores").then((res)=>{
                         var scores = res.data
+                        this.progress = res.data.length/92 * 100 + '%'
+                        this.finish = res.data.length
                         data.forEach(item => {
                             scores.forEach(itemScore =>{
                                 if(item.three_id==itemScore.assessment){
@@ -103,14 +106,6 @@
                         this.table = data
                     })
                     // this.updataIsData(url)
-                }, (err) => {
-                    console.log(err)
-                })
-            },
-            getPoint_count() {
-                this.$ajax.get('/api/role_points/point_count', {}).then((res) => {
-                    this.progress = (res.data.finish / (res.data.finish + res.data.no_finish)) * 100 + '%'
-                    this.point_count = res.data
                 }, (err) => {
                     console.log(err)
                 })
@@ -141,7 +136,6 @@
         },
         mounted() {
             this.getData('/api/assessments')
-            // this.getPoint_count()
         }
     }
 </script>
@@ -154,9 +148,10 @@
         background: #fff;
         margin: 0px 15px;
         box-shadow: 1px 1px 8px #ccc;
+        padding: 0px 15px;
     }
     .manage .table_header {
-        width: 1222px;
+        width: 100%;
         margin: 0 auto;
     }
     .manage .table_header ul {
@@ -173,7 +168,7 @@
         width: 100%;
     }
     .manage table {
-        width: 1222px;
+        width: 100%;
         border: 1px solid #ccc;
         margin: 0 auto;
     }
@@ -220,7 +215,6 @@
         align-items: center;
         justify-content: space-between;
         padding-left: 20px;
-        padding-right: 92px;
     }
     .data_header .progress_box {
         display: flex;

@@ -30,18 +30,18 @@
                 <div class="expert_pdf_header">
                     <div class="province_box">
                         <select name="" id="">
-                            <option value="请选择">请选择</option>
-                            <option value="北京市">北京市</option>
-                            <option value="上海市">上海市</option>
-                            <option value="重庆市">重庆市</option>
-                        </select>
+                                <option value="请选择">请选择</option>
+                                <option value="北京市">北京市</option>
+                                <option value="上海市">上海市</option>
+                                <option value="重庆市">重庆市</option>
+                            </select>
                     </div>
                     <div class="expert_write">
                         <i class="iconfont">&#xe609;</i>
-                        <span>评价</span>
+                        <span @click="show">评价</span>
                     </div>
                 </div>
-                <embed :src="pdfsrc" type="application/pdf" width="100%" height="100%">
+                <embed src="http://www.gov.cn/zhengce/pdfFile/2018_PDF.pdf" type="application/pdf" width="100%" height="100%">
             </div>
             <div class="upload_con">
                 <div class="uploadt_btn" @click="toggleUpload('block')">
@@ -63,6 +63,36 @@
                 </div>
             </div>
         </div>
+        <div class="score_box" id="score_box">
+            <div class="score_title" >
+                评价
+            </div>
+            <div class="score_con">
+                <div class="score_header">
+                    <p>
+                        <span class="title">自评等级</span>
+                        <input type="radio" id="A" value="A" name="self_point">
+                        <span>A</span>
+                        <input type="radio" id="B" value="B" name="self_point">
+                        <span>B</span>
+                        <input type="radio" id="C" value="C" name="self_point">
+                        <span>C</span>
+                    </p>
+                </div>
+                <div class="score_body">
+                    <textarea name="" id="" cols="30" rows="10"></textarea>
+                </div>
+                <div class="score_btn">
+                    <a href="javascript:;">保存</a>
+                </div>
+            </div>
+            <div class="socre_cloes" id="socre_cloes" @click="close">
+                x
+            </div>
+        </div>
+        <div id="model">
+
+        </div>
     </div>
 </template>
 
@@ -72,30 +102,35 @@
             return {
                 "fileList": {},
                 "review": {},
-                remnant:500,
-                pdfsrc:'',
-                assessments:{}
+                remnant: 500,
+                pdfsrc: '',
+                assessments: {}
             }
         },
         methods: {
             getDetail() { //获取附件列表
                 this.$ajax.get(`/api/assessments/${this.$route.params.id}`, {}).then((res) => {
                     this.assessments = res.data
-                    // this.fileList = res.data
-                    // this.review.self_point = res.data.self_point
-                    // this.review.user_remark = res.data.user_remark
-                    // this.pdfsrc = this.fileList.data[0].file
-                    // this.descInput()
                 }, (err) => {
                     console.log(err)
                 })
             },
-            changePdf(src){
+            changePdf(src) {
                 this.pdfsrc = src
             },
             descInput() { 
-                var txtVal = this.review.user_remark?this.review.user_remark.length:0; 
+                var txtVal = this.review.user_remark ? this.review.user_remark.length : 0; 
                 this.remnant = 500 - txtVal; 
+            },
+            show(){
+                document.getElementById("score_box").style.display = "block"
+                document.getElementById("model").style.display = "block"
+                document.getElementById("model").style.width = document.documentElement.clientWidth + "px"
+                document.getElementById("model").style.height = document.documentElement.clientHeight + "px"
+            },
+            close(){
+                document.getElementById("model").style.display = "none"
+                document.getElementById("score_box").style.display = "none"
             }
         },
         mounted() {
@@ -105,11 +140,11 @@
 </script>
 
 <style>
-    .expert_pdf_header{
+    .expert_pdf_header {
         display: flex;
         justify-content: space-between;
     }
-    .expert_pdf_header .expert_write{
+    .expert_pdf_header .expert_write {
         color: #4fa4f4;
         font-size: 20px;
     }
@@ -121,7 +156,7 @@
         min-height: 670px;
         width: 244px;
         background: #fff;
-        margin: 0px 16px;
+        margin-right:16px;
         padding: 0px 15px;
         box-shadow: 1px 1px 8px #ccc;
         box-sizing: border-box;
@@ -157,21 +192,23 @@
     }
     .uoload_con {
         display: flex;
+        padding: 0 16px;
     }
     .right_con {
-        width: 80%;
+        width: 90%;
         display: flex;
     }
     .right_con .review_con {
-        width: 886px;
+        width: 75%;
         background: #fff;
         box-shadow: 1px 1px 8px #ccc;
         margin-right: 10px;
-        padding:38px 30px;
+        padding: 38px 30px;
         overflow: hidden;
     }
     .right_con .upload_con {
         background: #fff;
+        width: 25%;
         box-shadow: 1px 1px 8px #ccc;
     }
     .uploadt_btn {
@@ -211,6 +248,67 @@
         height: 14px;
         background: url("../../assets/crumbs_bg.png") no-repeat;
         margin-right: 8px;
+    }
+    .score_box{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        width: 480px;
+        background: #fff;
+        padding: 20px;
+        display: none;
+        z-index: 11;
+    }
+    .score_box .score_title{
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        width: 100%;
+        background: #3a91ec;
+        color: #fff;
+    }
+    .score_box .score_header{
+        margin: 10px 0;
+    }
+    .score_box .score_body{
+        width: 100%;
+    }
+    .score_box .score_body textarea{
+        width: 99%;
+    }
+    .score_box .score_btn{
+        width: 100%;
+        text-align: right;
+        margin-top: 20px;
+    }
+    .score_box .score_btn a{
+        padding:5px 24px;
+        border: 1px solid #3a91ec;
+        color: #3a91ec;
+    }
+    #model{
+        width: 100%;
+        height: 100%;
+        background:rgba(0, 0, 0, 0.3);
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+        z-index: 10;
+    }
+    .score_box .socre_cloes{
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        color: #fff;
+        text-align: center;
+        line-height: 26px;
+        position: absolute;
+        right: -13px;
+        top: -13px;
+        background: #53a6f6;
+        cursor: pointer;
     }
 </style>
 

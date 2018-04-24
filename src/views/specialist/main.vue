@@ -10,7 +10,7 @@
                     <li>操作</li>
                 </ul>
             </div>
-            <div class="table_scroll" style="height:540px;width:1222px;margin:0 auto;overflow:scroll;">
+            <div class="table_scroll" style="height:540px;width:100%;margin:0 auto;overflow:scroll;">
                 <table border="1" cellspacing="0">
                     <tr v-for="(item,index) in table" :key="index">
                         <td :rowspan="item.one_row_span" v-bind:class="{ show: item.one_display.toString()=='false'}">{{item.one_content.replace(/\s/g,"")}}</td>
@@ -47,6 +47,9 @@
         methods: {
             getData(url) { //获取数据
                 this.$ajax.get(url, {}).then((res) => {
+                    this.$ajax.get("/api/assessments/processing").then((res)=>{
+                        console.log(res)
+                    })
                     this.table = res.data
                 }, (err) => {
                     console.log(err)
@@ -83,9 +86,10 @@
         background: #fff;
         margin: 0px 15px;
         box-shadow: 1px 1px 8px #ccc;
+
     }
     .manage .table_header {
-        width: 1222px;
+        width: 100%;
         margin: 0 auto;
     }
     .manage .table_header ul {
@@ -104,7 +108,7 @@
         width: 100%;
     }
     .manage table {
-        width: 1222px;
+        width: 100%;
         border: 1px solid #ccc;
         margin: 0 auto;
     }
@@ -130,7 +134,7 @@
         background: #ccc;
     }
     .specialist{
-        padding: 10px 0px;
+        padding: 10px 15px;
     }
 </style>
 

@@ -147,8 +147,8 @@ h6 {
     text-align: center;
 }
 #app{
-    width: 1440px;
-    min-width: 1440px;
+    width: 100%;
+    min-width: 100%;
     margin: 0 auto;
 }
 </style>

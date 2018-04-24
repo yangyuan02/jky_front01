@@ -1,7 +1,7 @@
 <template>
     <div>
         <header>
-            <div class="systemname" @click="goTo('/home/datamanage')">
+            <div class="systemname" @click="goTo(nav[person.level][0].path)">
                 省级政府履行教育职责测评系统
             </div>
             <div class="person_bar">

@@ -11,14 +11,12 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-        '/api/': {
+        '/api': {
             // 测试环境
-            target: 'http://127.0.0.1:3000',  // 接口域名
+            target: 'http://jky_api:3000',  // 接口域名
             // target: 'http://192.168.1.117:3000',  // 内网
             changeOrigin: true,  //是否跨域
-            pathRewrite: {
-                '^/api': '/api'   //需要rewrite重写的,
-            }
+            pathRewrite: function (path, req) { return path.replace('/api', '') }
         }
     },
 
