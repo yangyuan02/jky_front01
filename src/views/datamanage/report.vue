@@ -61,10 +61,19 @@
            }
         },
         methods:{
-            save(data){
-
-                console.log(this.content[data])
+            getData(){//获取总评信息
+                this.$ajax.get("/api/reports").then((res)=>{
+                    console.log(res)
+                })
+            },
+            save(id){
+                this.$ajax.patch(`/api/${id}`).then((res)=>{
+                    console.log(res)
+                })
             }
+        },
+        mounted(){
+            this.getData()
         }
     }
 </script>

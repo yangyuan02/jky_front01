@@ -86,6 +86,9 @@
                     <a href="javascript:;">保存</a>
                 </div>
             </div>
+            <div class="socre_cloes" id="socre_cloes" @click="close">
+                x
+            </div>
         </div>
         <div id="model">
 
@@ -108,11 +111,6 @@
             getDetail() { //获取附件列表
                 this.$ajax.get(`/api/assessments/${this.$route.params.id}`, {}).then((res) => {
                     this.assessments = res.data
-                    // this.fileList = res.data
-                    // this.review.self_point = res.data.self_point
-                    // this.review.user_remark = res.data.user_remark
-                    // this.pdfsrc = this.fileList.data[0].file
-                    // this.descInput()
                 }, (err) => {
                     console.log(err)
                 })
@@ -129,6 +127,10 @@
                 document.getElementById("model").style.display = "block"
                 document.getElementById("model").style.width = document.documentElement.clientWidth + "px"
                 document.getElementById("model").style.height = document.documentElement.clientHeight + "px"
+            },
+            close(){
+                document.getElementById("model").style.display = "none"
+                document.getElementById("score_box").style.display = "none"
             }
         },
         mounted() {
@@ -294,6 +296,19 @@
         top: 0;
         display: none;
         z-index: 10;
+    }
+    .score_box .socre_cloes{
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        color: #fff;
+        text-align: center;
+        line-height: 26px;
+        position: absolute;
+        right: -13px;
+        top: -13px;
+        background: #53a6f6;
+        cursor: pointer;
     }
 </style>
 

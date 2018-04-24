@@ -312,6 +312,7 @@
     .review_text textarea {
         width: 100%;
         height: 500px;
+        font-size: 14px;
     }
     input,
     button,

@@ -14,6 +14,22 @@ Vue.config.productionTip = false
 // 用钩子函数beforeEach()对路由进行判断
 router.beforeEach((to, from, next) => {
 
+    var pathObj = {
+        "省用户":"/home/datamanage",
+        "网评专家":"/home/specialist",
+        "实地专家":"/home/datamanage", ///暂定
+        "督导":"/home/supervisor",
+    }
+
+    if(to.name =='login' && window.localStorage.getItem("token")){  //解决登陆后 用户输入登录地址重定向到首页
+
+        let role = JSON.parse(window.localStorage.getItem("user")).role
+
+        next({
+            path: pathObj[role]
+          })
+    }
+
     if (to.name !== 'login') {//除了登录页
         if (window.localStorage.getItem("token")) {
 
