@@ -148,6 +148,7 @@
         background: #fff;
         margin: 0px 15px;
         box-shadow: 1px 1px 8px #ccc;
+        padding: 0px 15px;
     }
     .manage .table_header {
         width: 100%;
@@ -214,7 +215,6 @@
         align-items: center;
         justify-content: space-between;
         padding-left: 20px;
-        padding-right: 92px;
     }
     .data_header .progress_box {
         display: flex;

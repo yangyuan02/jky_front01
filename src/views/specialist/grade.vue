@@ -154,7 +154,7 @@
         min-height: 670px;
         width: 244px;
         background: #fff;
-        margin: 0px 16px;
+        margin-right:16px;
         padding: 0px 15px;
         box-shadow: 1px 1px 8px #ccc;
         box-sizing: border-box;
@@ -190,13 +190,14 @@
     }
     .uoload_con {
         display: flex;
+        padding: 0 16px;
     }
     .right_con {
-        width: 80%;
+        width: 90%;
         display: flex;
     }
     .right_con .review_con {
-        width: 886px;
+        width: 75%;
         background: #fff;
         box-shadow: 1px 1px 8px #ccc;
         margin-right: 10px;
@@ -205,6 +206,7 @@
     }
     .right_con .upload_con {
         background: #fff;
+        width: 25%;
         box-shadow: 1px 1px 8px #ccc;
     }
     .uploadt_btn {

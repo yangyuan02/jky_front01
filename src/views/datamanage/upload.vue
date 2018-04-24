@@ -401,7 +401,7 @@
         padding: 0px 16px;
     }
     .right_con {
-        width: 80%;
+        width: 90%;
         display: flex;
     }
     .right_con .review_con {
