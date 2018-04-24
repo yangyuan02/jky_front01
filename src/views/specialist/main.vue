@@ -47,6 +47,9 @@
         methods: {
             getData(url) { //获取数据
                 this.$ajax.get(url, {}).then((res) => {
+                    this.$ajax.get("/api/assessments/processing").then((res)=>{
+                        console.log(res)
+                    })
                     this.table = res.data
                 }, (err) => {
                     console.log(err)
