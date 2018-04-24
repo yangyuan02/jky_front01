@@ -75,9 +75,9 @@
                 progress: '0%',
                 finish:'',
                 grade:{
-                    less:"A",
+                    fully:"A",
                     basic:"B",
-                    fully:"C"
+                    less:"C"
                 }
             }
         },
