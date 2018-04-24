@@ -30,7 +30,7 @@
                     <li style="width:18.739%;">材料操作</li>
                 </ul>
             </div>
-            <div class="table_scroll" style="height:540px;width:1222px;margin:0 auto;overflow:scroll;">
+            <div class="table_scroll" style="height:540px;width:100%;margin:0 auto;overflow:scroll;">
                 <table border="1" cellspacing="0">
                     <tr>
                         <td style="width:22%;">自评总报告</td>
@@ -150,7 +150,7 @@
         box-shadow: 1px 1px 8px #ccc;
     }
     .manage .table_header {
-        width: 1222px;
+        width: 100%;
         margin: 0 auto;
     }
     .manage .table_header ul {
@@ -167,7 +167,7 @@
         width: 100%;
     }
     .manage table {
-        width: 1222px;
+        width: 100%;
         border: 1px solid #ccc;
         margin: 0 auto;
     }

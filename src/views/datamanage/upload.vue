@@ -162,13 +162,13 @@
             getScores(){//获取评测详情
                 this.$ajax.get(`/api/scores/${this.$route.params.id}`).then((res)=>{
                     this.review = res.data
-                    if(this.review.level=='less'){
+                    if(this.review.level=='fully'){
                         this.review.self_point = 'A'
                     }
                     if(this.review.level=='basic'){
                         this.review.self_point = 'B'
                     }
-                    if(this.review.level=='fully'){
+                    if(this.review.level=='less'){
                         this.review.self_point = 'C'
                     }
                 })
@@ -215,9 +215,12 @@
                 var id = this.$route.params.id
                 var fileData = new FormData()
                 this.picked = this.picked == 'one' ? true : false
-                var file = document.getElementById("file").files[0]
 
-                fileData.append("file", file)
+                if(this.picked){
+                    var file = document.getElementById("file").files[0]
+                    fileData.append("file", file)
+                }
+
                 fileData.append("name", this.filename)
                 fileData.append("file_code", this.filenum)
                 fileData.append("remark", this.remark)
@@ -229,7 +232,7 @@
                         }
                     }
 
-                this.$ajax.post(`/api//assessments/${id}/assessment_files`,fileData,config).then((res)=>{
+                this.$ajax.post(`/api/assessments/${id}/assessment_files`,fileData,config).then((res)=>{
                     this.toggleUpload("none")
                     this.getFils()
                 })
@@ -303,11 +306,11 @@
 <style>
     .review_text {
         position: relative;
-        width: 660px;
+        width: 98%;
         height: 500px;
     }
     .review_text textarea {
-        width: 660px;
+        width: 100%;
         height: 500px;
     }
     input,
@@ -358,7 +361,7 @@
         min-height: 670px;
         width: 244px;
         background: #fff;
-        margin: 0px 16px;
+        margin-right: 16px;
         padding: 0px 15px;
         box-shadow: 1px 1px 8px #ccc;
         box-sizing: border-box;
@@ -394,20 +397,23 @@
     }
     .uoload_con {
         display: flex;
+        width: 100%;
+        padding: 0px 16px;
     }
     .right_con {
         width: 80%;
         display: flex;
     }
     .right_con .review_con {
-        width: 736px;
+        width: 60%;
         padding-top: 14px;
-        padding-left: 40px;
+        padding-left: 14px;
         background: #fff;
         box-shadow: 1px 1px 8px #ccc;
         margin-right: 10px;
     }
     .right_con .upload_con {
+        width: 40%;
         background: #fff;
         box-shadow: 1px 1px 8px #ccc;
     }
@@ -422,7 +428,7 @@
         justify-content: space-between;
     }
     .upload {
-        width: 400px;
+        width: 100%;
     }
     .upload ul li {
         height: 30px;
