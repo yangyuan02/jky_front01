@@ -2,11 +2,17 @@
     <div class="bg">
         <div class="login_box">
             <h2>用户登录</h2>
-            <div class="user common">
+            <div class="user common" style="margin-bottom:20px;">
                 <input type="text" placeholder="请输入用户名" v-model="unsename">
             </div>
-            <div class="pass common">
+            <div class="common" style="margin-bottom:20px;">
                 <input type="password" placeholder="请输入密码" v-model="password" @keyup.enter="login">
+            </div>
+            <div class="common" style="margin-bottom:20px;">
+                <input type="password" placeholder="请输入密码" v-model="code.value" style="width:47%;">
+                <span style="display: inline-block;width:50%;" @click="creatCode()">
+                    <img :src="code.image" alt="" style="width:100%;">
+                </span>
             </div>
             <div class="login_btn" @click="login">登录</div>
         </div>
@@ -20,13 +26,14 @@
         data() {
             return {
                 unsename: "",
-                password: ""
+                password: "",
+                code:{}
             }
         },
         methods: {
             creatCode(){
-                this.$ajax.get("/api/captcha/show",{}).then((res)=>{
-                    console.log(res.data)
+                this.$ajax.get("/api/jky_rucaptcha",{}).then((res)=>{
+                    this.code = res.data
                 },(err)=>{
 
                 })
@@ -34,7 +41,9 @@
             login() {
                 this.$ajax.post("/api/user_token", {
                     "account": this.unsename,
-                    "password": this.password
+                    "password": this.password,
+                    "uuid":this.code.uuid,
+                    "rucaptcha":this.code.value
                 }).then((res) => {
                     if (res.data.jwt) {
                         var token = res.data.jwt
@@ -83,7 +92,7 @@
         height: 100%;
         background: url("../assets/login_bg.png") no-repeat center center;
         background-size:cover;
-        position: relative
+        position: relative;
     }
     .login_box {
         width: 305px;
