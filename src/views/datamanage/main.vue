@@ -36,7 +36,7 @@
                         <td style="width:22%;">自评总报告</td>
                         <td style="width:25%;"></td>
                         <td style="width:20.949%;"></td>
-                        <td style="width:7%;text-align:center;">未填写</td>
+                        <td style="width:7%;text-align:center;">-</td>
                         <td style="width:7%;text-align: center;">-</td>
                         <td style="width:18.739%;">
                             <a href="javascript:;" @click="goReport">填写</a>

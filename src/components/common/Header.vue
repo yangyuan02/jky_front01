@@ -80,11 +80,11 @@ export default {
         [
           {
             path: "/home/supervisor",
-            title: "评估进度"
+            title: "省自评进度"
           },
           {
             path: "/home/supervisor/result",
-            title: "评估结果"
+            title: "网评专家进度"
           }
         ]
       ]
@@ -124,6 +124,7 @@ export default {
       this.isActive = !this.isActive;
     },
     getPath() {
+        console.log(this.$route.path)
       if (this.$route.path.indexOf("upload") != -1) {
         this.path = this.$route.path.slice(6, 12);
       } else {
