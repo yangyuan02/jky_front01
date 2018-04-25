@@ -1,20 +1,45 @@
 <template>
     <div class="bg">
         <div class="login_box">
+          <div v-show="forget_password">
             <h2>用户登录</h2>
+            
             <div class="user common" style="margin-bottom:20px;">
                 <input type="text" placeholder="请输入用户名" v-model="unsename">
             </div>
             <div class="common" style="margin-bottom:20px;">
                 <input type="password" placeholder="请输入密码" v-model="password" @keyup.enter="login">
             </div>
-            <div class="common" style="margin-bottom:20px;">
+            <div class="common" style="margin-bottom:40px;">
                 <input type="password" placeholder="请输入验证码" v-model="code.value" style="width:47%;">
                 <span style="display: inline-block;width:50%;" @click="creatCode()">
                     <img :src="code.image" alt="" style="width:100%;">
                 </span>
+                <a style="color: #368ae2;float: right;font-size:12px;cursor: pointer;display: inline-block;margin-top: 5px;" @click="forget">忘记密码</a>
             </div>
             <div class="login_btn" @click="login">登录</div>
+            </div>
+          <!-- 忘记密码 -->
+          <div v-show="!forget_password">
+          <h2>忘记密码</h2>
+           
+            <div class="user common" style="margin-bottom:20px;">
+                <input type="text" placeholder="请输入姓名" v-model="forget_name">
+            </div>
+            <div class="common" style="margin-bottom:20px;">
+                <input type="password" placeholder="请输入手机号" @keyup.enter="login" v-model="forget_tel">
+            </div>
+            <div class="common" style="margin-bottom:40px;">
+                <input type="password" placeholder="请输入验证码"  style="width:47%;">
+                <span style="display: inline-block;width:50%;" @click="creatCode()">
+                    <img :src="code.image" alt="" style="width:100%;">
+                </span>
+                 <a style="color: #368ae2;float: right;font-size:12px;cursor: pointer;display: inline-block;margin-top: 5px;" @click="forget_back">返回</a>
+            </div>
+            <div class="login_btn" @click="forget_login">获取帐号</div>
+            </div>
+          <!-- 忘记密码 -->
+            
         </div>
     </div>
 </template>
@@ -25,9 +50,12 @@
     export default {
         data() {
             return {
+                forget_password:true,
                 unsename: "",
                 password: "",
-                code:{}
+                code:{},
+                forget_name:"",
+                forget_tel:"",
             }
         },
         methods: {
@@ -37,6 +65,38 @@
                 },(err)=>{
 
                 })
+            },
+            forget:function(){
+             this.forget_password=false
+             this.creatCode()
+            },
+            forget_back:function(){
+             this.forget_password=true
+             this.creatCode()
+            },
+            forget_login:function(){
+             
+             // if(this.forget_name==''){
+             //        alert("姓名名不能为空")
+             //        return
+             //    }
+             //    if(this.forget_tel==''){
+             //        alert("手机号不能为空")
+             //        return
+             //    }
+             //    if(this.code.value==undefined){
+             //        alert("验证码不能为空")
+             //        return
+             //    }
+                this.forget_password=true
+              // this.$ajax.get("/api/jky_rucaptcha",{}).then((res)=>{
+              //       this.code = res.data
+              //   },(err)=>{
+
+              //   })
+             console.log(this.forget_name)
+             console.log(this.forget_tel)
+
             },
             login() {
                 if(this.unsename==''){
@@ -50,7 +110,7 @@
                 if(this.code.value==undefined){
                     alert("验证码不能为空")
                     return
-                }
+                }               
                 this.$ajax.post("/api/user_token", {
                     "account": this.unsename,
                     "password": this.password,
