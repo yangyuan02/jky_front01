@@ -6,8 +6,8 @@
             </div>
             <div class="person_bar">
                 <div class="massage">
-                    <!-- <i class="iconfont">&#xe60e;</i> -->
-                    <!-- <span>截止日期:{{person.end_at}}</span> -->
+                    <i class="iconfont">&#xe60e;</i>
+                    <span>截止日期:{{person.end_at}}</span>
                     <!-- <i class="iconfont">&#xe614;</i> -->
                     <!-- <span>通知</span> -->
                 </div>
@@ -180,7 +180,7 @@ header .systemname {
   color: #327bca;
 }
 header .person_bar {
-  width: 140px;
+  width: auto;
   height: 72px;
   /* margin-left: 410px; */
   display: flex;

@@ -9,7 +9,7 @@
                 <input type="password" placeholder="请输入密码" v-model="password" @keyup.enter="login">
             </div>
             <div class="common" style="margin-bottom:20px;">
-                <input type="password" placeholder="请输入密码" v-model="code.value" style="width:47%;">
+                <input type="password" placeholder="请输入验证码" v-model="code.value" style="width:47%;">
                 <span style="display: inline-block;width:50%;" @click="creatCode()">
                     <img :src="code.image" alt="" style="width:100%;">
                 </span>
@@ -39,6 +39,18 @@
                 })
             },
             login() {
+                if(this.unsename==''){
+                    alert("用户名不能为空")
+                    return
+                }
+                if(this.password==''){
+                    alert("密码不能为空")
+                    return
+                }
+                if(this.code.value==undefined){
+                    alert("验证码不能为空")
+                    return
+                }
                 this.$ajax.post("/api/user_token", {
                     "account": this.unsename,
                     "password": this.password,

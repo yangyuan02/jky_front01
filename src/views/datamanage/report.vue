@@ -19,7 +19,7 @@
                 </div>
                 <div class="report_item_body">
                     <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="list[1].content"></textarea>
-                    <a href="javascript:;" @click="save(list[1].id),list[1].content">保存</a>
+                    <a href="javascript:;" @click="save(list[1].id,list[1].content)">保存</a>
                 </div>
             </div>
             <div class="report_item">
@@ -82,6 +82,10 @@
     .report {
         padding: 0px 20px;
     }
+    .report_item_title{
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
     .report .report_title span {
         display: inline-block;
         width: 172px;
@@ -112,6 +116,7 @@
         height: 400px;
         border: 1px solid #327bca;
         border-radius: 4px;
+        font-size: 20px;
     }
     .report .report_box .report_item a {
         position: absolute;
