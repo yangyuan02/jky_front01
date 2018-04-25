@@ -57,16 +57,7 @@
                             })
                         });
                         this.table = data
-                        console.log(res)
                     })
-                }, (err) => {
-                    console.log(err)
-                })
-            },
-             getPoint_count() {
-                this.$ajax.get('/api/role_points/point_count', {}).then((res) => {
-                    this.progress = (res.data.finish / (res.data.finish + res.data.no_finish)) * 100 + '%'
-                    this.point_count = res.data
                 }, (err) => {
                     console.log(err)
                 })

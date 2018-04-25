@@ -173,11 +173,13 @@
                 if(this.review.code=='404'){
                     this.$ajax.post(`/api/assessments/${this.$route.params.id}/scores`, param)
                     .then((res) => {
+                        this.close()
                         alert("感谢您的评价")
                     }, (err) => {})
                 }else{
                     this.$ajax.patch(`/api/assessments/${this.$route.params.id}/scores`, param)
                     .then((res) => {
+                        this.close()
                         alert("感谢您的评价")
                     }, (err) => {})
                 }
