@@ -25,7 +25,7 @@
                     <li style="width:22%;">评价内容</li>
                     <li style="width:25%;">具体测评内容</li>
                     <li style="width:20.949%;">测评点</li>
-                    <li style="width:7%;">状态</li>
+                    <li style="width:7%;">材料数量</li>
                     <li style="width:7%">自评等级</li>
                     <li style="width:18.739%;">材料操作</li>
                 </ul>

@@ -90,6 +90,12 @@
         width: 100%;
         border: 1px solid #ccc;
     }
+    .grade .grade_box .table_header table:nth-child(1),
+    .grade .grade_box .table_header table:nth-child(2),
+    .grade .grade_box .table_header table:nth-child(3){
+        background: #2dc9b9;
+        color: #fff;
+    }
     .grade .grade_box .table_header table td {
         height: 30px;
         text-align: center;

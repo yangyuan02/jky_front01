@@ -17,7 +17,7 @@
                         <td :rowspan="item.two_row_span" v-bind:class="{ show: item.two_display.toString()=='false'}">{{item.two_content.replace(/\s/g,"")}}</td>
                         <td>{{item.three_content.replace(/\s/g,"")}}</td>
                         <td>
-                            <Progress :progress="progress"></Progress>
+                            <Progress :progress="item.processing"></Progress>
                         </td>
                         <td>
                             <a href="javascript:;" @click="goDatail(item.three_id)">评估</a>
@@ -38,7 +38,6 @@
             return {
                 table: [],
                 point_count: {},
-                progress: ''
             }
         },
         components:{
@@ -47,10 +46,19 @@
         methods: {
             getData(url) { //获取数据
                 this.$ajax.get(url, {}).then((res) => {
+                    var data = res.data
                     this.$ajax.get("/api/assessments/processing").then((res)=>{
+                        var scores = res.data
+                        data.forEach(item => {
+                            scores.forEach(itemScore =>{
+                                if(item.three_id==itemScore.assessment_id){
+                                    item.processing = itemScore.numerator
+                                }
+                            })
+                        });
+                        this.table = data
                         console.log(res)
                     })
-                    this.table = res.data
                 }, (err) => {
                     console.log(err)
                 })
