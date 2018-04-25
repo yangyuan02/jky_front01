@@ -29,19 +29,24 @@
             <div class="review_con">
                 <div class="expert_pdf_header">
                     <div class="province_box">
-                        <select name="" id="">
-                                    <option value="请选择">请选择</option>
-                                    <option value="北京市">北京市</option>
-                                    <option value="上海市">上海市</option>
-                                    <option value="重庆市">重庆市</option>
-                                </select>
+                        <template>
+                      <el-select v-model="value" filterable placeholder="请选择" @change="selectProvince($event)" value-key="code">
+                        <el-option
+                          v-for="item in province"
+                          :key="item.name"
+                          :label="item.name"
+                          :value="item">
+                        </el-option>
+                      </el-select>
+</template>
+
                     </div>
                     <div class="expert_write">
                         <i class="iconfont">&#xe609;</i>
                         <span @click="show">评价</span>
                     </div>
                 </div>
-                <embed src="http://www.gov.cn/zhengce/pdfFile/2018_PDF.pdf" type="application/pdf" width="100%" height="100%">
+                <embed :src="pdfsrc" type="application/pdf" width="100%" height="100%">
             </div>
             <div class="upload_con">
                 <div class="target" style="margin-bottom:30px;">
@@ -51,7 +56,7 @@
                 </div>
                 <div class="upload">
                     <ul>
-                        <li v-for="(item,index) in fileList.pdfs" :key="index" @click="changePdf(item.file)">
+                        <li v-for="(item,index) in fileList.pdfs" :key="index" @click="changePdf(item.url)">
                             <a href="javascript:;">{{item.name}}</a>
                         </li>
                     </ul>
@@ -66,19 +71,19 @@
                 <div class="score_header">
                     <p>
                         <span class="title">自评等级</span>
-                        <input type="radio" id="A" value="A" name="self_point">
+                        <input type="radio" id="A" value="A" name="self_point" v-model="review.self_point">
                         <span>A</span>
-                        <input type="radio" id="B" value="B" name="self_point">
+                        <input type="radio" id="B" value="B" name="self_point" v-model="review.self_point">
                         <span>B</span>
-                        <input type="radio" id="C" value="C" name="self_point">
+                        <input type="radio" id="C" value="C" name="self_point" v-model="review.self_point">
                         <span>C</span>
                     </p>
                 </div>
                 <div class="score_body">
-                    <textarea name="" id="" cols="30" rows="10"></textarea>
+                    <textarea name="" id="" cols="30" rows="10" v-model="review.content"></textarea>
                 </div>
                 <div class="score_btn">
-                    <a href="javascript:;">保存</a>
+                    <a href="javascript:;" @click="save()">保存</a>
                 </div>
             </div>
             <div class="socre_cloes" id="socre_cloes" @click="close">
@@ -95,9 +100,12 @@
         data() {
             return {
                 fileList: {},
+                review :{},
                 remnant: 500,
                 pdfsrc: '',
-                assessments: {}
+                assessments: {},
+                province: [],
+                value:{}
             }
         },
         methods: {
@@ -108,22 +116,72 @@
                     console.log(err)
                 })
             },
-            getNetworkDetail(province) {//获取文件列表/省用户评价详情
-                this.$ajax.get(`/api/assessments/info?id=${this.$route.params.id}&province=410000`).then((res) => {
-                    if(res.data.score.flag=='fully'){
+            getProvince(){//获取省份
+                this.province = JSON.parse(window.localStorage.getItem("provinces"))
+            },
+            getNetworkDetail(province) { //获取文件列表/省用户评价详情
+                // this.
+                this.$ajax.get(`/api/assessments/info?id=${this.$route.params.id}&province=${province}`).then((res) => {
+                    if (res.data.score.flag == 'fully') {
                         res.data.score.flag = 'A'
                     }
-                    if(res.data.score.flag=='basic'){
+                    if (res.data.score.flag == 'basic') {
                         res.data.score.flag = 'B'
                     }
-                    if(res.data.score.flag=='less'){
+                    if (res.data.score.flag == 'less') {
                         res.data.flag = 'C'
                     }
+                    this.changePdf(res.data.pdfs[0].url)
+                    this.value = this.province[0].name
                     this.fileList = res.data
                 })
             },
+            selectProvince(data){//选择省份
+                this.getNetworkDetail(data.code)
+            },
             changePdf(src) {
                 this.pdfsrc = src
+            },
+            save() {//保存
+                var assessment_std_id = ''
+                if (this.review.self_point == null) {
+                    alert("请选择评价等级")
+                    return
+                }
+                if (this.review.content == null) {
+                    alert("请写评价详情")
+                    return
+                }
+                if (this.review.content.length > 500) {
+                    alert("最多500字")
+                    return
+                }
+                if(this.review.self_point == "A"){
+                    assessment_std_id = this.assessments.stds[0].std_id
+                }
+                if(this.review.self_point == "B"){
+                    assessment_std_id = this.assessments.stds[1].std_id
+                }
+                if(this.review.self_point == "C"){
+                    assessment_std_id = this.assessments.stds[2].std_id
+                }
+
+                var param = {
+                    "assessment_std_id":assessment_std_id,
+                    "content":this.review.content
+                }
+                if(this.review.code=='404'){
+                    this.$ajax.post(`/api/assessments/${this.$route.params.id}/scores`, param)
+                    .then((res) => {
+                        alert("感谢您的评价")
+                    }, (err) => {})
+                }else{
+                    this.$ajax.patch(`/api/assessments/${this.$route.params.id}/scores`, param)
+                    .then((res) => {
+                        alert("感谢您的评价")
+                    }, (err) => {})
+                }
+
             },
             show() {
                 document.getElementById("score_box").style.display = "block"
@@ -138,7 +196,8 @@
         },
         mounted() {
             this.getDetail()
-            this.getNetworkDetail()
+            this.getProvince()
+            this.getNetworkDetail('410000')
         }
     }
 </script>
