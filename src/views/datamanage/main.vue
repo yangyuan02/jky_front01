@@ -15,8 +15,8 @@
                         <span>{{92}}</span>
                     </div>
                     <div class="data_satus">
-                        <a href="javascrip:;" @click="getData('/api/role_points/finish_point')">已完成{{point_count.finish}}</a>
-                        <a href="javascrip:;" @click="getData('/api/role_points/no_finish_point')">未完成{{point_count.no_finish}}</a>
+                        <a href="javascrip:;" @click="getData('/api/assessments?status=1')">已完成</a>
+                        <a href="javascrip:;" @click="getData('/api/assessments?status=0')">未完成</a>
                     </div>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                         });
                         this.table = data
                     })
-                    // this.updataIsData(url)
+                    this.updataIsData(url)
                 }, (err) => {
                     console.log(err)
                 })
@@ -130,7 +130,7 @@
         watch:{
             isUpdata(OloData,NewData){
                 if(OloData=='/api/assessments'){
-                    this.getData('/api/role_points')
+                    this.getData('/api/assessments')
                 }
             }
         },

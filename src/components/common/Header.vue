@@ -95,7 +95,7 @@ export default {
     goTo(url) {
       console.log(url);
       this.$router.push(url);
-      this.updataIsData("/api/role_points");
+      this.updataIsData("/api/assessments");
     },
     getPersonInfo() {
       console.log(window.localStorage.getItem("user"));
