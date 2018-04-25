@@ -102,7 +102,7 @@
     .bg {
         width: 100%;
         height: 100%;
-        background: url("../assets/login_bg.png") no-repeat center center;
+        background: url("../assets/login_bg.jpg") no-repeat center center;
         background-size:cover;
         position: relative;
     }
