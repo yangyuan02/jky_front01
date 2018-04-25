@@ -10,7 +10,7 @@
                 </div>
                 <div class="report_item_body">
                     <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="list[0].content"></textarea>
-                    <a href="javascript:;" @click="save(list[0].id)">保存</a>
+                    <a href="javascript:;" @click="save(list[0].id,list[0].content)">保存</a>
                 </div>
             </div>
             <div class="report_item">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="report_item_body">
                     <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="list[1].content"></textarea>
-                    <a href="javascript:;" @click="save(list[1].id)">保存</a>
+                    <a href="javascript:;" @click="save(list[1].id),list[1].content">保存</a>
                 </div>
             </div>
             <div class="report_item">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="report_item_body">
                     <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="list[2].content"></textarea>
-                    <a href="javascript:;" @click="save(list[2].id)">保存</a>
+                    <a href="javascript:;" @click="save(list[2].id,list[2].content)">保存</a>
                 </div>
             </div>
             <div class="report_item">
@@ -37,7 +37,7 @@
                 </div>
                 <div class="report_item_body">
                     <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="list[3].content"></textarea>
-                    <a href="javascript:;" @click="save(list[3].id)">保存</a>
+                    <a href="javascript:;" @click="save(list[3].id,list[3].content)">保存</a>
                 </div>
             </div>
             <div class="report_item">
@@ -46,7 +46,7 @@
                 </div>
                 <div class="report_item_body">
                     <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="list[4].content"></textarea>
-                    <a href="javascript:;" @click="save(list[4].id)">保存</a>
+                    <a href="javascript:;" @click="save(list[4].id,list[4].content)">保存</a>
                 </div>
             </div>
         </div>
@@ -66,8 +66,8 @@
                     this.list = res.data
                 })
             },
-            save(id) {
-                this.$ajax.patch(`/api/reports/${id}`).then((res) => {
+            save(id,content) {
+                this.$ajax.patch(`/api/reports/${id}`,{"content":content}).then((res) => {
                     console.log(res)
                 })
             }

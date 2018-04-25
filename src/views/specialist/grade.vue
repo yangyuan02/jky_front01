@@ -30,11 +30,11 @@
                 <div class="expert_pdf_header">
                     <div class="province_box">
                         <select name="" id="">
-                                <option value="请选择">请选择</option>
-                                <option value="北京市">北京市</option>
-                                <option value="上海市">上海市</option>
-                                <option value="重庆市">重庆市</option>
-                            </select>
+                                    <option value="请选择">请选择</option>
+                                    <option value="北京市">北京市</option>
+                                    <option value="上海市">上海市</option>
+                                    <option value="重庆市">重庆市</option>
+                                </select>
                     </div>
                     <div class="expert_write">
                         <i class="iconfont">&#xe609;</i>
@@ -44,27 +44,22 @@
                 <embed src="http://www.gov.cn/zhengce/pdfFile/2018_PDF.pdf" type="application/pdf" width="100%" height="100%">
             </div>
             <div class="upload_con">
-                <div class="uploadt_btn" @click="toggleUpload('block')">
-                    <div>
-                        材料列表
-                    </div>
-                    <div>
-                        <i class="iconfont">&#xe616;</i>
-                        <span>添加</span>
+                <div class="target" style="margin-bottom:30px;">
+                    <div class="target_title" v-if="fileList.score">自评等级:{{fileList.score.flag}}</div>
+                    <div class="target_con" v-if="fileList.score" v-text="fileList.score.content">
                     </div>
                 </div>
                 <div class="upload">
                     <ul>
-                        <li v-for="(item,index) in fileList.data" :key="index" @click="changePdf(item.file)">
-                            <a href="javascript:;">{{item.title}}</a>
-                            <i class="iconfont" style="color:red;" @click="showDel('block',item.id)">&#xe612;</i>
+                        <li v-for="(item,index) in fileList.pdfs" :key="index" @click="changePdf(item.file)">
+                            <a href="javascript:;">{{item.name}}</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="score_box" id="score_box">
-            <div class="score_title" >
+            <div class="score_title">
                 评价
             </div>
             <div class="score_con">
@@ -91,7 +86,6 @@
             </div>
         </div>
         <div id="model">
-
         </div>
     </div>
 </template>
@@ -100,41 +94,51 @@
     export default {
         data() {
             return {
-                "fileList": {},
-                "review": {},
+                fileList: {},
                 remnant: 500,
                 pdfsrc: '',
                 assessments: {}
             }
         },
         methods: {
-            getDetail() { //获取附件列表
+            getDetail() { //获取测评标准
                 this.$ajax.get(`/api/assessments/${this.$route.params.id}`, {}).then((res) => {
                     this.assessments = res.data
                 }, (err) => {
                     console.log(err)
                 })
             },
+            getNetworkDetail(province) {//获取文件列表/省用户评价详情
+                this.$ajax.get(`/api/assessments/info?id=${this.$route.params.id}&province=410000`).then((res) => {
+                    if(res.data.score.flag=='fully'){
+                        res.data.score.flag = 'A'
+                    }
+                    if(res.data.score.flag=='basic'){
+                        res.data.score.flag = 'B'
+                    }
+                    if(res.data.score.flag=='less'){
+                        res.data.flag = 'C'
+                    }
+                    this.fileList = res.data
+                })
+            },
             changePdf(src) {
                 this.pdfsrc = src
             },
-            descInput() { 
-                var txtVal = this.review.user_remark ? this.review.user_remark.length : 0; 
-                this.remnant = 500 - txtVal; 
-            },
-            show(){
+            show() {
                 document.getElementById("score_box").style.display = "block"
                 document.getElementById("model").style.display = "block"
                 document.getElementById("model").style.width = document.documentElement.clientWidth + "px"
                 document.getElementById("model").style.height = document.documentElement.clientHeight + "px"
             },
-            close(){
+            close() {
                 document.getElementById("model").style.display = "none"
                 document.getElementById("score_box").style.display = "none"
             }
         },
         mounted() {
             this.getDetail()
+            this.getNetworkDetail()
         }
     }
 </script>
@@ -156,26 +160,26 @@
         min-height: 670px;
         width: 244px;
         background: #fff;
-        margin-right:16px;
+        margin-right: 16px;
         padding: 0px 15px;
         box-shadow: 1px 1px 8px #ccc;
         box-sizing: border-box;
         padding-top: 14px;
     }
-    nav .target {
+    .target {
         width: 100%;
         height: auto;
         border-radius: 4px;
         box-shadow: 1px 1px 8px #ccc;
         background: #fff;
     }
-    nav .target:first-child .target_con {
+    .target:first-child .target_con {
         color: #666;
     }
-    nav .target:not(:first-child) {
+    .target:not(:first-child) {
         margin-top: 10px;
     }
-    nav .target .target_title {
+    .target .target_title {
         background: #f7a31c;
         color: #fff;
         padding: 0px 10px;
@@ -183,10 +187,10 @@
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
     }
-    nav .target .target_title.blue {
+    .target .target_title.blue {
         background: #3485ee !important
     }
-    nav .target .target_con {
+    .target .target_con {
         padding: 5px 10px;
         color: #999;
     }
@@ -222,7 +226,7 @@
         justify-content: space-between;
     }
     .upload {
-        width: 250px;
+        width: 100%;
     }
     .upload ul li {
         height: 30px;
@@ -249,18 +253,18 @@
         background: url("../../assets/crumbs_bg.png") no-repeat;
         margin-right: 8px;
     }
-    .score_box{
+    .score_box {
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         width: 480px;
         background: #fff;
         padding: 20px;
         display: none;
         z-index: 11;
     }
-    .score_box .score_title{
+    .score_box .score_title {
         height: 30px;
         line-height: 30px;
         text-align: center;
@@ -268,36 +272,36 @@
         background: #3a91ec;
         color: #fff;
     }
-    .score_box .score_header{
+    .score_box .score_header {
         margin: 10px 0;
     }
-    .score_box .score_body{
+    .score_box .score_body {
         width: 100%;
     }
-    .score_box .score_body textarea{
+    .score_box .score_body textarea {
         width: 99%;
     }
-    .score_box .score_btn{
+    .score_box .score_btn {
         width: 100%;
         text-align: right;
         margin-top: 20px;
     }
-    .score_box .score_btn a{
-        padding:5px 24px;
+    .score_box .score_btn a {
+        padding: 5px 24px;
         border: 1px solid #3a91ec;
         color: #3a91ec;
     }
-    #model{
+    #model {
         width: 100%;
         height: 100%;
-        background:rgba(0, 0, 0, 0.3);
+        background: rgba(0, 0, 0, 0.3);
         position: absolute;
         left: 0;
         top: 0;
         display: none;
         z-index: 10;
     }
-    .score_box .socre_cloes{
+    .score_box .socre_cloes {
         width: 26px;
         height: 26px;
         border-radius: 50%;
