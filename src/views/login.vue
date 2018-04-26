@@ -30,10 +30,10 @@
                 <input type="text" placeholder="请输入姓名" v-model="forget_name">
             </div>
             <div class="common" style="margin-bottom:20px;">
-                <input type="password" placeholder="请输入手机号" @keyup.enter="login" v-model="forget_tel">
+                <input type="" placeholder="请输入手机号" @keyup.enter="login" v-model="forget_tel">
             </div>
             <div class="common" style="margin-bottom:40px;">
-                <input type="password" placeholder="请输入验证码"  style="width:47%;">
+                <input type="" placeholder="请输入验证码"  style="width:47%;" v-model="forget_value">
                 <span style="display: inline-block;width:50%;" @click="creatCode()">
                     <img :src="code.image" alt="" style="width:100%;">
                 </span>
@@ -59,6 +59,7 @@
                 code:{},
                 forget_name:"",
                 forget_tel:"",
+                forget_value:"",
             }
         },
         methods: {
@@ -78,27 +79,22 @@
              this.creatCode()
             },
             forget_login:function(){
-
-             // if(this.forget_name==''){
-             //        alert("姓名名不能为空")
-             //        return
-             //    }
-             //    if(this.forget_tel==''){
-             //        alert("手机号不能为空")
-             //        return
-             //    }
-             //    if(this.code.value==undefined){
-             //        alert("验证码不能为空")
-             //        return
-             //    }
-                this.forget_password=true
-              // this.$ajax.get("/api/jky_rucaptcha",{}).then((res)=>{
-              //       this.code = res.data
-              //   },(err)=>{
-
-              //   })
-             console.log(this.forget_name)
-             console.log(this.forget_tel)
+             if(this.forget_name==''){
+                    alert("姓名名不能为空")
+                    return
+                }
+                if(this.forget_tel==''){
+                    alert("手机号不能为空")
+                    return
+                }
+                if(this.forget_value==undefined){
+                    alert("验证码不能为空")
+                    return
+                }
+              this.$ajax.post("/api/admin/users/reset_user", {"name":this.forget_name,"mobile":this.forget_tel,"uuid":this.code.uuid,"rucaptcha":this.forget_value,}).then((res) => {
+                    
+                }, (err) => {})
+              this.forget_password=true
 
             },
             login() {
