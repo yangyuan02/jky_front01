@@ -33,7 +33,7 @@
             <div class="table_scroll" style="height:540px;width:100%;margin:0 auto;overflow:scroll;">
                 <table border="1" cellspacing="0">
                     <tr>
-                        <td style="width:22%;">自评总报告</td>
+                        <td style="width:22%;">自评报告</td>
                         <td style="width:25%;"></td>
                         <td style="width:20.949%;"></td>
                         <td style="width:7%;text-align:center;">-</td>
