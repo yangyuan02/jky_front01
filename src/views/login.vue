@@ -1,9 +1,12 @@
 <template>
     <div class="bg">
+        <div class="system_name">
+            省级政府履行教育职责评价工具
+        </div>
         <div class="login_box">
           <div v-show="forget_password">
             <h2>用户登录</h2>
-            
+
             <div class="user common" style="margin-bottom:20px;">
                 <input type="text" placeholder="请输入用户名" v-model="unsename">
             </div>
@@ -22,7 +25,7 @@
           <!-- 忘记密码 -->
           <div v-show="!forget_password">
           <h2>忘记密码</h2>
-           
+
             <div class="user common" style="margin-bottom:20px;">
                 <input type="text" placeholder="请输入姓名" v-model="forget_name">
             </div>
@@ -39,7 +42,7 @@
             <div class="login_btn" @click="forget_login">获取帐号</div>
             </div>
           <!-- 忘记密码 -->
-            
+
         </div>
     </div>
 </template>
@@ -75,7 +78,7 @@
              this.creatCode()
             },
             forget_login:function(){
-             
+
              // if(this.forget_name==''){
              //        alert("姓名名不能为空")
              //        return
@@ -110,7 +113,7 @@
                 if(this.code.value==undefined){
                     alert("验证码不能为空")
                     return
-                }               
+                }
                 this.$ajax.post("/api/user_token", {
                     "account": this.unsename,
                     "password": this.password,
@@ -174,6 +177,13 @@
         position: absolute;
         right: 10%;
         top: 20%;
+    }
+    .system_name{
+        font-size: 30px;
+        color: #fff;
+        position: relative;
+        left: 5%;
+        top:8%;
     }
     .login_box .common {
         width: 240px;

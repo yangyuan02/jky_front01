@@ -2,7 +2,7 @@
     <div>
         <header>
             <div class="systemname" @click="goTo(nav[person.level][0].path)">
-                省级政府履行教育职责测评系统
+                省级政府履行教育职责评价工具
             </div>
             <div class="person_bar">
                 <div class="massage">
