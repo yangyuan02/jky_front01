@@ -65,10 +65,10 @@
                 </div>
                 <div class="upload">
                     <ul>
-                        <li v-for="(item,index) in fileList" :key="index" @click="openPdf(item.url)">
+                        <li v-for="(item,index) in fileList" :key="index">
                             <a href="JavaScript:;">{{item.name}}</a>
                             <div>
-                                <i class="iconfont" style="color:#3485ee;" v-if="item.url">&#xe626;</i>
+                                <i class="iconfont" style="color:#3485ee;" v-if="item.url" @click="openPdf(item.url)">&#xe626;</i>
                                 <i class="iconfont" style="color:red;" @click="showDel('block',item.id)">&#xe612;</i>
                             </div>
                         </li>
@@ -233,13 +233,12 @@
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
-                    onUploadProgress: progressEvent => {
-
-                        var complete = (progressEvent.loaded / progressEvent.total * 100 | 0) + '%'
-                        console.log(complete)
-                        // this.progress = complete
+                    onUploadProgress: function(progressEvent) {
+                        console.log(1111)
+                        var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
+                        console.log(percentCompleted)
+                        }
                     }
-                }
                 this.$ajax.post(`/api/assessments/${id}/assessment_files`, fileData, config).then((res) => {
                     this.toggleUpload("none")
                     this.getFils()

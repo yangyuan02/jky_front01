@@ -70,6 +70,16 @@
 
                 })
             },
+            getProvince(){//获取省份
+                if(window.localStorage.getItem("provinces")){
+                    return
+                }
+                this.$ajax.get("/api/provinces").then((res)=>{
+                    window.localStorage.setItem("provinces",JSON.stringify(res.data))
+                },(err)=>{
+
+                })
+            },
             forget:function(){
              this.forget_password=false
              this.creatCode()
@@ -92,7 +102,7 @@
                     return
                 }
               this.$ajax.post("/api/admin/users/reset_user", {"name":this.forget_name,"mobile":this.forget_tel,"uuid":this.code.uuid,"rucaptcha":this.forget_value,}).then((res) => {
-                    
+
                 }, (err) => {})
               this.forget_password=true
 
@@ -152,7 +162,7 @@
         },
         mounted() {
             this.creatCode()
-            // this.getProvinces()
+            this.getProvince()
         }
     }
 </script>

@@ -47,7 +47,7 @@ export default {
       path: "",
       isActive: true,
       person: {},
-      province:JSON.parse(window.localStorage.getItem("provinces")),
+      province:[],
       nav: [
         [
           {
@@ -101,6 +101,7 @@ export default {
     },
     setProvinces(){//设置省份
         var user = JSON.parse(window.localStorage.getItem("user"))
+        this.province= JSON.parse(window.localStorage.getItem("provinces"))
         for(var i = 0;i<this.province.length;i++){
             if(user.province==this.province[i].code){
                 this.person.myProvince = this.province[i].name
