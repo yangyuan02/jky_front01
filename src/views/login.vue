@@ -126,6 +126,16 @@
                     "uuid":this.code.uuid,
                     "rucaptcha":this.code.value
                 }).then((res) => {
+                    console.log(res.data.message == '验证码错误')
+                    if(res.data.message == '验证码错误'){
+                        this.creatCode()
+                        this.$message.error("验证码错误")
+                        return
+                    }
+                    if(res.data.message == '账号密码错误'){
+                        this.$message.error("账号密码错误")
+                        return
+                    }
                     if (res.data.jwt) {
                         var token = res.data.jwt
                         var user = jsrsasign.KJUR.jws.JWS.parse(token).payloadObj

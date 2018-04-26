@@ -463,6 +463,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        width: 88%;
     }
     .upload ul li:nth-child(odd) {
         background: #dcdcdc;
