@@ -65,7 +65,7 @@
                 </div>
                 <div class="upload">
                     <ul>
-                        <li v-for="(item,index) in fileList" :key="index">
+                        <li v-for="(item,index) in fileList" :key="index" @click="openPdf(item.url)">
                             <a href="">{{item.name}}</a>
                             <i class="iconfont" style="color:red;" @click="showDel('block',item.id)">&#xe612;</i>
                         </li>
@@ -300,6 +300,14 @@
                 }
 
             },
+            openPdf(url){//打开pdf
+                if(url==undefined){
+                    console.log(111)
+                    alert("该文件为保密文件")
+                    return
+                }
+                window.open(url)
+            },
             descInput() { 
                 var txtVal = this.review.content?this.review.content.length:0; 
                 this.remnant = 500 - txtVal; 
@@ -317,11 +325,11 @@
     .review_text {
         position: relative;
         width: 98%;
-        height: 500px;
+        height: 400px;
     }
     .review_text textarea {
         width: 100%;
-        height: 500px;
+        height: 100%;
         font-size: 14px;
     }
     input,
@@ -437,6 +445,9 @@
         padding: 0px 16px;
         display: flex;
         justify-content: space-between;
+    }
+    .uploadt_btn span{
+        cursor: pointer;
     }
     .upload {
         width: 100%;

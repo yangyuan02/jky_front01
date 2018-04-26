@@ -2,10 +2,11 @@
     <div>
         <header>
             <div class="systemname" @click="goTo(nav[person.level][0].path)">
-                省级政府履行教育职责测评系统
+                省级政府履行教育职责评价工具
             </div>
             <div class="person_bar">
                 <div class="massage">
+                    <span style="margin-right:10px;">{{person.myProvince}}</span>
                     <i class="iconfont">&#xe60e;</i>
                     <span>截止日期:{{person.end_at}}</span>
                     <!-- <i class="iconfont">&#xe614;</i> -->
@@ -46,6 +47,7 @@ export default {
       path: "",
       isActive: true,
       person: {},
+      province:JSON.parse(window.localStorage.getItem("provinces")),
       nav: [
         [
           {
@@ -97,8 +99,16 @@ export default {
       this.$router.push(url);
       this.updataIsData("/api/assessments");
     },
+    setProvinces(){//设置省份
+        var user = JSON.parse(window.localStorage.getItem("user"))
+        for(var i = 0;i<this.province.length;i++){
+            if(user.province==this.province[i].code){
+                this.person.myProvince = this.province[i].name
+            }
+        }
+
+    },
     getPersonInfo() {
-      console.log(window.localStorage.getItem("user"));
       this.person = JSON.parse(window.localStorage.getItem("user"));
       if (this.person.role == "省用户") {
         this.$set(this.person, "level", 0);
@@ -133,9 +143,9 @@ export default {
     }
   },
   created() {
-    // console.log(this.person)
     this.getPath();
     this.getPersonInfo();
+    this.setProvinces()
   },
   watch: {
     $route(to, from) {

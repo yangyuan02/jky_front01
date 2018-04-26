@@ -28,7 +28,7 @@
 export default {
     methods:{
         getDetail(){
-            this.$ajax.post("/api/admin/assessments/progress").then((res)=>{
+            this.$ajax.get("/api/assessment_opts").then((res)=>{
                 console.log(res)
             })
         },
