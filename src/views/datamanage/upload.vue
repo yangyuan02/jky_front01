@@ -325,11 +325,11 @@
     .review_text {
         position: relative;
         width: 98%;
-        height: 500px;
+        height: 400px;
     }
     .review_text textarea {
         width: 100%;
-        height: 500px;
+        height: 100%;
         font-size: 14px;
     }
     input,
@@ -445,6 +445,9 @@
         padding: 0px 16px;
         display: flex;
         justify-content: space-between;
+    }
+    .uploadt_btn span{
+        cursor: pointer;
     }
     .upload {
         width: 100%;
