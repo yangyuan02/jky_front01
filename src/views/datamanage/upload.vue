@@ -65,7 +65,7 @@
                 </div>
                 <div class="upload">
                     <ul>
-                        <li v-for="(item,index) in fileList" :key="index">
+                        <li v-for="(item,index) in fileList" :key="index" @click="openPdf(item.url)">
                             <a href="">{{item.name}}</a>
                             <i class="iconfont" style="color:red;" @click="showDel('block',item.id)">&#xe612;</i>
                         </li>
@@ -299,6 +299,14 @@
                     }, (err) => {})
                 }
 
+            },
+            openPdf(url){//打开pdf
+                if(url==undefined){
+                    console.log(111)
+                    alert("该文件为保密文件")
+                    return
+                }
+                window.open(url)
             },
             descInput() { 
                 var txtVal = this.review.content?this.review.content.length:0; 
