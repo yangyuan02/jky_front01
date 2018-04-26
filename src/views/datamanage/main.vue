@@ -51,7 +51,7 @@
                         </td>
                         <td style="width:7%;text-align: center;">{{grade[item.level]}}</td>
                         <td style="width:18.739%;">
-                            <a href="javascript:;" @click="goDatail(item.three_id)">保存</a>
+                            <a href="javascript:;" @click="goDatail(item.three_id)">管理</a>
                             <!-- <a href="javascript:;" @click="goDatail(item.three_id)">补传</a> -->
                         </td>
                     </tr>

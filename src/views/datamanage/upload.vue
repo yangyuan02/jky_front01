@@ -66,8 +66,11 @@
                 <div class="upload">
                     <ul>
                         <li v-for="(item,index) in fileList" :key="index" @click="openPdf(item.url)">
-                            <a href="">{{item.name}}</a>
-                            <i class="iconfont" style="color:red;" @click="showDel('block',item.id)">&#xe612;</i>
+                            <a href="JavaScript:;">{{item.name}}</a>
+                            <div>
+                                <i class="iconfont" style="color:#3485ee;" v-if="item.url">&#xe626;</i>
+                                <i class="iconfont" style="color:red;" @click="showDel('block',item.id)">&#xe612;</i>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -229,6 +232,12 @@
                 let config = {
                     headers: {
                         'Content-Type': 'multipart/form-data'
+                    },
+                    onUploadProgress: progressEvent => {
+
+                        var complete = (progressEvent.loaded / progressEvent.total * 100 | 0) + '%'
+                        console.log(complete)
+                        // this.progress = complete
                     }
                 }
                 this.$ajax.post(`/api/assessments/${id}/assessment_files`, fileData, config).then((res) => {
