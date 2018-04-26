@@ -22,7 +22,7 @@ api.interceptors.request.use(function (config) {
 
 }, function (error) {
     // 对请求错误做些什么
-    alert('网络错误,请稍后再试');
+    this.$message.error('网络错误,请稍后再试');
 
     // store.commit('SET_LOADING', false);
 

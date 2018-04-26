@@ -43,7 +43,7 @@
                     </div>
                     <div class="review_text">
                         <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model.trim="review.content" @input="descInput" maxlength="500">
-                                                                            </textarea>
+                                                                                </textarea>
                         <p>
                             <span>字数限制：{{remnant}}/500</span>
                         </p>
@@ -133,7 +133,6 @@
 
 <script>
     import fayes from 'faye'
-
     export default {
         data() {
             return {
@@ -146,8 +145,8 @@
                 "review": {},
                 isFile: 0,
                 _filename: '',
-                remnant:500,
-                assessments:{}
+                remnant: 500,
+                assessments: {}
             }
         },
         methods: {
@@ -159,35 +158,34 @@
                     console.log(err)
                 })
             },
-            getScores(){//获取评测详情
-                this.$ajax.get(`/api/scores/${this.$route.params.id}`).then((res)=>{
+            getScores() { //获取评测详情
+                this.$ajax.get(`/api/scores/${this.$route.params.id}`).then((res) => {
                     this.review = res.data
-                    if(this.review.level=='fully'){
+                    if (this.review.level == 'fully') {
                         this.review.self_point = 'A'
                     }
-                    if(this.review.level=='basic'){
+                    if (this.review.level == 'basic') {
                         this.review.self_point = 'B'
                     }
-                    if(this.review.level=='less'){
+                    if (this.review.level == 'less') {
                         this.review.self_point = 'C'
                     }
                 })
             },
-            getFils(){//获取文件列表
-                this.$ajax.get(`/api/assessments/${this.$route.params.id}/assessment_files`).then((res)=>{
-                    this.fileList =  res.data
+            getFils() { //获取文件列表
+                this.$ajax.get(`/api/assessments/${this.$route.params.id}/assessment_files`).then((res) => {
+                    this.fileList = res.data
                 })
             },
             toggleUpload(type) {
                 var upload = document.getElementById("up_dialog")
                 upload.style.display = type
-
                 if (type == 'none') {
                     this.filename = ''
                     this.filenum = ''
                     this.remark = ''
                     this.isFile = 0,
-                    this._filename = ''
+                        this._filename = ''
                     this.picked = 'one'
                     // document.getElementById("file").value = ''
                 }
@@ -209,43 +207,34 @@
             },
             upload(id) {
                 if (this.filename == '') {
-                    alert("文件名为必填项")
+                    this.$message.error("文件名为必填项")
                     return
                 }
-
                 console.log(this.filename)
-
                 var id = this.$route.params.id
                 var fileData = new FormData()
-
-                if(this.picked == 'one'){
+                if (this.picked == 'one') {
                     var file = document.getElementById("file").files[0]
-                    if(file==undefined){
-                        alert("附件为必填")
+                    if (file == undefined) {
+                        this.$message.error("附件为必填")
                         return false
                     }
                     fileData.append("file", file)
                 }
-
                 var normal = this.picked == 'one' ? true : false
-
                 fileData.append("name", this.filename)
                 fileData.append("file_code", this.filenum)
                 fileData.append("remark", this.remark)
                 fileData.append("normal", normal)
-
-
                 let config = {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
                     }
-
-                this.$ajax.post(`/api/assessments/${id}/assessment_files`,fileData,config).then((res)=>{
+                }
+                this.$ajax.post(`/api/assessments/${id}/assessment_files`, fileData, config).then((res) => {
                     this.toggleUpload("none")
                     this.getFils()
                 })
-
             },
             changeFile() {
                 var file = document.getElementById("file").files[0]
@@ -262,54 +251,57 @@
                 var assessment_std_id = ''
                 console.log(this.review.content)
                 if (this.review.self_point == null || this.review.self_point == undefined || this.review.self_point == '') {
-                    alert("请选择评价等级")
+                    this.$message.error("请选择评价等级")
                     return
                 }
                 if (this.review.content == null || this.review.content == undefined || this.review.content == '') {
-                    alert("请写评价详情")
+                    this.$message.error("请写评价详情")
                     return
                 }
                 if (this.review.content.length > 500) {
-                    alert("最多500字")
+                    this.$message.error("最多500字")
                     return
                 }
-                if(this.review.self_point == "A"){
+                if (this.review.self_point == "A") {
                     assessment_std_id = this.assessments.stds[0].std_id
                 }
-                if(this.review.self_point == "B"){
+                if (this.review.self_point == "B") {
                     assessment_std_id = this.assessments.stds[1].std_id
                 }
-                if(this.review.self_point == "C"){
+                if (this.review.self_point == "C") {
                     assessment_std_id = this.assessments.stds[2].std_id
                 }
-
                 var param = {
-                    "assessment_std_id":assessment_std_id,
-                    "content":this.review.content
+                    "assessment_std_id": assessment_std_id,
+                    "content": this.review.content
                 }
-                if(this.review.code=='404'){
+                if (this.review.code == '404') {
                     this.$ajax.post(`/api/assessments/${this.$route.params.id}/scores`, param)
-                    .then((res) => {
-                        alert("感谢您的评价")
-                    }, (err) => {})
-                }else{
+                        .then((res) => {
+                            this.$message({
+                                message: '感谢您的评价',
+                                type: 'success'
+                            });
+                        }, (err) => {})
+                } else {
                     this.$ajax.patch(`/api/assessments/${this.$route.params.id}/scores`, param)
-                    .then((res) => {
-                        alert("感谢您的评价")
-                    }, (err) => {})
+                        .then((res) => {
+                            this.$message({
+                                message: '感谢您的评价',
+                                type: 'success'
+                            });
+                        }, (err) => {})
                 }
-
             },
-            openPdf(url){//打开pdf
-                if(url==undefined){
-                    console.log(111)
-                    alert("该文件为保密文件")
+            openPdf(url) { //打开pdf
+                if (url == undefined) {
+                    this.$message.error("该文件为保密文件")
                     return
                 }
                 window.open(url)
             },
             descInput() { 
-                var txtVal = this.review.content?this.review.content.length:0; 
+                var txtVal = this.review.content ? this.review.content.length : 0; 
                 this.remnant = 500 - txtVal; 
             }
         },
@@ -446,7 +438,7 @@
         display: flex;
         justify-content: space-between;
     }
-    .uploadt_btn span{
+    .uploadt_btn span {
         cursor: pointer;
     }
     .upload {

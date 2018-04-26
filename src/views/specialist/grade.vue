@@ -145,15 +145,15 @@
             save() {//保存
                 var assessment_std_id = ''
                 if (this.review.self_point == null) {
-                    alert("请选择评价等级")
+                    this.$message.error("请选择评价等级")
                     return
                 }
                 if (this.review.content == null) {
-                    alert("请写评价详情")
+                    this.$message.error("请写评价详情")
                     return
                 }
                 if (this.review.content.length > 500) {
-                    alert("最多500字")
+                    this.$message.error("最多500字")
                     return
                 }
                 if(this.review.self_point == "A"){
@@ -174,13 +174,19 @@
                     this.$ajax.post(`/api/assessments/${this.$route.params.id}/scores`, param)
                     .then((res) => {
                         this.close()
-                        alert("感谢您的评价")
+                        this.$message({
+                                message: '感谢您的评价',
+                                type: 'success'
+                            });
                     }, (err) => {})
                 }else{
                     this.$ajax.patch(`/api/assessments/${this.$route.params.id}/scores`, param)
                     .then((res) => {
                         this.close()
-                        alert("感谢您的评价")
+                        this.$message({
+                                message: '感谢您的评价',
+                                type: 'success'
+                            });
                     }, (err) => {})
                 }
 

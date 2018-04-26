@@ -103,15 +103,15 @@
             },
             login() {
                 if(this.unsename==''){
-                    alert("用户名不能为空")
+                    this.$message.error("用户名不能为空")
                     return
                 }
                 if(this.password==''){
-                    alert("密码不能为空")
+                    this.$message.error("密码不能为空")
                     return
                 }
                 if(this.code.value==undefined){
-                    alert("验证码不能为空")
+                    this.$message.error("验证码不能为空")
                     return
                 }
                 this.$ajax.post("/api/user_token", {
