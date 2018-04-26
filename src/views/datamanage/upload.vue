@@ -286,6 +286,7 @@
                 if (this.review.code == '404') {
                     this.$ajax.post(`/api/assessments/${this.$route.params.id}/scores`, param)
                         .then((res) => {
+                            this.review.code = '200'
                             this.$message({
                                 message: '感谢您的评价',
                                 type: 'success'
