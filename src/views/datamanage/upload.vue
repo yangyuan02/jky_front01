@@ -1,5 +1,5 @@
 <template>
-    <div class="uoload_con">
+    <div class="data_01 uoload_con">
         <nav>
             <div class="target" style="margin-bottom:30px;">
                 <div class="target_title">测评点</div>
@@ -431,7 +431,7 @@
         box-shadow: 1px 1px 8px #ccc;
         margin-right: 10px;
     }
-    .right_con .upload_con {
+    .data_01 .right_con .upload_con {
         width: 40%;
         background: #fff;
         box-shadow: 1px 1px 8px #ccc;

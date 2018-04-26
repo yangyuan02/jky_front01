@@ -196,7 +196,7 @@
     .manage table tr td {
         padding: 4px 10px;
     }
-    .manage table tr td:nth-child(6) a {
+    .data.manage table tr td:nth-child(6) a {
         color: #fff;
         background: #7acedf;
         width: 70px;
