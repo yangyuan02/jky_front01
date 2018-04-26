@@ -42,7 +42,7 @@
                         <span>简述</span>
                     </div>
                     <div class="review_text">
-                        <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model="review.content" @input="descInput" maxlength="500">
+                        <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model.trim="review.content" @input="descInput" maxlength="500">
                                                                             </textarea>
                         <p>
                             <span>字数限制：{{remnant}}/500</span>
@@ -90,11 +90,11 @@
             </div>
             <div class="label">
                 <span>资料名称</span>
-                <input type="text" v-model="filename" placeholder="此项为必填">
+                <input type="text" v-model.trim="filename" placeholder="此项为必填">
             </div>
             <div class="label">
                 <span>文件编号</span>
-                <input type="text" v-model="filenum">
+                <input type="text" v-model.trim="filenum">
             </div>
             <div class="label">
                 <span>备注</span>
@@ -212,19 +212,28 @@
                     alert("文件名为必填项")
                     return
                 }
+
+                console.log(this.filename)
+
                 var id = this.$route.params.id
                 var fileData = new FormData()
-                this.picked = this.picked == 'one' ? true : false
 
-                if(this.picked){
+                if(this.picked == 'one'){
                     var file = document.getElementById("file").files[0]
+                    if(file==undefined){
+                        alert("附件为必填")
+                        return false
+                    }
                     fileData.append("file", file)
                 }
+
+                var normal = this.picked == 'one' ? true : false
 
                 fileData.append("name", this.filename)
                 fileData.append("file_code", this.filenum)
                 fileData.append("remark", this.remark)
-                fileData.append("normal", this.picked)
+                fileData.append("normal", normal)
+
 
                 let config = {
                         headers: {
@@ -251,11 +260,12 @@
             },
             save() {
                 var assessment_std_id = ''
-                if (this.review.self_point == null) {
+                console.log(this.review.content)
+                if (this.review.self_point == null || this.review.self_point == undefined || this.review.self_point == '') {
                     alert("请选择评价等级")
                     return
                 }
-                if (this.review.content == null) {
+                if (this.review.content == null || this.review.content == undefined || this.review.content == '') {
                     alert("请写评价详情")
                     return
                 }

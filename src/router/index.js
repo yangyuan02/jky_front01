@@ -29,9 +29,14 @@ const specialistMain = r => require.ensure([], () => r(require('@/views/speciali
 const specialistGrade = r => require.ensure([], () => r(require('@/views/specialist/grade')), 'specialistGrade')
 
 //督导用户
+
+
+
 const supervisorIndex = r => require.ensure([], () => r(require('@/views/supervisor/index')), 'supervisorIndex')
 
-const supervisorMain = r => require.ensure([], () => r(require('@/views/supervisor/main')), 'supervisorMain')
+const supervisorMain = r => require.ensure([], () => r(require('@/views/supervisor/provinceProgress')), 'provinceProgress')
+
+// const supervisorMain = r => require.ensure([], () => r(require('@/views/supervisor/main')), 'supervisorMain')
 
 const department = r => require.ensure([], () => r(require('@/views/supervisor/department')), 'department')
 

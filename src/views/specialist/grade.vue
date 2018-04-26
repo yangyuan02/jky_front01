@@ -120,7 +120,7 @@
                 this.province = JSON.parse(window.localStorage.getItem("provinces"))
             },
             getNetworkDetail(province) { //获取文件列表/省用户评价详情
-                // this.
+                this.value = this.province[0].name
                 this.$ajax.get(`/api/assessments/info?id=${this.$route.params.id}&province=${province}`).then((res) => {
                     if (res.data.score.flag == 'fully') {
                         res.data.score.flag = 'A'
@@ -132,7 +132,7 @@
                         res.data.flag = 'C'
                     }
                     this.changePdf(res.data.pdfs[0].url)
-                    this.value = this.province[0].name
+
                     this.fileList = res.data
                 })
             },
@@ -199,7 +199,7 @@
         mounted() {
             this.getDetail()
             this.getProvince()
-            this.getNetworkDetail('410000')
+            this.getNetworkDetail(this.province[0].code)
         }
     }
 </script>
