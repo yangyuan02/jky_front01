@@ -66,10 +66,10 @@
                 <div class="upload">
                     <ul>
                         <li v-for="(item,index) in fileList" :key="index">
-                            <a href="JavaScript:;">{{item.name}}</a>
+                            <a href="JavaScript:;" @click="openPdf(item.url)" >{{item.name}}</a>
                             <div>
-                                <i class="iconfont" style="color:#3485ee;" v-if="item.url" @click="openPdf(item.url)">&#xe626;</i>
-                                <i class="iconfont" style="color:red;" @click="showDel('block',item.id)">&#xe612;</i>
+                                <!-- <i class="iconfont" style="color:#3485ee;" v-if="item.url" >&#xe626;</i> -->
+                                <i class="iconfont" style="color:red;cursor:pointer" @click="showDel('block',item.id)">&#xe612;</i>
                             </div>
                         </li>
                     </ul>
@@ -304,7 +304,7 @@
             },
             openPdf(url) { //打开pdf
                 if (url == undefined) {
-                    this.$message.error("该文件为保密文件")
+                    this.$message.error("此材料为保密，请现场查看")
                     return
                 }
                 window.open(url)
