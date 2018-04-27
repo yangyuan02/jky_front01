@@ -115,17 +115,17 @@
             <div class="label access" v-if="picked=='one'">
                 <div class="accessory">
                     <i class="iconfont" v-bind:class="{ active: '1'== isFile}">&#xe615;</i>
-                    <span>{{isFile==1?_filename:'请选择文件上传'}}</span>
+                    <span>{{changefilename}}</span>
                     <input type="file" name="" id="file" accept=".pdf" @change="changeFile()">
                 </div>
             </div>
-            <div class="label access" v-if="picked=='two'">
+            <!-- <div class="label access" v-if="picked=='two'">
                 <div class="accessory disabled">
                     <i class="iconfont" v-bind:class="{ active: '1'== isFile}">&#xe615;</i>
                     <span>{{isFile==1?_filename:'请选择文件上传'}}</span>
                     <input type="file" name="" accept=".pdf" @change="changeFile()" disabled>
                 </div>
-            </div>
+            </div> -->
             <div class="btns">
                 <a href="javascript:;" @click="upload()">上传</a>
                 <a href="javascript:;" @click="toggleUpload('none')">取消</a>
@@ -147,7 +147,7 @@
                 "fileList": [],
                 "review": {},
                 isFile: 0,
-                _filename: '',
+                changefilename: "请选择上传文件",
                 remnant: 500,
                 assessments: {}
             }
@@ -188,9 +188,11 @@
                     this.filenum = ''
                     this.remark = ''
                     this.isFile = 0,
-                        this._filename = ''
+                    this.changefilename = '请选择上传文件'
                     this.picked = 'one'
-                    // document.getElementById("file").value = ''
+                    if(document.getElementById("file")){
+                        document.getElementById("file").value = ''
+                    }
                 }
             },
             showDel(type, id) {
@@ -246,14 +248,12 @@
             },
             changeFile() {
                 var file = document.getElementById("file").files[0]
-                console.log(file)
                 if (file) {
                     this.isFile = 1
-                    this._filename = file.name
+                    this.changefilename = file.name
                 } else {
                     this.isFile = 0
                 }
-                // this.changFile = 0
             },
             save() {
                 var assessment_std_id = ''
