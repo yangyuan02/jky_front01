@@ -233,7 +233,7 @@
                         return false
                     }
                     if(file.type!=='application/pdf'){
-                        this.$message.error("上传文件问pdf格式")
+                        this.$message.error("上传文件为pdf格式")
                         return false
                     }
                     fileData.append("file", file)
@@ -276,7 +276,8 @@
                     return
                 }
                 if (this.review.content) {
-                    if(this.review.content.length<1000){
+                    console.log(this.review.content.length)
+                    if(this.review.content.length>1000){
                         this.$message.error("最多1000字")
                         return
                     }
