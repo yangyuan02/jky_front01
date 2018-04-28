@@ -49,6 +49,7 @@
                         </p>
                     </div>
                     <div class="review_btn">
+                        <a href="javascrip:;" @click="goBack()" style="right:80px;">返回</a>
                         <a href="javascrip:;" @click="save()">{{review.code=='404'?'保存':'更新'}}</a>
                     </div>
                 </div>
@@ -175,6 +176,12 @@
                     }
                 })
             },
+            goBack(){
+                 this.$router.back(-1)
+                 if(this.review.code == '404'){
+                     this.review = ''
+                 }
+            },
             getFils() { //获取文件列表
                 this.$ajax.get(`/api/assessments/${this.$route.params.id}/assessment_files`).then((res) => {
                     this.fileList = res.data
@@ -220,8 +227,13 @@
                 var fileData = new FormData()
                 if (this.picked == 'one') {
                     var file = document.getElementById("file").files[0]
+                    console.log(file)
                     if (file == undefined) {
                         this.$message.error("附件为必填")
+                        return false
+                    }
+                    if(file.type!=='application/pdf'){
+                        this.$message.error("上传文件问pdf格式")
                         return false
                     }
                     fileData.append("file", file)
@@ -251,6 +263,7 @@
                 if (file) {
                     this.isFile = 1
                     this.changefilename = file.name
+                    console.log(this.changefilename)
                 } else {
                     this.isFile = 0
                 }

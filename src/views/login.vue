@@ -39,7 +39,7 @@
                 </span>
                  <a style="color: #368ae2;float: right;font-size:12px;cursor: pointer;display: inline-block;margin-top: 5px;" @click="forget_back">返回</a>
             </div>
-            <div class="login_btn" @click="forget_login">获取帐号</div>
+            <div class="login_btn" @click="forget_login">获取密码</div>
             </div>
           <!-- 忘记密码 -->
 

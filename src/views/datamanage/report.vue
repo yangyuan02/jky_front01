@@ -9,6 +9,7 @@
                     <textarea name="" id="" cols="30" rows="10" placeholder="字数限制8000" v-model="list[0].content" maxlength="8000"></textarea>
                 </div>
                 <div class="report_btn">
+                    <a href="javascript:;" @click="goBack()">返回</a>
                     <a href="javascript:;" @click="save(list[0].id,list[0].content)">保存</a>
                 </div>
             </div>
@@ -38,6 +39,9 @@
                         type: 'success'
                     });
                 })
+            },
+            goBack(){//返回
+                this.$router.back(-1)
             }
         },
         mounted() {
