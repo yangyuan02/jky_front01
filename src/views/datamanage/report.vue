@@ -5,48 +5,11 @@
         </div>
         <div class="report_box" v-if="list[0]">
             <div class="report_item">
-                <div class="report_item_title">
-                    <p>一、自查情况</p>
+                <div class="report_item_body" style="width:98%;">
+                    <textarea name="" id="" cols="30" rows="10" placeholder="字数限制8000" v-model="list[0].content" maxlength="8000"></textarea>
                 </div>
-                <div class="report_item_body">
-                    <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="list[0].content"></textarea>
+                <div class="report_btn">
                     <a href="javascript:;" @click="save(list[0].id,list[0].content)">保存</a>
-                </div>
-            </div>
-            <div class="report_item">
-                <div class="report_item_title">
-                    <p>二、工作成效</p>
-                </div>
-                <div class="report_item_body">
-                    <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="list[1].content"></textarea>
-                    <a href="javascript:;" @click="save(list[1].id,list[1].content)">保存</a>
-                </div>
-            </div>
-            <div class="report_item">
-                <div class="report_item_title">
-                    <p>三、经验做法</p>
-                </div>
-                <div class="report_item_body">
-                    <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="list[2].content"></textarea>
-                    <a href="javascript:;" @click="save(list[2].id,list[2].content)">保存</a>
-                </div>
-            </div>
-            <div class="report_item">
-                <div class="report_item_title">
-                    <p>四、存在问题</p>
-                </div>
-                <div class="report_item_body">
-                    <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="list[3].content"></textarea>
-                    <a href="javascript:;" @click="save(list[3].id,list[3].content)">保存</a>
-                </div>
-            </div>
-            <div class="report_item">
-                <div class="report_item_title">
-                    <p>五、改进措施</p>
-                </div>
-                <div class="report_item_body">
-                    <textarea name="" id="" cols="30" rows="10" placeholder="字数限制1000" v-model="list[4].content"></textarea>
-                    <a href="javascript:;" @click="save(list[4].id,list[4].content)">保存</a>
                 </div>
             </div>
         </div>
@@ -66,9 +29,14 @@
                     this.list = res.data
                 })
             },
-            save(id,content) {
-                this.$ajax.patch(`/api/reports/${id}`,{"content":content}).then((res) => {
-                    console.log(res)
+            save(id, content) {
+                this.$ajax.patch(`/api/reports/${id}`, {
+                    "content": content
+                }).then((res) => {
+                    this.$message({
+                        message: '感谢您的评价',
+                        type: 'success'
+                    });
                 })
             }
         },
@@ -82,7 +50,7 @@
     .report {
         padding: 0px 20px;
     }
-    .report_item_title{
+    .report_item_title {
         margin-bottom: 10px;
         font-size: 16px;
     }
@@ -117,11 +85,15 @@
         border: 1px solid #327bca;
         border-radius: 4px;
         font-size: 20px;
+        padding: 10px;
     }
-    .report .report_box .report_item a {
-        position: absolute;
-        right: 2%;
-        bottom: 8%;
-        color: #327bca;
+    .report .report_box .report_item .report_btn {
+        text-align: right;
+        margin-top: 10px;
+    }
+    .report .report_box .report_item .report_btn a{
+        padding: 6px 20px;
+        color: #fff;
+        background:#327bca;
     }
 </style>
