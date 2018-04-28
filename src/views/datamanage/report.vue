@@ -6,7 +6,10 @@
         <div class="report_box" v-if="list[0]">
             <div class="report_item">
                 <div class="report_item_body" style="width:98%;">
-                    <textarea name="" id="" cols="30" rows="10" placeholder="字数限制8000" v-model="list[0].content" maxlength="8000"></textarea>
+                    <textarea name="" id="" cols="30" rows="10" placeholder="字数限制8000" v-model.trim="list[0].content" maxlength="8000" @input="descInput"></textarea>
+                </div>
+                <div>
+                    <span>字数限制：{{remnant}}/8000</span>
                 </div>
                 <div class="report_btn">
                     <a href="javascript:;" @click="goBack()">返回</a>
@@ -21,13 +24,15 @@
     export default {
         data() {
             return {
-                list: []
+                list: [],
+                remnant: 8000,
             }
         },
         methods: {
             getData() { //获取总评信息
                 this.$ajax.get("/api/reports").then((res) => {
                     this.list = res.data
+                    this.descInput()
                 })
             },
             save(id, content) {
@@ -40,7 +45,11 @@
                     });
                 })
             },
-            goBack(){//返回
+            descInput() { 
+                var txtVal = this.list[0].content ? this.list[0].content.length : 0; 
+                this.remnant = 8000 - txtVal; 
+            },
+            goBack() { //返回
                 this.$router.back(-1)
             }
         },
@@ -95,9 +104,9 @@
         text-align: right;
         margin-top: 10px;
     }
-    .report .report_box .report_item .report_btn a{
+    .report .report_box .report_item .report_btn a {
         padding: 6px 20px;
         color: #fff;
-        background:#327bca;
+        background: #327bca;
     }
 </style>

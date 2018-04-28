@@ -275,9 +275,11 @@
                     this.$message.error("请选择评价等级")
                     return
                 }
-                if (this.review.content.length > 1000) {
-                    this.$message.error("最多1000字")
-                    return
+                if (this.review.content) {
+                    if(this.review.content.length<1000){
+                        this.$message.error("最多1000字")
+                        return
+                    }
                 }
                 if (this.review.self_point == "A") {
                     assessment_std_id = this.assessments.stds[0].std_id

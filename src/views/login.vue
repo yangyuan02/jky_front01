@@ -14,7 +14,7 @@
                 <input type="password" placeholder="请输入密码" v-model="password" @keyup.enter="login">
             </div>
             <div class="common" style="margin-bottom:40px;">
-                <input type="password" placeholder="请输入验证码" v-model="code.value" style="width:47%;">
+                <input type="text" placeholder="请输入验证码" v-model="code.value" style="width:47%;">
                 <span style="display: inline-block;width:50%;" @click="creatCode()">
                     <img :src="code.image" alt="" style="width:100%;">
                 </span>
