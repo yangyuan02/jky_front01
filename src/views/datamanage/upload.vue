@@ -42,10 +42,10 @@
                         <span>简述</span>
                     </div>
                     <div class="review_text">
-                        <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model.trim="review.content" @input="descInput" maxlength="500">
+                        <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model.trim="review.content" @input="descInput" maxlength="1000">
                                                                                 </textarea>
                         <p>
-                            <span>字数限制：{{remnant}}/500</span>
+                            <span>字数限制：{{remnant}}/1000</span>
                         </p>
                     </div>
                     <div class="review_btn">
@@ -148,7 +148,7 @@
                 "review": {},
                 isFile: 0,
                 changefilename: "请选择上传文件",
-                remnant: 500,
+                remnant: 1000,
                 assessments: {}
             }
         },
@@ -262,12 +262,8 @@
                     this.$message.error("请选择评价等级")
                     return
                 }
-                if (this.review.content == null || this.review.content == undefined || this.review.content == '') {
-                    this.$message.error("请写评价详情")
-                    return
-                }
-                if (this.review.content.length > 500) {
-                    this.$message.error("最多500字")
+                if (this.review.content.length > 1000) {
+                    this.$message.error("最多1000字")
                     return
                 }
                 if (this.review.self_point == "A") {
@@ -311,7 +307,7 @@
             },
             descInput() { 
                 var txtVal = this.review.content ? this.review.content.length : 0; 
-                this.remnant = 500 - txtVal; 
+                this.remnant = 1000 - txtVal; 
             }
         },
         mounted() {
