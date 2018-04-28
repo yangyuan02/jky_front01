@@ -29,10 +29,10 @@
         <div class="nav">
             <ul>
                 <li @click="goTo(nav[person.level][0].path)">
-                    <a href="javascript:;" v-bind:class="{ active: 'datamanage'== path|'upload'== path}">{{nav[person.level][0].title}}</a>
+                    <a href="javascript:;" v-bind:class="{ active: nav[person.level][0].path == path }">{{nav[person.level][0].title}}</a>
                 </li>
                 <li @click="goTo(nav[person.level][1].path)">
-                    <a href="javascript:;" v-bind:class="{ active: 'grade'== path}">{{nav[person.level][1].title}}</a>
+                    <a href="javascript:;" v-bind:class="{ active: nav[person.level][1].path == path}">{{nav[person.level][1].title}}</a>
                 </li>
             </ul>
         </div>
@@ -135,12 +135,13 @@ export default {
       this.isActive = !this.isActive;
     },
     getPath() {
+        this.path =  this.$route.path
         console.log(this.$route.path)
-      if (this.$route.path.indexOf("upload") != -1) {
-        this.path = this.$route.path.slice(6, 12);
-      } else {
-        this.path = this.$route.path.slice(6);
-      }
+    //   if (this.$route.path.indexOf("upload") != -1) {
+    //     this.path = this.$route.path.slice(6, 12);
+    //   } else {
+    //     this.path = this.$route.path.slice(6);
+    //   }
     }
   },
   created() {
