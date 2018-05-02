@@ -127,6 +127,7 @@ export default {
     logout() {
       window.localStorage.removeItem("token");
       window.localStorage.removeItem("user");
+      window.localStorage.removeItem("provinces")
       this.$router.replace({
         path: "/"
       });
