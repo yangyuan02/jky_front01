@@ -137,12 +137,6 @@ export default {
     },
     getPath() {
         this.path =  this.$route.path
-        console.log(this.$route.path)
-    //   if (this.$route.path.indexOf("upload") != -1) {
-    //     this.path = this.$route.path.slice(6, 12);
-    //   } else {
-    //     this.path = this.$route.path.slice(6);
-    //   }
     }
   },
   created() {

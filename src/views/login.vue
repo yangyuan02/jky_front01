@@ -90,15 +90,15 @@
             },
             forget_login:function(){
              if(this.forget_name==''){
-                    alert("姓名名不能为空")
+                    this.$message.error("姓名名不能为空")
                     return
                 }
                 if(this.forget_tel==''){
-                    alert("手机号不能为空")
+                    this.$message.error("手机号不能为空")
                     return
                 }
                 if(this.forget_value==undefined){
-                    alert("验证码不能为空")
+                    this.$message.error("验证码不能为空")
                     return
                 }
               this.$ajax.post("/api/admin/users/reset_user", {"name":this.forget_name,"mobile":this.forget_tel,"uuid":this.code.uuid,"rucaptcha":this.forget_value,}).then((res) => {
@@ -134,6 +134,10 @@
                     }
                     if(res.data.message == '账号密码错误'){
                         this.$message.error("账号密码错误")
+                        return
+                    }
+                    if(res.data.message == '用户所属角色登陆时间已过期'){
+                        this.$message.error("用户所属角色登陆时间已过期")
                         return
                     }
                     if (res.data.jwt) {
