@@ -89,8 +89,9 @@
              this.creatCode()
             },
             forget_login:function(){
+    
              if(this.forget_name==''){
-                    this.$message.error("姓名名不能为空")
+                    this.$message.error("姓名不能为空")
                     return
                 }
                 if(this.forget_tel==''){
@@ -102,7 +103,11 @@
                     return
                 }
               this.$ajax.post("/api/admin/users/reset_user", {"name":this.forget_name,"mobile":this.forget_tel,"uuid":this.code.uuid,"rucaptcha":this.forget_value,}).then((res) => {
-
+                  this.$message({
+                          showClose: true,
+                          message: '短信已发送',
+                          type: 'success'
+                     })
                 }, (err) => {})
               this.forget_password=true
 
