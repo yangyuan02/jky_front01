@@ -184,6 +184,9 @@
             },
             getFils() { //获取文件列表
                 this.$ajax.get(`/api/assessments/${this.$route.params.id}/assessment_files`).then((res) => {
+                    if(res.data.code=='404'){
+                        return
+                    }
                     this.fileList = res.data
                 })
             },
