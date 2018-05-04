@@ -17,7 +17,7 @@
                         <td :rowspan="item.two_row_span" v-bind:class="{ show: item.two_display.toString()=='false'}">{{item.two_content.replace(/\s/g,"")}}</td>
                         <td>{{item.three_content.replace(/\s/g,"")}}</td>
                         <td>
-                            <Progress :progress="item.processing"></Progress>
+                            <Progress :progress="item.processing/32*100+'%'"></Progress>
                         </td>
                         <td>
                             <a href="javascript:;" @click="goDatail(item.three_id)">评估</a>

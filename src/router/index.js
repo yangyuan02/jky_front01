@@ -28,6 +28,8 @@ const specialistMain = r => require.ensure([], () => r(require('@/views/speciali
 
 const specialistGrade = r => require.ensure([], () => r(require('@/views/specialist/grade')), 'specialistGrade')
 
+const specialistReport = r => require.ensure([], () => r(require('@/views/specialist/report')), 'specialistReport')
+
 //督导用户
 
 
@@ -100,6 +102,11 @@ export default new Router({
                         {
                             path: '/home/specialist/grade',
                             component: grade,
+                            meta: { requiresAuth: '网评专家' },
+                        },
+                        {
+                            path: '/home/specialist/report',
+                            component: specialistReport,
                             meta: { requiresAuth: '网评专家' },
                         },
                         {

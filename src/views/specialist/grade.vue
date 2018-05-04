@@ -83,7 +83,7 @@
                     <textarea name="" id="" cols="30" rows="10" v-model="review.content"></textarea>
                 </div>
                 <div class="score_btn">
-                    <a href="javascript:;" @click="save()">保存</a>
+                    <a href="javascript:;" @click="save()">{{review.code=='404'?'保存':'更新'}}</a>
                 </div>
             </div>
             <div class="socre_cloes" id="socre_cloes" @click="close">
@@ -120,8 +120,8 @@
                 this.province = JSON.parse(window.localStorage.getItem("provinces"))
             },
             getNetworkDetail(province) { //获取文件列表/省用户评价详情
-                this.value = this.province[0].name
-                this.$ajax.get(`/api/assessments/info?id=${this.$route.params.id}&province=${province}`).then((res) => {
+                this.value = province
+                this.$ajax.get(`/api/assessments/info?id=${this.$route.params.id}&province=${province.code}`).then((res) => {
                     if (res.data.score.flag == 'fully') {
                         res.data.score.flag = 'A'
                     }
@@ -136,8 +136,23 @@
                     this.fileList = res.data
                 })
             },
+            getScores(province) { //获取评测详情
+                this.$ajax.get(`/api/scores/${this.$route.params.id}?province=${province.code}`).then((res) => {
+                    this.review = res.data
+                    if (this.review.level == 'fully') {
+                        this.review.self_point = 'A'
+                    }
+                    if (this.review.level == 'basic') {
+                        this.review.self_point = 'B'
+                    }
+                    if (this.review.level == 'less') {
+                        this.review.self_point = 'C'
+                    }
+                })
+            },
             selectProvince(data){//选择省份
-                this.getNetworkDetail(data.code)
+                this.getNetworkDetail(data)
+                this.getScores(data)
             },
             changePdf(src) {
                 this.pdfsrc = src
@@ -171,8 +186,9 @@
                     "content":this.review.content
                 }
                 if(this.review.code=='404'){
-                    this.$ajax.post(`/api/assessments/${this.$route.params.id}/scores`, param)
+                    this.$ajax.post(`/api/assessments/${this.$route.params.id}/scores?province=${this.value.code}`, param)
                     .then((res) => {
+                        this.review.code = '200'
                         this.close()
                         this.$message({
                                 message: '感谢您的评价',
@@ -180,7 +196,7 @@
                             });
                     }, (err) => {})
                 }else{
-                    this.$ajax.patch(`/api/assessments/${this.$route.params.id}/scores`, param)
+                    this.$ajax.patch(`/api/assessments/${this.$route.params.id}/scores?province=${this.value.code}`, param)
                     .then((res) => {
                         this.close()
                         this.$message({
@@ -203,9 +219,10 @@
             }
         },
         mounted() {
-            this.getDetail()
             this.getProvince()
-            this.getNetworkDetail(this.province[0].code)
+            this.getDetail()
+            this.getScores(this.province[0])
+            this.getNetworkDetail(this.province[0])
         }
     }
 </script>
