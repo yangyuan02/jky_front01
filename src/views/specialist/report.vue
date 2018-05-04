@@ -3,10 +3,22 @@
         <div class="report_title">
             <span></span>
         </div>
-        <div class="report_box">
+        <div style="width:100%;background:#fff;padding:10px 20px;">
+            <template>
+                      <el-select v-model="value" filterable placeholder="请选择" @change="selectProvince($event)" value-key="code">
+                        <el-option
+                          v-for="item in province"
+                          :key="item.name"
+                          :label="item.name"
+                          :value="item">
+                        </el-option>
+                      </el-select>
+</template>
+        </div>
+        <div class="report_box" v-if="list[0]">
             <div class="report_item">
                 <div class="report_item_body" style="width:98%;">
-                    <textarea name="" id="" cols="30" rows="10" placeholder="字数限制8000" maxlength="8000"></textarea>
+                    <textarea name="" id="" cols="30" rows="10" v-model.trim="list[0].content" disabled="disabled"></textarea>
                 </div>
                 <div class="report_btn">
                     <a href="javascript:;" @click="goBack()">返回</a>
@@ -22,12 +34,30 @@
             return {
                 list: [],
                 remnant: 8000,
+                province:[],
+                value:{}
             }
         },
         methods: {
+            getData(province) { //获取总评信息
+                this.value = province
+                this.$ajax.get(`/api/reports?&province=${province.code}`).then((res) => {
+                    this.list = res.data
+                })
+            },
+            getProvince(){//获取省份
+                this.province = JSON.parse(window.localStorage.getItem("provinces"))
+            },
+            selectProvince(data){//选择省份
+                this.getData(data)
+            },
             goBack() { //返回
                 this.$router.back(-1)
             }
+        },
+        mounted(){
+            this.getProvince()
+            this.getData(this.province[0])
         }
     }
 </script>
