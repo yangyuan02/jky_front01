@@ -85,7 +85,7 @@ export default {
             title: "省自评进度"
           },
           {
-            path: "/home/supervisor/result",
+            path: "/home/supervisor/onlinecomment",
             title: "网评专家进度"
           }
         ]

@@ -1,5 +1,5 @@
 <template>
-    <div class="department">
+    <div class="on_department">
         <SideNav></SideNav>
         <div class="sup_right">
             <div class="back">
@@ -44,17 +44,17 @@ export default {
 </script>
 
 <style>
-    .department{
+    .on_department{
         display: flex;
     }
-    .sup_right{
+    .on_department .sup_right{
         width: calc(100% - 352px - 20px - 40px);
         height: 600px;
         background: #fff;
         box-shadow: 1px 1px 8px #ccc;
         padding: 20px;
     }
-    .sup_right .depar_head{
+    .on_department .sup_right .depar_head{
         width: 100%;
         height: 38px;
         line-height: 38px;
@@ -62,29 +62,29 @@ export default {
         background: #a4c9e9;
         color: #fff;
     }
-    .sup_right .back{
+    .on_department .sup_right .back{
         color: #419bf6
     }
-    .sup_right .back a{
+    .on_department .sup_right .back a{
         color: #419bf6
     }
-    .sup_right .depart_head{
+    .on_department .sup_right .depart_head{
         height: 38px;
         line-height: 38px;
         text-align: center;
         background: #a4c9e9;
         color: #fff;
     }
-    .sup_right .depart_con ul{
+    .on_department .sup_right .depart_con ul{
         display: flex;
         justify-content:space-between;
         flex-wrap: wrap;
     }
-    .sup_right .depart_con ul::after{
+    .on_department .sup_right .depart_con ul::after{
          content: "";
          flex: auto;
     }
-    .sup_right .depart_con ul li{
+    .on_department .sup_right .depart_con ul li{
         padding: 10px 5px;
         color: #00a0e9;
         border: 1px solid #00a0e9;
@@ -95,10 +95,10 @@ export default {
         margin-top: 14px;
         /* margin-right: 10px; */
     }
-    .sup_right .depart_con ul li:nth-child(7n){
+    .on_department .sup_right .depart_con ul li:nth-child(7n){
         margin-right: 0px;
     }
-    .sup_right .depart_con ul li.active{
+    .on_department .sup_right .depart_con ul li.active{
         color: #fff;
         border:1px solid #4adedd;
         background: #4adedd;

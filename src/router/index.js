@@ -44,6 +44,8 @@ const supervisorListReport = r => require.ensure([], () => r(require('@/views/su
 
 const supervisorListUpload = r => require.ensure([], () => r(require('@/views/supervisor/upload')), 'supervisorListUpload')
 
+const supervisorOnMain = r => require.ensure([], () => r(require('@/views/supervisor/on_main')), 'supervisorOnMain')
+
 
 // const supervisorMain = r => require.ensure([], () => r(require('@/views/supervisor/main')), 'supervisorMain')
 
@@ -153,18 +155,18 @@ export default new Router({
                             meta: { requiresAuth: '督导' },
                         },
                         {
-                            path: '/home/department',
+                            path: '/home/supervisor/onlinecomment',
+                            component: supervisorOnMain,
+                            meta: { requiresAuth: '督导' },
+                        },
+                        {
+                            path: '/home/supervisor/onlinecomment/department',
                             component: department,
                             meta: { requiresAuth: '督导' },
                         },
                         {
                             path: '/home/department/detail',
                             component: departmentDetail,
-                            meta: { requiresAuth: '督导' },
-                        },
-                        {
-                            path: '/home/supervisor/result',
-                            component: grade,
                             meta: { requiresAuth: '督导' },
                         }
                     ]

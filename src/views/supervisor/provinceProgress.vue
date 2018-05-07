@@ -1,5 +1,5 @@
 <template>
-    <div class="department">
+    <div class="superv_department">
         <div class="sup_right">
             <div class="depart_head">
                 省自评进度情况
@@ -50,17 +50,17 @@
 </script>
 
 <style>
-    .department {
+    .superv_department {
         display: flex;
     }
-    .sup_right {
+    .superv_department .sup_right {
         width: 100%;
         height: 600px;
         background: #fff;
         box-shadow: 1px 1px 8px #ccc;
         padding: 20px;
     }
-    .sup_right .depar_head {
+    .superv_department .sup_right .depar_head {
         width: 100%;
         height: 38px;
         line-height: 38px;
@@ -68,25 +68,25 @@
         background: #a4c9e9;
         color: #fff;
     }
-    .sup_right .back {
+    .superv_department .sup_right .back {
         color: #419bf6
     }
-    .sup_right .back a {
+    .superv_department .sup_right .back a {
         color: #419bf6
     }
-    .sup_right .depart_head {
+    .superv_department .sup_right .depart_head {
         height: 38px;
         line-height: 38px;
         text-align: center;
         background: #a4c9e9;
         color: #fff;
     }
-    .sup_right .depart_con ul {
+    .superv_department .sup_right .depart_con ul {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
     }
-    .sup_right .depart_con ul li {
+    .superv_department .sup_right .depart_con ul li {
         padding: 10px 26px;
         color: #00a0e9;
         border: 1px solid #00a0e9;
@@ -94,11 +94,12 @@
         justify-content: space-around;
         align-items: center;
         margin-top: 14px;
+        cursor: pointer;
     }
-    .sup_right .depart_con ul li span {
+    .superv_department .sup_right .depart_con ul li span {
         margin-right: 8px;
     }
-    .sup_right .depart_con ul li.active {
+    .superv_department .sup_right .depart_con ul li.active {
         color: #fff;
         border: 1px solid #4adedd;
         background: #4adedd;
