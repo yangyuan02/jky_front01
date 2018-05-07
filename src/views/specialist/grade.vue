@@ -124,6 +124,7 @@
                 this.$ajax.get(`/api/assessments/info?id=${this.$route.params.id}&province=${province.code}`).then((res) => {
                     if(res.data.code=='404'){
                         this.fileList = {}
+                        this.pdfsrc = ''
                         return
                     }
                     if (res.data.score.flag == 'fully') {
