@@ -14,10 +14,10 @@
                         <Progress :progress="progress"></Progress>
                         <span>{{92}}</span>
                     </div>
-                    <div class="data_satus">
+                    <!-- <div class="data_satus">
                         <a href="javascrip:;" @click="getData('/api/assessments?status=1')">已完成</a>
                         <a href="javascrip:;" @click="getData('/api/assessments?status=0')">未完成</a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="table_header">
