@@ -75,7 +75,7 @@
                 this.$router.push('/home/supervisor/onlinecomment/department')
             },
             goReport(){
-                this.$router.push('./specialist/report')
+                this.$router.push('/home/supervisor/onlinecomment/report')
             }
         },
         mounted() {
