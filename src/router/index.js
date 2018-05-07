@@ -38,6 +38,13 @@ const supervisorIndex = r => require.ensure([], () => r(require('@/views/supervi
 
 const supervisorMain = r => require.ensure([], () => r(require('@/views/supervisor/provinceProgress')), 'provinceProgress')
 
+const supervisorList = r => require.ensure([], () => r(require('@/views/supervisor/supervisorList')), 'supervisorList')
+
+const supervisorListReport = r => require.ensure([], () => r(require('@/views/supervisor/report')), 'supervisorListReport')
+
+const supervisorListUpload = r => require.ensure([], () => r(require('@/views/supervisor/upload')), 'supervisorListUpload')
+
+
 // const supervisorMain = r => require.ensure([], () => r(require('@/views/supervisor/main')), 'supervisorMain')
 
 const department = r => require.ensure([], () => r(require('@/views/supervisor/department')), 'department')
@@ -125,6 +132,24 @@ export default new Router({
                         {
                             path: '/',
                             component: supervisorMain,
+                            meta: { requiresAuth: '督导' },
+                        },
+                        {
+                            path: '/home/supervisor/list/:code',
+                            name:'supervisorList',
+                            component: supervisorList,
+                            meta: { requiresAuth: '督导' },
+                        },
+                        {
+                            path: '/home/supervisor/report:code',
+                            name:'supervisorReport',
+                            component: supervisorListReport,
+                            meta: { requiresAuth: '督导' },
+                        },
+                        {
+                            path: '/home/supervisor/upload/:id/:code',
+                            name:'supervisorListUpload',
+                            component: supervisorListUpload,
                             meta: { requiresAuth: '督导' },
                         },
                         {

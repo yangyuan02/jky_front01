@@ -6,7 +6,7 @@
             </div>
             <div class="depart_con">
                 <ul>
-                    <li :class="{ active:  item.total==92}" @click="goDetail" v-for="(item,index,) in list" :key="index"><span>{{item.name}}</span><span>{{item.total}}/92</span></li>
+                    <li :class="{ active:  item.total==92}" @click="goDetail(item.code)" v-for="(item,index,) in list" :key="index"><span>{{item.name}}</span><span>{{item.total}}/92</span></li>
                 </ul>
             </div>
         </div>
@@ -34,8 +34,13 @@
                     this.list = res.data.data.progress
                 })
             },
-            goDetail() { //跳转详情
-                this.$router.push('/home/department/detail')
+            goDetail(code) { //跳转详情
+                this.$router.push({
+                    name:'supervisorList',
+                    params: {
+                        code: code
+                    }
+                })
             }
         },
         mounted() {
