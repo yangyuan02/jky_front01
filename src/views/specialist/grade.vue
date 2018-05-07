@@ -122,6 +122,9 @@
             getNetworkDetail(province) { //获取文件列表/省用户评价详情
                 this.value = province
                 this.$ajax.get(`/api/assessments/info?id=${this.$route.params.id}&province=${province.code}`).then((res) => {
+                    if(res.data.code=='404'){
+                        return
+                    }
                     if (res.data.score.flag == 'fully') {
                         res.data.score.flag = 'A'
                     }
