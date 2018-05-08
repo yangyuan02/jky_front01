@@ -12,7 +12,7 @@
             </div>
             <div class="table_scroll" style="height:540px;width:100%;margin:0 auto;overflow:scroll;">
                 <table border="1" cellspacing="0">
-                    <tr>
+                    <!-- <tr>
                         <td style="width:22%;">自评报告</td>
                         <td style="width:25%;"></td>
                         <td style="width:20.949%;"></td>
@@ -20,7 +20,7 @@
                         <td style="width:18.739%;">
                             <a href="javascript:;" @click="goReport">填写</a>
                         </td>
-                    </tr>
+                    </tr> -->
                     <tr v-for="(item,index) in table" :key="index">
                         <td :rowspan="item.one_row_span" v-bind:class="{ show: item.one_display.toString()=='false'}">{{item.one_content.replace(/\s/g,"")}}</td>
                         <td :rowspan="item.two_row_span" v-bind:class="{ show: item.two_display.toString()=='false'}">{{item.two_content.replace(/\s/g,"")}}</td>
