@@ -123,11 +123,6 @@
             getNetworkDetail(province) { //获取文件列表/省用户评价详情
                 this.value = province
                 this.$ajax.get(`/api/assessments/info?id=${this.$route.params.id}&province=${province.code}`).then((res) => {
-                    if(res.data.code=='404'){
-                        this.fileList = {}
-                        this.pdfsrc = ''
-                        return
-                    }
                     if (res.data.score.flag == 'fully') {
                         res.data.score.flag = 'A'
                     }
@@ -135,10 +130,9 @@
                         res.data.score.flag = 'B'
                     }
                     if (res.data.score.flag == 'less') {
-                        res.data.flag = 'C'
+                        res.data.score.flag = 'C'
                     }
-                    this.changePdf(res.data.pdfs[0].url)
-
+                    console.log(res.data)
                     this.fileList = res.data
                 })
             },
