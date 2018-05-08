@@ -141,8 +141,8 @@
                         this.$message.error("账号密码错误")
                         return
                     }
-                    if(res.data.message == '用户所属角色登陆时间已过期'){
-                        this.$message.error("用户所属角色登陆时间已过期")
+                    if(res.data.message == '您所使用的账号不在系统开放日期内'){
+                        this.$message.error("您所使用的账号不在系统开放日期内")
                         return
                     }
                     if (res.data.jwt) {
