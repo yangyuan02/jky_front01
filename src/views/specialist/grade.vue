@@ -35,7 +35,9 @@
                           v-for="item in province"
                           :key="item.name"
                           :label="item.name"
-                          :value="item">
+                          :value="item" style="display:flex;justify-content: space-between;align-items: center;">
+                            <span>{{item.name}}</span>
+                            <i class="el-icon-check" v-if="item.status==1"></i>
                         </el-option>
                       </el-select>
 </template>
@@ -118,7 +120,13 @@
                 })
             },
             getProvince(){//获取省份
-                this.province = JSON.parse(window.localStorage.getItem("provinces"))
+                // this.province = JSON.parse(window.localStorage.getItem("provinces"))
+
+                this.$ajax.get(`/api/scores/score_province?id=${this.$route.params.id}`).then((res)=>{
+                    this.province = res.data.data
+                    this.getScores(this.province[0])
+                    this.getNetworkDetail(this.province[0])
+                })
             },
             getNetworkDetail(province) { //获取文件列表/省用户评价详情
                 this.value = province
@@ -194,6 +202,7 @@
                     this.$ajax.post(`/api/assessments/${this.$route.params.id}/scores?province=${this.value.code}`, param)
                     .then((res) => {
                         this.review.code = '200'
+                        this.value.status = 1
                         this.close()
                         this.$message({
                                 message: '感谢您的评价',
@@ -223,11 +232,9 @@
                 document.getElementById("score_box").style.display = "none"
             }
         },
-        mounted() {
+        created() {
             this.getProvince()
             this.getDetail()
-            this.getScores(this.province[0])
-            this.getNetworkDetail(this.province[0])
         }
     }
 </script>
