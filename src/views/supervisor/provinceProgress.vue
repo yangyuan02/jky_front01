@@ -19,7 +19,7 @@
             return{
                 list:[]
             }
-        },
+        },//测试git
         methods: {
             getDetail() {
                 this.$ajax.get("/api/ddj_provinces").then((res) => {
