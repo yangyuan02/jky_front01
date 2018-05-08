@@ -53,7 +53,7 @@
             <div class="upload_con">
                 <div class="target" style="margin-bottom:30px;">
                     <div class="target_title" v-if="fileList.score">自评等级:{{fileList.score.flag}}</div>
-                    <div class="target_con more" v-if="fileList.score" v-text="fileList.score.content" :title="fileList.score.content">
+                    <div class="target_con more" v-if="fileList.score" v-text="fileList.score.content" :title="fileList.score.content" style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 10;overflow: hidden;padding-bottom: 2px;-webkit-box-orient: vertical;">
                     </div>
                 </div>
                 <div class="upload">
@@ -120,8 +120,6 @@
                 })
             },
             getProvince(){//获取省份
-                // this.province = JSON.parse(window.localStorage.getItem("provinces"))
-
                 this.$ajax.get(`/api/scores/score_province?id=${this.$route.params.id}`).then((res)=>{
                     this.province = res.data.data
                     this.getScores(this.province[0])
@@ -140,8 +138,11 @@
                     if (res.data.score.flag == 'less') {
                         res.data.score.flag = 'C'
                     }
-                    console.log(res.data)
+                    if(res.data.pdfs.length>0){
+                        this.pdfsrc = res.data.pdfs[0].url
+                    }
                     this.fileList = res.data
+
                 })
             },
             descInput() { 
@@ -168,6 +169,10 @@
                 this.getScores(data)
             },
             changePdf(src) {
+                if (src == undefined) {
+                    this.$message.error("此材料为保密，请现场查看")
+                    return
+                }
                 this.pdfsrc = src
             },
             save() {//保存
@@ -273,14 +278,7 @@
         color: #666;
     }
     .target:first-child .target_con.more{
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 10;
-        overflow: hidden;
-        padding-bottom: 2px;
-        /* autoprefixer: off */
-        -webkit-box-orient: vertical;
-        /* autoprefixer: on */
+
     }
     .target:not(:first-child) {
         margin-top: 10px;

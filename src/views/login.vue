@@ -89,7 +89,7 @@
              this.creatCode()
             },
             forget_login:function(){
-    
+
              if(this.forget_name==''){
                     this.$message.error("姓名不能为空")
                     return
@@ -138,10 +138,12 @@
                         return
                     }
                     if(res.data.message == '账号密码错误'){
+                        this.creatCode()
                         this.$message.error("账号密码错误")
                         return
                     }
                     if(res.data.message == '您所使用的账号不在系统开放日期内'){
+                        this.creatCode()
                         this.$message.error("您所使用的账号不在系统开放日期内")
                         return
                     }
