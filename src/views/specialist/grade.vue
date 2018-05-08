@@ -1,5 +1,5 @@
 <template>
-    <div class="uoload_con">
+    <div class="spec uoload_con">
         <nav>
             <div class="target" style="margin-bottom:30px;">
                 <div class="target_title">测评点</div>
@@ -294,11 +294,11 @@
         display: flex;
         padding: 0 16px;
     }
-    .right_con {
+    .spec .right_con {
         width: 90%;
         display: flex;
     }
-    .right_con .review_con {
+    .spec .right_con .review_con {
         width: 75%;
         background: #fff;
         box-shadow: 1px 1px 8px #ccc;
@@ -306,12 +306,12 @@
         padding: 38px 30px;
         overflow: hidden;
     }
-    .right_con .upload_con {
+    .spec .right_con .upload_con {
         background: #fff;
         width: 25%;
         box-shadow: 1px 1px 8px #ccc;
     }
-    .uploadt_btn {
+    .spec .uploadt_btn {
         width: 100%;
         height: 30px;
         line-height: 30px;
@@ -321,35 +321,35 @@
         display: flex;
         justify-content: space-between;
     }
-    .upload {
+    .spec .upload {
         width: 100%;
     }
-    .upload ul li {
+    .spec .upload ul li {
         height: 30px;
         line-height: 30px;
         display: flex;
         justify-content: space-between;
         padding: 0px 20px;
     }
-    .upload ul li a {
+    .spec .upload ul li a {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .upload ul li:nth-child(odd) {
+    .spec .upload ul li:nth-child(odd) {
         background: #dcdcdc;
     }
-    .upload ul li:nth-child(even) {
+    .spec .upload ul li:nth-child(even) {
         background: #f4f2f3;
     }
-    .right_con p i {
+    .spec .right_con p i {
         display: inline-block;
         width: 10px;
         height: 14px;
         background: url("../../assets/crumbs_bg.png") no-repeat;
         margin-right: 8px;
     }
-    .score_box {
+    .spec .score_box {
         position: absolute;
         left: 50%;
         top: 50%;
@@ -360,7 +360,7 @@
         display: none;
         z-index: 11;
     }
-    .score_box .score_title {
+    .spec .score_box .score_title {
         height: 30px;
         line-height: 30px;
         text-align: center;
@@ -368,23 +368,23 @@
         background: #3a91ec;
         color: #fff;
     }
-    .score_box .score_header {
+    .spec .score_box .score_header {
         margin: 10px 0;
     }
-    .score_box .score_body {
+    .spec .score_box .score_body {
         width: 100%;
     }
-    .score_box .score_body textarea {
+    .spec .score_box .score_body textarea {
         width: 99%;
     }
-    .score_box .score_btn {
+    .spec .score_box .score_btn {
         width: 100%;
         display: flex;
         justify-content: space-between;
         align-items:center;
         margin-top: 20px;
     }
-    .score_box .score_btn a {
+    .spec .score_box .score_btn a {
         padding: 5px 24px;
         border: 1px solid #3a91ec;
         color: #3a91ec;
@@ -399,7 +399,7 @@
         display: none;
         z-index: 10;
     }
-    .score_box .socre_cloes {
+    .spec .score_box .socre_cloes {
         width: 26px;
         height: 26px;
         border-radius: 50%;
