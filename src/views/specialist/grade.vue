@@ -80,9 +80,10 @@
                     </p>
                 </div>
                 <div class="score_body">
-                    <textarea name="" id="" cols="30" rows="10" v-model="review.content"></textarea>
+                    <textarea name="" id="" cols="30" rows="10" v-model.trim="review.content" @input="descInput" maxlength="1000"></textarea>
                 </div>
                 <div class="score_btn">
+                    <span>{{remnant}}/1000</span>
                     <a href="javascript:;" @click="save()">{{review.code=='404'?'保存':'更新'}}</a>
                 </div>
             </div>
@@ -101,7 +102,7 @@
             return {
                 fileList: {},
                 review :{},
-                remnant: 500,
+                remnant: 1000,
                 pdfsrc: '',
                 assessments: {},
                 province: [],
@@ -141,6 +142,10 @@
                     this.fileList = res.data
                 })
             },
+            descInput() { 
+                var txtVal = this.review.content ? this.review.content.length : 0; 
+                this.remnant = 1000 - txtVal; 
+            },
             getScores(province) { //获取评测详情
                 this.$ajax.get(`/api/scores/${this.$route.params.id}?province=${province.code}`).then((res) => {
                     this.review = res.data
@@ -153,6 +158,7 @@
                     if (this.review.level == 'less') {
                         this.review.self_point = 'C'
                     }
+                    this.descInput()
                 })
             },
             selectProvince(data){//选择省份
@@ -372,7 +378,9 @@
     }
     .score_box .score_btn {
         width: 100%;
-        text-align: right;
+        display: flex;
+        justify-content: space-between;
+        align-items:center;
         margin-top: 20px;
     }
     .score_box .score_btn a {
