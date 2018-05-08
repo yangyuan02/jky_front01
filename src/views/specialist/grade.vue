@@ -29,6 +29,7 @@
             <div class="review_con">
                 <div class="expert_pdf_header">
                     <div class="province_box">
+                        <span>评价省份</span>
                         <template>
                       <el-select v-model="value" filterable placeholder="请选择" @change="selectProvince($event)" value-key="code">
                         <el-option
@@ -58,8 +59,11 @@
                 </div>
                 <div class="upload">
                     <ul>
-                        <li v-for="(item,index) in fileList.pdfs" :key="index" @click="changePdf(item.url)">
-                            <a href="javascript:;">{{item.name}}</a>
+                        <li style="color:#fff;background:#f7a31c">材料列表</li>
+                    </ul>
+                    <ul>
+                        <li v-for="(item,index) in fileList.pdfs" :key="index" @click="changePdf(item.url,index)">
+                            <a href="javascript:;" :class="{active:listIndex===index}">{{item.name}}</a>
                         </li>
                     </ul>
                 </div>
@@ -108,7 +112,8 @@
                 pdfsrc: '',
                 assessments: {},
                 province: [],
-                value:{}
+                value:{},
+                listIndex:''
             }
         },
         methods: {
@@ -168,7 +173,8 @@
                 this.getNetworkDetail(data)
                 this.getScores(data)
             },
-            changePdf(src) {
+            changePdf(src,index) {
+                this.listIndex = index
                 if (src == undefined) {
                     this.$message.error("此材料为保密，请现场查看")
                     return
@@ -343,6 +349,9 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+    .spec .upload ul li a.active{
+        color: #327bca;
     }
     .spec .upload ul li:nth-child(odd) {
         background: #dcdcdc;

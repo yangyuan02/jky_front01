@@ -30,28 +30,29 @@
                 <div class="review">
                     <div class="review_grade">
                         <span class="title">自评等级</span>
-                        <input type="radio" id="A" value="A" name="self_point" v-model="review.self_point">
+                        <span>{{review.self_point}}</span>
+                        <!-- <input type="radio" id="A" value="A" name="self_point" v-model="review.self_point">
                         <span>A</span>
                         <input type="radio" id="B" value="B" name="self_point" v-model="review.self_point">
                         <span>B</span>
                         <input type="radio" id="C" value="C" name="self_point" v-model="review.self_point">
-                        <span>C</span>
+                        <span>C</span> -->
                     </div>
                     <div class="review_head">
                         <i class="iconfont">&#xe609;</i>
                         <span>简述</span>
                     </div>
                     <div class="review_text">
-                        <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model.trim="review.content" @input="descInput" maxlength="1000">
+                        <textarea name="" id="" cols="30" rows="10" placeholder="请写评价...." v-model.trim="review.content" @input="descInput" maxlength="1000" disabled="disabled">
                                                                                 </textarea>
                         <p>
                             <span>字数限制：{{remnant}}/1000</span>
                         </p>
                     </div>
-                    <div class="review_btn">
+                    <!-- <div class="review_btn">
                         <a href="javascrip:;" @click="goBack()" style="right:80px;">返回</a>
                         <a href="javascrip:;" @click="save()">{{review.code=='404'?'保存':'更新'}}</a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="upload_con">
@@ -59,10 +60,10 @@
                     <div>
                         材料列表
                     </div>
-                    <div>
+                    <!-- <div>
                         <i class="iconfont">&#xe616;</i>
                         <span>添加</span>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="upload">
                     <ul>
