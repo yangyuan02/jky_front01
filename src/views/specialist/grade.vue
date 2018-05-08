@@ -278,6 +278,9 @@
         -webkit-line-clamp: 10;
         overflow: hidden;
         padding-bottom: 2px;
+        /* autoprefixer: off */
+        -webkit-box-orient: vertical;
+        /* autoprefixer: on */
     }
     .target:not(:first-child) {
         margin-top: 10px;
