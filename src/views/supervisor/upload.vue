@@ -158,7 +158,7 @@
             getDetail() { //获取abc评测标准
                 this.$ajax.get(`/api/assessments/${this.$route.params.id}`).then((res) => {
                     this.assessments = res.data
-                    this.descInput()
+
                 }, (err) => {
                     console.log(err)
                 })
@@ -175,6 +175,7 @@
                     if (this.review.level == 'less') {
                         this.review.self_point = 'C'
                     }
+                    this.descInput()
                 })
             },
             goBack(){
