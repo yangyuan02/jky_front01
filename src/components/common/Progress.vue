@@ -14,9 +14,10 @@
     .progress {
         width: 200px;
         height: 18px;
-        margin: 0px 8px;
+        margin: -4px 8px;
         background: #e2e0e0;
         border-radius: 12px;
+        display: inline-block;
     }
     .progress .progress_bar {
         height: 18px;
