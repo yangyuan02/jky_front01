@@ -51,7 +51,7 @@
             <div class="upload_con">
                 <div class="target" style="margin-bottom:30px;">
                     <div class="target_title" v-if="fileList.score">自评等级:{{fileList.score.flag}}</div>
-                    <div class="target_con" v-if="fileList.score" v-text="fileList.score.content">
+                    <div class="target_con more" v-if="fileList.score" v-text="fileList.score.content" :title="fileList.score.content">
                     </div>
                 </div>
                 <div class="upload">
@@ -270,6 +270,13 @@
     }
     .target:first-child .target_con {
         color: #666;
+    }
+    .target:first-child .target_con.more{
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 10;
+        overflow: hidden;
+        padding-bottom: 2px;
     }
     .target:not(:first-child) {
         margin-top: 10px;
