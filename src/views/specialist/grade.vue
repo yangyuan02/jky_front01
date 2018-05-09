@@ -53,8 +53,8 @@
             </div>
             <div class="upload_con">
                 <div class="target" style="margin-bottom:30px;">
-                    <div class="target_title" v-if="fileList.score">自评等级:{{fileList.score.flag}}</div>
-                    <div class="target_con more" v-if="fileList.score" v-text="fileList.score.content" :title="fileList.score.content" style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 10;overflow: hidden;padding-bottom: 2px;-webkit-box-orient: vertical;">
+                    <div class="target_title">自评等级</div>
+                    <div class="target_con more" v-if="fileList.score" v-text="fileList.score.opt==0?'该省暂无评级':fileList.score.flag" style="height:150px;text-align:center;line-height:140px;font-size:40px;">
                     </div>
                 </div>
                 <div class="upload">
@@ -62,6 +62,7 @@
                         <li style="color:#fff;background:#f7a31c">材料列表</li>
                     </ul>
                     <ul>
+                        <li>数据概况</li>
                         <li v-for="(item,index) in fileList.pdfs" :key="index" @click="changePdf(item.url,index)">
                             <a href="javascript:;" :class="{active:listIndex===index}">{{item.name}}</a>
                         </li>
@@ -258,6 +259,7 @@
     .expert_pdf_header .expert_write {
         color: #4fa4f4;
         font-size: 20px;
+        cursor: pointer;
     }
     textarea {
         resize: none;
