@@ -6,7 +6,10 @@
             </div>
             <div class="depart_con">
                 <ul>
-                    <li :class="{ active:  item.total==92}" @click="goDetail(item.code)" v-for="(item,index,) in list" :key="index"><span>{{item.name}}</span><span>{{item.total}}/92</span></li>
+                    <li :class="{ active:  item.total==92}" @click="goDetail(item.code)" v-for="(item,index,) in list" :key="index">
+                        <p>{{item.name}}</p>
+                        <p>{{item.total}}/92</p>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -87,12 +90,10 @@
         flex-wrap: wrap;
     }
     .superv_department .sup_right .depart_con ul li {
-        padding: 10px 26px;
+        width: 11.5%;
+        text-align: center;
         color: #00a0e9;
         border: 1px solid #00a0e9;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
         margin-top: 14px;
         cursor: pointer;
     }
