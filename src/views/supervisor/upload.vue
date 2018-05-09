@@ -68,7 +68,7 @@
                 <div class="upload">
                     <ul>
                         <li v-for="(item,index) in fileList" :key="index">
-                            <a href="JavaScript:;" @click="openPdf(item.url)" >{{item.name}}</a>
+                            <a href="JavaScript:;" @click="openPdf(item.url,index)" :class="{active:listIndex===index}">{{item.name}}</a>
                             <div>
                                 <!-- <i class="iconfont" style="color:#3485ee;" v-if="item.url" >&#xe626;</i> -->
                                 <i class="iconfont" style="color:red;cursor:pointer" @click="showDel('block',item.id)">&#xe612;</i>
@@ -148,6 +148,7 @@
                 "picked": 'one',
                 "fileList": [],
                 "review": {},
+                listIndex:'',
                 isFile: 0,
                 changefilename: "请选择上传文件",
                 remnant: 1000,
@@ -320,7 +321,8 @@
                         }, (err) => {})
                 }
             },
-            openPdf(url) { //打开pdf
+            openPdf(url,index) { //打开pdf
+                this.listIndex = index
                 if (url == undefined) {
                     this.$message.error("此材料为保密，请现场查看")
                     return
@@ -483,6 +485,9 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         width: 88%;
+    }
+    .upload ul li a.active{
+        color: #327bca;
     }
     .upload ul li:nth-child(odd) {
         background: #dcdcdc;
