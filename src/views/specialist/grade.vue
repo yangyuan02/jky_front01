@@ -54,7 +54,7 @@
             <div class="upload_con">
                 <div class="target" style="margin-bottom:30px;">
                     <div class="target_title">自评等级</div>
-                    <div class="target_con more" v-if="fileList.score" v-text="fileList.score.opt==0?'该省暂无评级':fileList.score.flag" style="height:150px;text-align:center;line-height:140px;font-size:40px;">
+                    <div class="target_con more" v-if="fileList.score" v-text="fileList.score.opt==0?'该省暂无评级':fileList.score.flag" style="height:150px;text-align:center;line-height:140px;font-size:36px;">
                     </div>
                 </div>
                 <div class="upload">

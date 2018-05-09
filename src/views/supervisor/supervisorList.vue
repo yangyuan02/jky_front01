@@ -14,10 +14,10 @@
                         <Progress :progress="progress"></Progress>
                         <span>{{92}}</span>
                     </div>
-                    <!-- <div class="data_satus">
-                        <a href="javascrip:;" @click="getData('/api/assessments?status=1')">已完成</a>
-                        <a href="javascrip:;" @click="getData('/api/assessments?status=0')">未完成</a>
-                    </div> -->
+                    <div class="data_satus">
+                        <a href="javascrip:;" @click="getData('/api/ddj_provinces/assessments?status=1')">已完成</a>
+                        <a href="javascrip:;" @click="getData('/api/ddj_provinces/assessments?status=0')">未完成</a>
+                    </div>
                 </div>
             </div>
             <div class="table_header">
@@ -98,7 +98,8 @@
                 }
             },
             getData(url) { //获取数据
-                this.$ajax.get(url, {}).then((res) => {
+                var urls = url == '/api/ddj_provinces/assessments'? url :`${url}&province=${this.$route.params.code}`
+                this.$ajax.get(urls, {}).then((res) => {
                     var data = res.data
                     this.$ajax.get(`/api/ddj_provinces/scores?province=${this.$route.params.code}`).then((res)=>{
                         var scores = res.data
@@ -144,14 +145,14 @@
         },
         watch:{
             isUpdata(OloData,NewData){
-                if(OloData=='/api/assessments'){
-                    this.getData('/api/assessments')
+                if(OloData=='/api/ddj_provinces/assessments'){
+                    this.getData('/api/ddj_provinces/assessments')
                 }
             }
         },
         mounted() {
             this.setPprovinces()
-            this.getData('/api/assessments')
+            this.getData('/api/ddj_provinces/assessments')
         }
     }
 </script>
