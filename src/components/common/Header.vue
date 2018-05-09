@@ -13,7 +13,7 @@
                     <!-- <span>通知</span> -->
                 </div>
                 <div class="person">
-                    <div class="user" @click="toggle()">
+                    <div class="user" @click="toggle()" @mouseout.capture="outHead">
                         <span>{{person.name}}</span>
                         <!-- <i class="iconfont">&#xe656;</i> -->
                     </div>
@@ -108,6 +108,11 @@ export default {
             }
         }
 
+    },
+    outHead(){
+        if(!this.isActive){
+            this.isActive = !this.isActive
+        }
     },
     getPersonInfo() {
       this.person = JSON.parse(window.localStorage.getItem("user"));

@@ -38,7 +38,7 @@
                           :label="item.name"
                           :value="item" style="display:flex;justify-content: space-between;align-items: center;">
                             <span>{{item.name}}</span>
-                            <i class="el-icon-check" v-if="item.status==1"></i>
+                            <i class="el-icon-check" v-if="item.status==1" style="color:#409eff"></i>
                         </el-option>
                       </el-select>
 </template>
@@ -91,7 +91,10 @@
                 </div>
                 <div class="score_btn">
                     <span>{{remnant}}/1000</span>
-                    <a href="javascript:;" @click="save()">{{review.code=='404'?'保存':'更新'}}</a>
+                    <div>
+                        <a href="javascript:;" @click="close" style="color:#fc7e7f;border-color:#fc7e7f;">返回</a>
+                        <a href="javascript:;" @click="save()">{{review.code=='404'?'保存':'更新'}}</a>
+                    </div>
                 </div>
             </div>
             <div class="socre_cloes" id="socre_cloes" @click="close">
