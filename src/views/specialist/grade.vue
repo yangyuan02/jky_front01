@@ -146,6 +146,8 @@
                     }
                     if(res.data.pdfs.length>0){
                         this.pdfsrc = res.data.pdfs[0].url
+                    }else{
+                        this.pdfsrc = ''
                     }
                     this.fileList = res.data
 
